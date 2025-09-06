@@ -1,14 +1,14 @@
-import { Usuario } from "./usuario";
-import { Moneda } from "./moneda";
-import { DireccionEntrega } from "./direccionEntrega";
-import { EstadoPedido } from "./estadoPedido";
-import { CambioEstadoPedido } from "./cambioEstadoPedido";
+import { Usuario } from "./Usuario";
+import { MONEDA } from "./MONEDA";
+import { DireccionEntrega } from "./DireccionEntrega";
+import { ESTADO_PEDIDO } from "./ESTADO_PEDIDO";
+import { CambioEstadoPedido } from "./CambioEstadoPedido";
 
 export class Pedido {
   /**
    *
    * @param {Usuario} comprador
-   * @param {Moneda} moneda
+   * @param {MONEDA} moneda
    * @param {DireccionEntrega} direccionEntrega
    */
   constructor(comprador, moneda, direccionEntrega) {
@@ -34,7 +34,7 @@ export class Pedido {
   }
 
   /**
-   * @param {EstadoPedido} nuevoEstado
+   * @param {ESTADO_PEDIDO} nuevoEstado
    * @param {Usuario} quien
    * @param {String} motivo
    */

@@ -1,11 +1,11 @@
-import { EstadoPedido } from "./estadoPedido";
-import { Notificacion } from "./notificacion";
-import { Pedido } from "./pedido";
+import { ESTADO_PEDIDO } from "./ESTADO_PEDIDO";
+import { Notificacion } from "./Notificacion";
+import { Pedido } from "./Pedido";
 
 export class FactoryNotificacion {
   /**
    *
-   * @param {EstadoPedido} estado
+   * @param {ESTADO_PEDIDO} estado
    * @returns {String}
    */
   crearSegunEstadoPedido(estado) {

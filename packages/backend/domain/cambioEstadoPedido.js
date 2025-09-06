@@ -1,11 +1,11 @@
-import { EstadoPedido } from "./estadoPedido";
-import { Pedido } from "./pedido";
-import { Usuario } from "./usuario";
+import { ESTADO_PEDIDO } from "./ESTADO_PEDIDO";
+import { Pedido } from "./Pedido";
+import { Usuario } from "./Usuario";
 
 export class CambioEstadoPedido {
   /**
    *
-   * @param {EstadoPedido} estado
+   * @param {ESTADO_PEDIDO} estado
    * @param {Pedido} pedido
    * @param {Usuario} usuario
    * @param {String} motivo

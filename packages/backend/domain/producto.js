@@ -1,5 +1,5 @@
-import { Usuario } from "./usuario";
-import { Moneda } from "./moneda";
+import { Usuario } from "./Usuario";
+import { MONEDA } from "./MONEDA";
 
 export class Producto {
   /**
@@ -8,7 +8,7 @@ export class Producto {
    * @param {String} titulo
    * @param {String} descripcion
    * @param {Number} precio
-   * @param {Moneda} moneda
+   * @param {MONEDA} moneda
    * @param {Boolean} activo
    */
   constructor(vendedor, titulo, descripcion, precio, moneda, activo) {
