@@ -5,6 +5,7 @@ import { ESTADO_PEDIDO } from "./estadoPedido";
 import { CambioEstadoPedido } from "./cambioEstadoPedido";
 
 export class Pedido {
+  
   /**
    *
    * @param {Usuario} comprador
