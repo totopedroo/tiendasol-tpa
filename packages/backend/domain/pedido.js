@@ -1,8 +1,8 @@
-import { Usuario } from "./Usuario";
-import { MONEDA } from "./MONEDA";
-import { DireccionEntrega } from "./DireccionEntrega";
-import { ESTADO_PEDIDO } from "./ESTADO_PEDIDO";
-import { CambioEstadoPedido } from "./CambioEstadoPedido";
+import { Usuario } from "./usuario";
+import { MONEDA } from "./moneda";
+import { DireccionEntrega } from "./direccionEntrega";
+import { ESTADO_PEDIDO } from "./estadoPedido";
+import { CambioEstadoPedido } from "./cambioEstadoPedido";
 
 export class Pedido {
   /**
@@ -19,7 +19,7 @@ export class Pedido {
     this.id = ""; // TODO generar un id
     this.total = 0;
     this.items = []; // TODO ver si la lista la pasamos de una o si la vamos llenando
-    this.estado = EstadoPedido.PENDIENTE;
+    this.estado = ESTADO_PEDIDO.PENDIENTE;
     this.fechaCreacion = new Date();
     this.historialEstados = [];
   }
@@ -43,7 +43,7 @@ export class Pedido {
       nuevoEstado,
       this,
       quien,
-      motivo,
+      motivo
     );
     this.estado = nuevoEstado;
     this.historialEstados.push(cambioEstado);
@@ -55,7 +55,7 @@ export class Pedido {
   validarStock() {
     // return Boolean
     return this.items.every((item) =>
-      item.producto.estaDisponible(item.cantidad),
+      item.producto.estaDisponible(item.cantidad)
     );
   }
 }

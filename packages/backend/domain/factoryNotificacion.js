@@ -1,6 +1,6 @@
-import { ESTADO_PEDIDO } from "./ESTADO_PEDIDO";
-import { Notificacion } from "./Notificacion";
-import { Pedido } from "./Pedido";
+import { ESTADO_PEDIDO } from "./estadoPedido";
+import { Notificacion } from "./notificacion";
+import { Pedido } from "./pedido";
 
 export class FactoryNotificacion {
   /**
@@ -18,9 +18,9 @@ export class FactoryNotificacion {
    * @returns {Notificacion}
    */
   crearSegunPedido(pedido) {
-    var receptor = pedido.items.at(0).producto.vendedor; 
+    var receptor = pedido.items.at(0).producto.vendedor;
     var emisor = pedido.comprador;
-    if(pedido.estado === ESTADO_PEDIDO.ENVIADO) {
+    if (pedido.estado === ESTADO_PEDIDO.ENVIADO) {
       // Intercambio de variables
       [receptor, emisor] = [emisor, receptor];
     }
@@ -32,7 +32,7 @@ export class FactoryNotificacion {
             })}\n
             Total: ${pedido.total}\n
             Dirección de entrega: ${pedido.direccionEntrega} 
-            `,
+            `
     );
   }
 }

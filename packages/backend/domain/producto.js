@@ -1,5 +1,5 @@
-import { Usuario } from "./Usuario";
-import { MONEDA } from "./MONEDA";
+import { Usuario } from "./usuario";
+import { MONEDA } from "./moneda";
 
 export class Producto {
   /**
