@@ -59,4 +59,19 @@ export class Pedido {
       item.producto.estaDisponible(item.cantidad)
     );
   }
+
+  /**
+   * @param {ItemPedido} item 
+   */
+  agregarItem(item) {
+    this.items.push(item)
+  }
+
+  /**
+   * @param {ItemPedido} item 
+   */
+  eliminarItem(item) {
+    const indice = this.items.indexOf(item);
+    this.items.splice(indice, 1);
+  }
 }
