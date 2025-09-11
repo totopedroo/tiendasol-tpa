@@ -1,5 +1,5 @@
-import { Usuario } from "./usuario";
-import { MONEDA } from "./moneda";
+import { Usuario } from "./usuario.js";
+import { MONEDA } from "./moneda.js";
 
 export class Producto {
   /**

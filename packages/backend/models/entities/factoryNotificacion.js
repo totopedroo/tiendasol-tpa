@@ -1,6 +1,6 @@
-import { ESTADO_PEDIDO } from "./estadoPedido";
-import { Notificacion } from "./notificacion";
-import { Pedido } from "./pedido";
+import { ESTADO_PEDIDO } from "./estadoPedido.js";
+import { Notificacion } from "./notificacion.js";
+import { Pedido } from "./pedido.js";
 
 export class FactoryNotificacion {
   /**
@@ -32,7 +32,7 @@ export class FactoryNotificacion {
             })}\n
             Total: ${pedido.total}\n
             Dirección de entrega: ${pedido.direccionEntrega} 
-            `
+            `,
     );
   }
 }
