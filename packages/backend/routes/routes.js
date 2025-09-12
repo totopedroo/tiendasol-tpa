@@ -1,5 +1,7 @@
 import pedidosRoutes from "./pedidosRoutes.js";
 
-const routes = [pedidosRoutes];
+const routes = [
+    pedidosRoutes
+];
 
 export default routes;
