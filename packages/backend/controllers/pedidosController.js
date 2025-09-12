@@ -13,11 +13,16 @@ export class PedidosController {
     const resultBody = pedidoSchema.safeParse(body);
 
     if (resultBody.error) {
-      return res.status(400).json({ error: resultBody.error });
+      return res.status(400).json({ 
+        error: resultBody.error,
+        message: "Error en el formato del pedido"
+      });
     }
     const nuevoPedido = this.pedidosService.create(resultBody.data);
-    return res.status(201).json(nuevoPedido);
+    return res.status(201).json("El Pedido se creó con éxito");
   }
+
+  // 564321
 
   findAll(req, res) {
     const { page = 1, limit = 10 } = req.query;

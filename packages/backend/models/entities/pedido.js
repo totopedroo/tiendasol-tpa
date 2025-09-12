@@ -1,52 +1,30 @@
 import { Usuario } from "./usuario.js";
-
 import { MONEDA } from "./moneda.js";
-
 import { DireccionEntrega } from "./direccionEntrega.js";
-
 import { ESTADO_PEDIDO } from "./estadoPedido.js";
-
 import { CambioEstadoPedido } from "./cambioEstadoPedido.js";
 
 export class Pedido {
   /**
-
-   *
-
    * @param {Usuario} comprador
-
    * @param {MONEDA} moneda
-
    * @param {DireccionEntrega} direccionEntrega
-
    */
-
   constructor(comprador, moneda, direccionEntrega, items) {
-    this.comprador = comprador;
-
+    this.comprador = comprador; 
     this.moneda = moneda;
-
     this.direccionEntrega = direccionEntrega;
-
     this.id = ""; // TODO generar un id => 1 para arriba
-
     this.total = 0;
-
     this.items = items; // TODO ver si la lista la pasamos de una o si la vamos llenando
-
     this.estado = ESTADO_PEDIDO.PENDIENTE;
-
     this.fechaCreacion = new Date();
-
     this.historialEstados = [];
   }
 
   /**
-
    * @return {Number}
-
    */
-
   calcularTotal() {
     this.total = this.items
       .map((item) => item.subtotal())
@@ -55,64 +33,43 @@ export class Pedido {
   }
 
   /**
-
    * @param {ESTADO_PEDIDO} nuevoEstado
-
    * @param {Usuario} quien
-
    * @param {String} motivo
-
    */
-
   actualizarEstado(nuevoEstado, quien, motivo) {
     const cambioEstado = new CambioEstadoPedido(
       nuevoEstado,
-
       this,
-
       quien,
-
       motivo,
     );
-
     this.estado = nuevoEstado;
-
     this.historialEstados.push(cambioEstado);
   }
 
   /**
-
    * @return {Boolean}
-
    */
-
   validarStock() {
     // return Boolean
-
     return this.items.every((item) =>
       item.producto.estaDisponible(item.cantidad),
     );
   }
 
   /**
-
    * @param {ItemPedido} item
-
    */
-
   agregarItem(item) {
     this.items.push(item);
   }
 
   /**
-
    * @param {ItemPedido} item
-
    */
-
   eliminarItem(item) {
     const indice = this.items.indexOf(item);
-
     this.items.splice(indice, 1);
   }
 }

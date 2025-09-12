@@ -1,5 +1,6 @@
 import { Pedido } from "../models/entities/pedido.js";
 import { DireccionEntrega } from "../models/entities/direccionEntrega.js";
+import { ItemPedido } from "../models/entities/itemPedido.js";
 
 export class PedidosService {
   constructor(pedidoRepository) {
@@ -19,16 +20,24 @@ export class PedidosService {
       d.pais
     );
 
+    const items = nuevoPedidoJSON.items.map(item => new ItemPedido(
+      item.producto,
+      item.cantidad,
+      item.precioUnitario
+    ));
+
     const nuevoPedido = new Pedido(
       nuevoPedidoJSON.id_comprador,
       nuevoPedidoJSON.moneda,
       direccionEntrega,
-      nuevoPedidoJSON.items
+      items,
     );
 
+    /**
     if (!nuevoPedido.validarStock()) {
       throw new Error("No hay stock disponible para uno o más productos.");
     }
+       */
 
     nuevoPedido.calcularTotal();
 
