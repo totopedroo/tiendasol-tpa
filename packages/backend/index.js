@@ -6,7 +6,6 @@ import cors from "cors";
 import { Server } from "./server.js";
 
 import routes from "./routes/routes.js";
-import healthRoutes from "./routes/health.js";
 
 import { PedidosController } from "./controllers/pedidosController.js";
 import { PedidosService } from "./services/pedidosService.js";
@@ -35,13 +34,6 @@ server.setControllers(PedidosController, pedidosController);
 routes.forEach((route) => server.addRoute(route));
 server.configureRoutes();
 server.launch();
-
-app.use((req, res, next) => {
-  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
-  next();
-});
-
-app.use("/", healthRoutes);
 
 MongoDBClient.connect();
 

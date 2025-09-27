@@ -1,9 +1,13 @@
 import express from "express";
 
-const router = express.Router();
+const pathHealth = "/health";
 
-router.get("/health", (req, res) => {
-  res.status(200).send("OK");
-});
+export default function healthRoute() {
+  const router = express.Router();
 
-export default router;
+  router.get(pathHealth, (req, res) => {
+    res.status(200).send("OK");
+  });
+
+  return router;
+}

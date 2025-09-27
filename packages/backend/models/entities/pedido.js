@@ -5,6 +5,17 @@ import { ESTADO_PEDIDO } from "./estadoPedido.js";
 import { CambioEstadoPedido } from "./cambioEstadoPedido.js";
 
 export class Pedido {
+  id;
+  comprador;
+  moneda;
+  direccionEntrega;
+  items;
+
+  total = 0;
+  estado = ESTADO_PEDIDO.PENDIENTE;
+  historialEstados = [];
+  fechaCreacion = new Date();
+
   /**
    * @param {Usuario} comprador
    * @param {MONEDA} moneda
@@ -14,12 +25,7 @@ export class Pedido {
     this.comprador = comprador; 
     this.moneda = moneda;
     this.direccionEntrega = direccionEntrega;
-    this.id = ""; // TODO generar un id => 1 para arriba
-    this.total = 0;
-    this.items = items; // TODO ver si la lista la pasamos de una o si la vamos llenando
-    this.estado = ESTADO_PEDIDO.PENDIENTE;
-    this.fechaCreacion = new Date();
-    this.historialEstados = [];
+    this.items = items;
   }
 
   /**

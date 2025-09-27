@@ -1,5 +1,6 @@
 import express from "express";
 import { errorHandler } from "./middlewares/errorHandler";
+import { logger } from "./middlewares/logger";
 
 export class Server {
   #controllers = {};
@@ -47,6 +48,9 @@ export class Server {
 
     // Middleware global de manejo de errores
     this.#app.use(errorHandler);
+
+    // Middleware global de logueo
+    this.#app.use(logger);
   }
 
   launch() {

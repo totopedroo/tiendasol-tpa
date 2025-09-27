@@ -1,14 +1,15 @@
 import { Pedido } from "../models/entities/pedido.js";
 import { DireccionEntrega } from "../models/entities/direccionEntrega.js";
 import { ItemPedido } from "../models/entities/itemPedido.js";
+import { ConflictError, NotFoundError, ValidationError } from "../error/appError.js";
 
 export class PedidosService {
-  constructor(pedidoRepository) {
-    this.pedidoRepository = pedidoRepository;
+  constructor(pedidosRepository) {
+    this.pedidosRepository = pedidosRepository;
   }
 
-  create(nuevoPedidoJSON) {
-    const d = nuevoPedidoJSON.direccionEntrega;
+  async create(data) {
+    const d = data.direccionEntrega;
     const direccionEntrega = new DireccionEntrega(
       d.calle,
       d.altura,
@@ -20,50 +21,61 @@ export class PedidosService {
       d.pais
     );
 
-    const items = nuevoPedidoJSON.items.map(item => new ItemPedido(
-      item.producto,
-      item.cantidad,
-      item.precioUnitario
-    ));
-
-    const nuevoPedido = new Pedido(
-      nuevoPedidoJSON.id_comprador,
-      nuevoPedidoJSON.moneda,
-      direccionEntrega,
-      items,
+    const items = data.items.map(
+      (item) =>
+        new ItemPedido(item.producto, item.cantidad, item.precioUnitario)
     );
 
-    /**
+    const nuevoPedido = new Pedido(
+      data.id_comprador,
+      data.moneda,
+      direccionEntrega,
+      items
+    );
+
     if (!nuevoPedido.validarStock()) {
-      throw new Error("No hay stock disponible para uno o más productos.");
+      throw new ConflictError("No hay stock disponible para uno o más productos.")
     }
-       */
 
     nuevoPedido.calcularTotal();
 
-    const pedidoGuardado = this.pedidoRepository.create(nuevoPedido);
-    return pedidoGuardado;
+    return await this.pedidosRepository.create(nuevoPedido);
   }
 
-  findById(id) {
-    return this.pedidoRepository.findById(id);
+  async findById(id) {
+    const pedido = await this.pedidosRepository.findById(id);
+    if (!pedido) {
+      throw new NotFoundError("No se encontró el pedido con el ID especificado");
+    }
+    return pedido;
   }
 
-  historialDelUsuario(userId) {
-    return this.pedidoRepository.historialDelUsuario(userId);
+  async historialDelUsuario(userId) {
+    const pedidosUsuario =
+      await this.pedidosRepository.getHistorialDeUsuario(userId);
+    if (!pedidosUsuario) {
+      throw new NotFoundError(
+        "El usuario con ese ID no existe o no tiene pedidos"
+      );
+    }
+    return pedidosUsuario;
   }
 
-  findall(page, limit, filtros) {
+  async findAll(page, limit, filtros) {
     const numeroPagina = Math.max(Number(page), 1);
     const elementosPorPagina = Math.min(Math.max(Number(limit), 1), 100);
 
-    const pedidos = this.pedidoRepository.findByPage(
+    const pedidos = await this.pedidosRepository.findByPage(
       numeroPagina,
       elementosPorPagina,
       filtros
     );
 
-    const total = this.pedidoRepository.contarTodos();
+    if (!pedidos) {
+      throw new NotFoundError("No hay ningún pedido en la base de datos.")
+    }
+
+    const total = await this.pedidosRepository.contarTodos();
     const totalPaginas = Math.ceil(total / elementosPorPagina);
 
     return {
@@ -75,11 +87,19 @@ export class PedidosService {
     };
   }
 
-  cancelar(id) {
-    return this.pedidoRepository.cancelar(id);
+  async cancelar(id) {
+    const pedido = await this.pedidosRepository.cancelar(id);
+    if (!pedido) {
+      throw new NotFoundError("No se encontró el pedido con el ID especificado");
+    }
+    return pedido;
   }
 
-  marcarEnviado(id) {
-    return this.pedidoRepository.marcarEnviado(id);
+  async marcarEnviado(id) {
+    const pedido = await this.pedidosRepository.marcarEnviado(id);
+    if (!pedido) {
+      throw new NotFoundError("No se encontró el pedido con el ID especificado");
+    }
+    return pedido;
   }
 }

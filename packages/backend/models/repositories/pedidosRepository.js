@@ -1,57 +1,54 @@
 import { ESTADO_PEDIDO } from "../entities/estadoPedido.js";
+import { PedidoModel } from "../../schemas/pedidoSchema.js";
 
 export class PedidosRepository {
   constructor() {
-    this.pedidos = [];
-    this.nextId = 1;
+    this.model = PedidoModel;
   }
 
-  create(pedido) {
-    pedido.id = this.nextId++;
-    this.pedidos.push(pedido);
-    return pedido;
+  async create(pedido) {
+    const nuevoPedido = new this.model(pedido);
+    return await nuevoPedido.save();
   }
 
-  findById(id) {
-    return this.pedidos.find((p) => p.id === id) || null;
+  async findById(id) {
+    return await this.model.findById({id})
   }
 
-  historialDelUsuario(userId) {
-    const historial = this.pedidos.filter((p) => p.id_comprador === userId);
-    if (historial.length === 0) {
-      return null;
-    }
-    return historial;
+  async getHistorialDeUsuario(userId) {
+    return await this.model.find({comprador: userId})
   }
 
-  findByPage(pagina, elementosPorPagina, filtros) {
-    const offset = (pagina - 1) * elementosPorPagina;
-    const pedidos = this.findall(filtros);
-    return pedidos.slice(offset, offset + elementosPorPagina);
+  async findByPage(pagina, elementosPorPagina, filtros) {
+    return await this.findAll(filtros)
+      .skip((pagina - 1) * elementosPorPagina)
+      .limit(elementosPorPagina)
+      .sort({createdAt: -1 });
   }
 
-  findall(filtros) {
-    // ver tema filtros mas tarde
-    // const { estado, id_comprador, moneda, fechaDesde, fechaHasta, minTotal, maxTotal } = filtros;
-    let pedidosADevolver = this.pedidos;
-    return pedidosADevolver;
+  async findAll(filtros) {
+    return await this.model.find(filtros);
   }
 
-  cancelar(id, motivo) {
-    const pedido = this.findById(pedidoId);
+  async cancelar(pedidoId, motivo) {
+    const pedido = await this.findById(pedidoId);
     if (!pedido) {
       return null;
     }
     pedido.actualizarEstado(ESTADO_PEDIDO.CANCELADO, null, motivo);
-    return pedido;
+    return await pedido.save();
   }
 
-  marcarEnviado(id) {
-    const pedido = this.findById(id);
+  async marcarEnviado(pedidoId) {
+    const pedido = await this.findById(pedidoId);
     if (!pedido) {
       return null;
     }
     pedido.actualizarEstado(ESTADO_PEDIDO.ENVIADO, null, "Pedido enviado");
-    return pedido;
+    return await pedido.save();
+  }
+
+  async contarTodos() {
+    return await this.model.countDocuments();
   }
 }
