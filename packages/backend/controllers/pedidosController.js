@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { ESTADO_PEDIDO } from "../models/entities/estadoPedido.js";
 import { MONEDA } from "../models/entities/moneda.js";
+import { ValidationError } from "../error/appError.js";
 
 export class PedidosController {
   constructor(pedidosService) {
@@ -34,7 +35,7 @@ export class PedidosController {
       const pedidosPaginados = this.pedidosService.findall(
         page,
         limit,
-        filtros
+        filtros,
       );
       if (pedidosPaginados === null) {
         return res.status(204).send();
@@ -79,7 +80,7 @@ export class PedidosController {
           pedido = await this.pedidosService.marcarEnviado(resultId.data);
           break;
         default:
-          return res.status(400).json({ error: "Nuevo estado inválido" });
+          throw new ValidationError("Nuevo estado inválido");
       }
       res.status(200).json(pedido);
     } catch (error) {
@@ -99,7 +100,7 @@ export class PedidosController {
     try {
       const userId = historialUsuarioSchema.safeParse(req.query);
       const pedidosUsuario = this.pedidosService.historialDelUsuario(
-        userId.data
+        userId.data,
       );
       res.json(pedidosUsuario);
     } catch (error) {

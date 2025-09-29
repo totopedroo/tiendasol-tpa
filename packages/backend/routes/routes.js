@@ -1,9 +1,6 @@
 import pedidosRoutes from "./pedidosRoutes.js";
-import healthRoute from "./health.js"
+import healthRoute from "./health.js";
 
-const routes = [
-    pedidosRoutes,
-    healthRoute
-];
+const routes = [pedidosRoutes, healthRoute];
 
 export default routes;

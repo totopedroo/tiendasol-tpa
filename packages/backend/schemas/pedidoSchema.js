@@ -23,7 +23,7 @@ const cambioEstadoPedidoSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const direccionEntregaSchema = new mongoose.Schema({
@@ -98,13 +98,13 @@ const pedidoSchema = new mongoose.Schema(
   {
     timestamps: true,
     collection: "pedidos",
-  }
+  },
 );
 
 pedidoSchema.methods.actualizarEstado = function (
   nuevoEstado,
   usuario,
-  motivo
+  motivo,
 ) {
   this.estado = nuevoEstado;
   this.historialEstados.push({

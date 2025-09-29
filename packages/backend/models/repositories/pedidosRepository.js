@@ -12,18 +12,18 @@ export class PedidosRepository {
   }
 
   async findById(id) {
-    return await this.model.findById({id})
+    return await this.model.findById({ id });
   }
 
   async getHistorialDeUsuario(userId) {
-    return await this.model.find({comprador: userId})
+    return await this.model.find({ comprador: userId });
   }
 
   async findByPage(pagina, elementosPorPagina, filtros) {
     return await this.findAll(filtros)
       .skip((pagina - 1) * elementosPorPagina)
       .limit(elementosPorPagina)
-      .sort({createdAt: -1 });
+      .sort({ createdAt: -1 });
   }
 
   async findAll(filtros) {

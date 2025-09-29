@@ -1,7 +1,11 @@
 import { Pedido } from "../models/entities/pedido.js";
 import { DireccionEntrega } from "../models/entities/direccionEntrega.js";
 import { ItemPedido } from "../models/entities/itemPedido.js";
-import { ConflictError, NotFoundError, ValidationError } from "../error/appError.js";
+import {
+  ConflictError,
+  NotFoundError,
+  ValidationError,
+} from "../error/appError.js";
 
 export class PedidosService {
   constructor(pedidosRepository) {
@@ -18,23 +22,25 @@ export class PedidosService {
       d.codigoPostal,
       d.ciudad,
       d.provincia,
-      d.pais
+      d.pais,
     );
 
     const items = data.items.map(
       (item) =>
-        new ItemPedido(item.producto, item.cantidad, item.precioUnitario)
+        new ItemPedido(item.producto, item.cantidad, item.precioUnitario),
     );
 
     const nuevoPedido = new Pedido(
       data.id_comprador,
       data.moneda,
       direccionEntrega,
-      items
+      items,
     );
 
     if (!nuevoPedido.validarStock()) {
-      throw new ConflictError("No hay stock disponible para uno o más productos.")
+      throw new ConflictError(
+        "No hay stock disponible para uno o más productos.",
+      );
     }
 
     nuevoPedido.calcularTotal();
@@ -45,7 +51,9 @@ export class PedidosService {
   async findById(id) {
     const pedido = await this.pedidosRepository.findById(id);
     if (!pedido) {
-      throw new NotFoundError("No se encontró el pedido con el ID especificado");
+      throw new NotFoundError(
+        "No se encontró el pedido con el ID especificado",
+      );
     }
     return pedido;
   }
@@ -55,7 +63,7 @@ export class PedidosService {
       await this.pedidosRepository.getHistorialDeUsuario(userId);
     if (!pedidosUsuario) {
       throw new NotFoundError(
-        "El usuario con ese ID no existe o no tiene pedidos"
+        "El usuario con ese ID no existe o no tiene pedidos",
       );
     }
     return pedidosUsuario;
@@ -68,11 +76,11 @@ export class PedidosService {
     const pedidos = await this.pedidosRepository.findByPage(
       numeroPagina,
       elementosPorPagina,
-      filtros
+      filtros,
     );
 
     if (!pedidos) {
-      throw new NotFoundError("No hay ningún pedido en la base de datos.")
+      throw new NotFoundError("No hay ningún pedido en la base de datos.");
     }
 
     const total = await this.pedidosRepository.contarTodos();
@@ -90,7 +98,9 @@ export class PedidosService {
   async cancelar(id) {
     const pedido = await this.pedidosRepository.cancelar(id);
     if (!pedido) {
-      throw new NotFoundError("No se encontró el pedido con el ID especificado");
+      throw new NotFoundError(
+        "No se encontró el pedido con el ID especificado",
+      );
     }
     return pedido;
   }
@@ -98,7 +108,9 @@ export class PedidosService {
   async marcarEnviado(id) {
     const pedido = await this.pedidosRepository.marcarEnviado(id);
     if (!pedido) {
-      throw new NotFoundError("No se encontró el pedido con el ID especificado");
+      throw new NotFoundError(
+        "No se encontró el pedido con el ID especificado",
+      );
     }
     return pedido;
   }

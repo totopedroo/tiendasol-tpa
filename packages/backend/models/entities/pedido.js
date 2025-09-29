@@ -22,7 +22,7 @@ export class Pedido {
    * @param {DireccionEntrega} direccionEntrega
    */
   constructor(comprador, moneda, direccionEntrega, items) {
-    this.comprador = comprador; 
+    this.comprador = comprador;
     this.moneda = moneda;
     this.direccionEntrega = direccionEntrega;
     this.items = items;

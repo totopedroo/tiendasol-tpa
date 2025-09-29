@@ -8,21 +8,21 @@ export default function pedidosRoutes(getController) {
 
   // TODO armar los endpoints
   // Creación de un pedido, validando el stock disponible de cada producto.
-  router.post(pathPedidos, (req, res) => {
-    getController(PedidosController).crear(req, res);
+  router.post(pathPedidos, (req, res, next) => {
+    getController(PedidosController).crear(req, res, next);
   });
 
   // Consulta del historial de pedidos de un usuario.
   // /pedidos?userId=xxx
-  router.get(pathPedidos, (req, res) => {
-    getController(PedidosController).historialDelUsuario(req, res);
+  router.get(pathPedidos, (req, res, next) => {
+    getController(PedidosController).historialDelUsuario(req, res, next);
   });
 
   // Cancelación de un pedido antes de que haya sido enviado.
   // Marcado de un pedido como enviado por parte del vendedor.
   // ? para el cancelado: método post (marcar como cancelado) o delete?
-  router.patch(pathPedidos + "/:id", (req, res) => {
-    getController(PedidosController).cambiarEstado(req, res);
+  router.patch(pathPedidos + "/:id", (req, res, next) => {
+    getController(PedidosController).cambiarEstado(req, res, next);
   });
 
   return router;

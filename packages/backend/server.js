@@ -36,21 +36,23 @@ export class Server {
 
   // le bindeamos la ruta a cada controlador
   configureRoutes() {
-    this.#routes.forEach(route => this.#app.use(route(this.getController.bind(this)))) 
+    // Middleware global de logueo
+    this.#app.use(logger);
+
+    this.#routes.forEach((route) =>
+      this.#app.use(route(this.getController.bind(this))),
+    );
 
     // Middleware para manejar rutas no encontradas
-    this.#app.use((req, res, next) => {
+    this.#app.use((req, res) => {
       res.status(404).json({
-        status: 'fail',
-        message: "La ruta solicitada no existe"
+        status: "fail",
+        message: "La ruta solicitada no existe",
       });
     });
 
     // Middleware global de manejo de errores
     this.#app.use(errorHandler);
-
-    // Middleware global de logueo
-    this.#app.use(logger);
   }
 
   launch() {

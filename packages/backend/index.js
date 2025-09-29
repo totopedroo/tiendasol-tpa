@@ -19,7 +19,7 @@ app.use(
     origin: process.env.ALLOWED_ORIGINS
       ? process.env.ALLOWED_ORIGINS.split(",").map((o) => o.trim())
       : true,
-  })
+  }),
 );
 const port = process.env.SERVER_PORT || 3000;
 
