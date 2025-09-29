@@ -1,6 +1,6 @@
 import express from "express";
-import { errorHandler } from "./middlewares/errorHandler";
-import { logger } from "./middlewares/logger";
+import { errorHandler } from "./middlewares/errorHandler.js";
+import { logger } from "./middlewares/logger.js";
 
 export class Server {
   #controllers = {};

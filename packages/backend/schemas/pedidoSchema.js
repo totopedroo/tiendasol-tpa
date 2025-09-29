@@ -1,48 +1,7 @@
 import mongoose from "mongoose";
-import { Pedido } from "../models/entities/pedido";
-import { ESTADO_PEDIDO } from "../models/entities/estadoPedido";
-import { MONEDA } from "../models/entities/moneda";
-
-const pedidoSchema = new mongoose.Schema(
-  {
-    comprador: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Usuario",
-      required: true,
-    },
-    moneda: {
-      type: String,
-      enum: Object.values(MONEDA),
-      required: true,
-    },
-    direccionEntrega: direccionEntregaSchema,
-    items: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "ItemPedido",
-      },
-    ],
-    estado: {
-      type: String,
-      enum: Object.values(ESTADO_PEDIDO),
-      required: true,
-    },
-    historialEstados: [cambioEstadoPedidoSchema],
-  },
-  {
-    timestamps: true,
-    collection: "pedidos",
-  }
-);
-
-pedidoSchema.methods.actualizarEstado = function(nuevoEstado, usuario, motivo) {
-    this.estado = nuevoEstado;
-    this.historialEstados.push({
-        estado: nuevoEstado,
-        usuario: usuario,
-        motivo: motivo
-    })
-}
+import { Pedido } from "../models/entities/pedido.js";
+import { ESTADO_PEDIDO } from "../models/entities/estadoPedido.js";
+import { MONEDA } from "../models/entities/moneda.js";
 
 const cambioEstadoPedidoSchema = new mongoose.Schema(
   {
@@ -109,6 +68,51 @@ const direccionEntregaSchema = new mongoose.Schema({
     type: Number,
   },
 });
+
+const pedidoSchema = new mongoose.Schema(
+  {
+    comprador: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Usuario",
+      required: true,
+    },
+    moneda: {
+      type: String,
+      enum: Object.values(MONEDA),
+      required: true,
+    },
+    direccionEntrega: direccionEntregaSchema,
+    items: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "ItemPedido",
+      },
+    ],
+    estado: {
+      type: String,
+      enum: Object.values(ESTADO_PEDIDO),
+      required: true,
+    },
+    historialEstados: [cambioEstadoPedidoSchema],
+  },
+  {
+    timestamps: true,
+    collection: "pedidos",
+  }
+);
+
+pedidoSchema.methods.actualizarEstado = function (
+  nuevoEstado,
+  usuario,
+  motivo
+) {
+  this.estado = nuevoEstado;
+  this.historialEstados.push({
+    estado: nuevoEstado,
+    usuario: usuario,
+    motivo: motivo,
+  });
+};
 
 pedidoSchema.loadClass(Pedido);
 
