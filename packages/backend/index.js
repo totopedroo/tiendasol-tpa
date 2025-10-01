@@ -7,9 +7,17 @@ import { Server } from "./server.js";
 
 import routes from "./routes/routes.js";
 
+// NOTIFICACIONES
+import { NotificacionesRepository } from "./models/repositories/notificacionesRepository.js";
+import { NotificacionesService } from "./services/notificacionesService.js";
+import { NotificacionesController } from "./controllers/notificacionesController.js";
+import { NotificacionesPublisher } from "./adapters/notificacionesPublisher.js";
+// PEDIDOS
 import { PedidosController } from "./controllers/pedidosController.js";
 import { PedidosService } from "./services/pedidosService.js";
 import { PedidosRepository } from "./models/repositories/pedidosRepository.js";
+
+// MONGO
 import { MongoDBClient } from "./config/database.js";
 
 const app = express();
@@ -21,20 +29,25 @@ app.use(
       : true,
   }),
 );
-const port = process.env.SERVER_PORT || 3000;
 
+const port = process.env.SERVER_PORT || 3000;
 const server = new Server(app, port);
 
-const pedidosRepository = new PedidosRepository();
-const pedidosService = new PedidosService(pedidosRepository);
-const pedidosController = new PedidosController(pedidosService);
+await MongoDBClient.connect();
 
+const notiRepository = new NotificacionesRepository();
+const notiService = new NotificacionesService(notiRepository);
+const notiController = new NotificacionesController(notiService);
+const notiPublisher = new NotificacionesPublisher(notiService);
+server.setControllers(NotificacionesController, notiController);
+
+const pedidosRepository = new PedidosRepository();
+const pedidosService = new PedidosService(pedidosRepository, notiPublisher);
+const pedidosController = new PedidosController(pedidosService);
 server.setControllers(PedidosController, pedidosController);
 
 routes.forEach((route) => server.addRoute(route));
 server.configureRoutes();
 server.launch();
-
-MongoDBClient.connect();
 
 export default app;

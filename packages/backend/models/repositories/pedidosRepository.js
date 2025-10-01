@@ -48,6 +48,18 @@ export class PedidosRepository {
     return await pedido.save();
   }
 
+  async confirmar(pedidoId) {
+    const pedido = await this.model.findById(pedidoId);
+    if (!pedido) return null;
+
+    // Idempotencia y validación de transición
+    if (pedido.estado === ESTADO_PEDIDO.CONFIRMADO) return pedido; // ya confirmado
+    if (pedido.estado !== ESTADO_PEDIDO.PENDIENTE) return null;    // transición inválida
+
+    pedido.actualizarEstado(ESTADO_PEDIDO.CONFIRMADO, null, "Pedido confirmado");
+    return await pedido.save();
+  }
+
   async contarTodos() {
     return await this.model.countDocuments();
   }
