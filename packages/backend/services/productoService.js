@@ -1,4 +1,4 @@
-import { NotFoundError } from "../error/appError"
+import { NotFoundError } from "../error/appError.js"
 
 export class ProductoService {
     constructor(productoRepository) {

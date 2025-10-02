@@ -10,7 +10,7 @@ export class ProductoController {
       const { page = 1, limit = 10 } = req.query;
       const filtros = req.query;
 
-      const productosPaginados = this.productoService.findall(
+      const productosPaginados = this.productoService.findAll(
         page,
         limit,
         filtros,

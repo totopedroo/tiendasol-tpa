@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { MONEDA } from "../models/entities/moneda.js";
+import { Producto } from "../models/entities/producto.js";
 
 
 const categoriaSchema = new mongoose.Schema({
@@ -14,7 +15,7 @@ const categoriaSchema = new mongoose.Schema({
   versionKey: false
 });
 
-export const CategoriaModel = mongoose.model("Categoria", productoSchema);
+export const CategoriaModel = mongoose.model("Categoria", categoriaSchema);
 
 const productoSchema = new mongoose.Schema(
   {
@@ -43,7 +44,7 @@ const productoSchema = new mongoose.Schema(
       required: true,
     },
     activo: {
-      type: boolean,
+      type: Boolean,
       required: true,
     },
     categorias: [{
@@ -65,18 +66,6 @@ const productoSchema = new mongoose.Schema(
   },
 );
 
-pedidoSchema.methods.actualizarEstado = function (
-  nuevoEstado,
-  usuario,
-  motivo,
-) {
-  this.estado = nuevoEstado;
-  this.historialEstados.push({
-    estado: nuevoEstado,
-    usuario: usuario,
-    motivo: motivo,
-  });
-};
 
 productoSchema.loadClass(Producto);
 
