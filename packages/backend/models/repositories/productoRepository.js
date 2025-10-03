@@ -36,6 +36,113 @@ export class ProductoRepository {
 
       filtrosMongo.categorias = { $in: idsCategorias };
     }
+    
+    if (filtros.precioMin != null || filtros.precioMax != null) {
+      filtrosMongo.precio = {};
+      if (filtros.precioMin != null)
+        filtrosMongo.precio.$gte = filtros.precioMin;
+      if (filtros.precioMax != null)
+        filtrosMongo.precio.$lte = filtros.precioMax;
+    }
+    
+    if (filtros.ordenVentas === "desc") {
+      const pipeline = [
+        { $match: filtrosMongo },
+        {
+          $lookup: {
+            from: "itemPedidos",
+            localField: "_id",
+            foreignField: "producto",
+            as: "itemsPedido"
+          }
+        },
+        {
+          $addFields: {
+            idsItemsPedido: "$itemsPedido._id"
+          }
+        },
+        
+        // Buscar los Pedidos que contengan alguno de estos items y filtrar por estado CONFIRMADO o ENTREGADO
+        {
+          $lookup: {
+            from: "pedidos",
+            let: { itemsIds: "$idsItemsPedido" },
+            pipeline: [
+              {
+                $match: {
+                  $expr: {
+                    $and: [
+                      {
+                        $gt: [
+                          { $size: { $setIntersection: ["$items", "$$itemsIds"] } },
+                          0
+                        ]
+                      },
+                      {
+                        $in: ["$estado", ["CONFIRMADO", "ENTREGADO"]]
+                      }
+                    ]
+                  }
+                }
+              },
+              { $project: { items: 1 } }
+            ],
+            as: "pedidosValidos"
+          }
+        },
+        {
+          $addFields: {
+            itemsVendidos: {
+              $filter: {
+                input: "$itemsPedido",
+                as: "item",
+                cond: {
+                  $in: [
+                    "$$item._id",
+                    {
+                      $reduce: {
+                        input: "$pedidosValidos.items",
+                        initialValue: [],
+                        in: { $concatArrays: ["$$value", "$$this"] }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          $addFields: {
+            totalVendido: {
+              $sum: "$itemsVendidos.cantidad"
+            }
+          }
+        },
+        { $sort: { totalVendido: -1 } },
+        {
+          $lookup: {
+            from: "categorias",
+            localField: "categorias",
+            foreignField: "_id",
+            as: "categorias"
+          }
+        },
+        { $skip: (pagina - 1) * elementosPorPagina },
+        { $limit: elementosPorPagina },
+        {
+          $project: {
+            itemsPedido: 0,
+            idsItemsPedido: 0,
+            pedidosValidos: 0,
+            itemsVendidos: 0
+          }
+        }
+      ];
+
+      return await this.model.aggregate(pipeline);
+    }
+
 
     if (filtros.ordenPrecio) {
       if (filtros.ordenPrecio === "asc") {
@@ -45,13 +152,6 @@ export class ProductoRepository {
       }
     }
 
-    if (filtros.precioMin != null || filtros.precioMax != null) {
-      filtrosMongo.precio = {};
-      if (filtros.precioMin != null)
-        filtrosMongo.precio.$gte = filtros.precioMin;
-      if (filtros.precioMax != null)
-        filtrosMongo.precio.$lte = filtros.precioMax;
-    }
     return await this.model
       .find(filtrosMongo)
       .populate('categorias')
