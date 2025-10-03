@@ -30,6 +30,7 @@ const usuarioSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    collection: "usuarios"
   },
 );
 

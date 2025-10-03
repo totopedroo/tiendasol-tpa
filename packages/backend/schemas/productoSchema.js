@@ -12,6 +12,7 @@ const categoriaSchema = new mongoose.Schema({
   }
 }, {
   timestamps: true,
+  collection: "categorias",
   versionKey: false
 });
 
@@ -63,6 +64,7 @@ const productoSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    collection: "productos"
   },
 );
 
