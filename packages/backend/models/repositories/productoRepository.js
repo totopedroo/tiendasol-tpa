@@ -1,5 +1,5 @@
 import { ProductoModel } from "../../schemas/productoSchema.js";
-import mongoose from "mongoose";
+import { CategoriaModel } from "../../schemas/productoSchema.js";
 
 export class ProductoRepository {
   constructor() {
@@ -11,7 +11,7 @@ export class ProductoRepository {
     const sort = {};
 
     if (filtros.vendedor) {
-      filtrosMongo["vendedor"] = filtros.vendedor;
+      filtrosMongo.vendedor = filtros.vendedor;
     }
 
     if (filtros.titulo) {
@@ -22,9 +22,20 @@ export class ProductoRepository {
       filtrosMongo.descripcion = { $regex: filtros.descripcion, $options: "i" };
     }
 
-    // if (filtros.categoria) {
-    //     filtrosMongo.categorias = filtros.categoria;
-    // }
+    if (filtros.categoria) {
+      // Soportamos formato ?categorias=elec,ropa o categoria=elec&categoria=ropa
+      const categorias = Array.isArray(filtros.categoria) ? filtros.categoria : filtros.categoria.split(",");
+      console.log(categorias);
+      
+      // Buscamos IDs de categorías que hagan match con regex
+      const categoriasDocs = await CategoriaModel.find({
+        nombre: { $in: categorias.map(categoria => new RegExp(categoria, "i")) }
+      });
+
+      const idsCategorias = categoriasDocs.map(cat => cat._id);
+
+      filtrosMongo.categorias = { $in: idsCategorias };
+    }
 
     if (filtros.ordenPrecio) {
       if (filtros.ordenPrecio === "asc") {
@@ -42,7 +53,9 @@ export class ProductoRepository {
         filtrosMongo.precio.$lte = filtros.precioMax;
     }
     return await this.model
-      .find(filtrosMongo).sort(sort)
+      .find(filtrosMongo)
+      .populate('categorias')
+      .sort(sort)
       .skip((pagina - 1) * elementosPorPagina)
       .limit(elementosPorPagina);
   }
@@ -54,7 +67,6 @@ export class ProductoRepository {
   /*   
     TODO:
     * ORDENAMIENTO POR MAS VENDIDO -- CONSULTA DB
-    * Filtrar por categoria
     * DOCUMENTACIÓN
     * PRUEBAS UNITARIAS
     
