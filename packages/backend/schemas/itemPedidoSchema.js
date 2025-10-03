@@ -24,6 +24,6 @@ const itemPedidoSchema = new mongoose.Schema(
 );
 
 
-productoSchema.loadClass(ItemPedido);
+itemPedidoSchema.loadClass(ItemPedido);
 
-export const ProductoModel = mongoose.model("ItemPedido", itemPedidoSchema);
+export const ItemPedidoModel = mongoose.model("ItemPedido", itemPedidoSchema);
