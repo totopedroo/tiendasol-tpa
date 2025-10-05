@@ -1,5 +1,6 @@
 import { ProductoModel } from "../../schemas/productoSchema.js";
 import { CategoriaModel } from "../../schemas/productoSchema.js";
+import { UsuarioModel } from "../../schemas/usuarioSchema.js";
 
 export class ProductoRepository {
   constructor() {
@@ -24,19 +25,23 @@ export class ProductoRepository {
 
     if (filtros.categoria) {
       // Soportamos formato ?categorias=elec,ropa o categoria=elec&categoria=ropa
-      const categorias = Array.isArray(filtros.categoria) ? filtros.categoria : filtros.categoria.split(",");
+      const categorias = Array.isArray(filtros.categoria)
+        ? filtros.categoria
+        : filtros.categoria.split(",");
       console.log(categorias);
-      
+
       // Buscamos IDs de categorías que hagan match con regex
       const categoriasDocs = await CategoriaModel.find({
-        nombre: { $in: categorias.map(categoria => new RegExp(categoria, "i")) }
+        nombre: {
+          $in: categorias.map((categoria) => new RegExp(categoria, "i")),
+        },
       });
 
-      const idsCategorias = categoriasDocs.map(cat => cat._id);
+      const idsCategorias = categoriasDocs.map((cat) => cat._id);
 
       filtrosMongo.categorias = { $in: idsCategorias };
     }
-    
+
     if (filtros.precioMin != null || filtros.precioMax != null) {
       filtrosMongo.precio = {};
       if (filtros.precioMin != null)
@@ -44,7 +49,7 @@ export class ProductoRepository {
       if (filtros.precioMax != null)
         filtrosMongo.precio.$lte = filtros.precioMax;
     }
-    
+
     if (filtros.ordenVentas === "desc") {
       const pipeline = [
         { $match: filtrosMongo },
@@ -53,15 +58,15 @@ export class ProductoRepository {
             from: "itemPedidos",
             localField: "_id",
             foreignField: "producto",
-            as: "itemsPedido"
-          }
+            as: "itemsPedido",
+          },
         },
         {
           $addFields: {
-            idsItemsPedido: "$itemsPedido._id"
-          }
+            idsItemsPedido: "$itemsPedido._id",
+          },
         },
-        
+
         // Buscar los Pedidos que contengan alguno de estos items y filtrar por estado CONFIRMADO o ENTREGADO
         {
           $lookup: {
@@ -74,21 +79,25 @@ export class ProductoRepository {
                     $and: [
                       {
                         $gt: [
-                          { $size: { $setIntersection: ["$items", "$$itemsIds"] } },
-                          0
-                        ]
+                          {
+                            $size: {
+                              $setIntersection: ["$items", "$$itemsIds"],
+                            },
+                          },
+                          0,
+                        ],
                       },
                       {
-                        $in: ["$estado", ["CONFIRMADO", "ENTREGADO"]]
-                      }
-                    ]
-                  }
-                }
+                        $in: ["$estado", ["CONFIRMADO", "ENTREGADO"]],
+                      },
+                    ],
+                  },
+                },
               },
-              { $project: { items: 1 } }
+              { $project: { items: 1 } },
             ],
-            as: "pedidosValidos"
-          }
+            as: "pedidosValidos",
+          },
         },
         {
           $addFields: {
@@ -103,21 +112,21 @@ export class ProductoRepository {
                       $reduce: {
                         input: "$pedidosValidos.items",
                         initialValue: [],
-                        in: { $concatArrays: ["$$value", "$$this"] }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
+                        in: { $concatArrays: ["$$value", "$$this"] },
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          },
         },
         {
           $addFields: {
             totalVendido: {
-              $sum: "$itemsVendidos.cantidad"
-            }
-          }
+              $sum: "$itemsVendidos.cantidad",
+            },
+          },
         },
         { $sort: { totalVendido: -1 } },
         {
@@ -125,8 +134,8 @@ export class ProductoRepository {
             from: "categorias",
             localField: "categorias",
             foreignField: "_id",
-            as: "categorias"
-          }
+            as: "categorias",
+          },
         },
         { $skip: (pagina - 1) * elementosPorPagina },
         { $limit: elementosPorPagina },
@@ -135,26 +144,26 @@ export class ProductoRepository {
             itemsPedido: 0,
             idsItemsPedido: 0,
             pedidosValidos: 0,
-            itemsVendidos: 0
-          }
-        }
+            itemsVendidos: 0,
+          },
+        },
       ];
 
       return await this.model.aggregate(pipeline);
     }
 
-
     if (filtros.ordenPrecio) {
       if (filtros.ordenPrecio === "asc") {
-        sort.precio = 1; 
+        sort.precio = 1;
       } else if (filtros.ordenPrecio === "desc") {
-        sort.precio = -1; 
+        sort.precio = -1;
       }
     }
 
     return await this.model
       .find(filtrosMongo)
-      .populate('categorias')
+      .populate("categorias")
+      .populate("vendedor")
       .sort(sort)
       .skip((pagina - 1) * elementosPorPagina)
       .limit(elementosPorPagina);
@@ -162,6 +171,35 @@ export class ProductoRepository {
 
   async findAll(filtros = {}) {
     return await this.model.find(filtros);
+  }
+
+  async save(data) {
+    const producto = new this.model(data);
+    const productoGuardado = await producto.save();
+    return await this.model
+      .findById(productoGuardado._id)
+      .populate("categorias")
+      .populate("vendedor");
+  }
+
+  async findById(id) {
+    return await this.model
+      .findById(id)
+      .populate("categorias")
+      .populate("vendedor");
+  }
+
+  async update(id, productoModificado) {
+    return await this.model
+      .findByIdAndUpdate(id, productoModificado, {
+        new: true,
+      })
+      .populate("categorias")
+      .populate("vendedor");
+  }
+
+  async delete(id) {
+    return await this.model.findByIdAndDelete(id);
   }
 
   /*   
