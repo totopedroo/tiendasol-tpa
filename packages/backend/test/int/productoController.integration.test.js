@@ -38,7 +38,7 @@ describe("GET / producto", () => {
     mockRepo.contarTodos.mockResolvedValue(100);
 
     const app = server && (server.app || (typeof server.getApp === "function" && server.getApp()) || server); //
-    const res = await request(app).get("/producto?precioMin=80&precioMax=100");
+    const res = await request(app).get("/productos?precioMin=80&precioMax=100");
     //  const res = await request(server.app).get("/producto?page=1&limit=3&precioMin=79&precioMax=101");
 
     expect(res.status).toBe(200);
