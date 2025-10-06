@@ -74,10 +74,14 @@ export class PedidosController {
       var pedido;
       switch (nuevoEstado.data) {
         case "CANCELADO":
-          pedido = await this.pedidosService.cancelar(resultId.data);
+          const motivo = req.body?.motivo ?? req.query?.motivo ?? null;
+          pedido = await this.pedidosService.cancelar(resultId.data, motivo);
           break;
         case "ENVIADO":
           pedido = await this.pedidosService.marcarEnviado(resultId.data);
+          break;
+        case "CONFIRMADO":
+          pedido = await this.pedidosService.confirmar(resultId.data);
           break;
         default:
           throw new ValidationError("Nuevo estado inválido");

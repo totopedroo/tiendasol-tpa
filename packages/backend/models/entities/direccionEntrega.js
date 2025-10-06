@@ -8,8 +8,8 @@ export class DireccionEntrega {
     ciudad,
     provincia,
     pais,
-    lat,
-    long,
+    latitud,
+    longitud,
   ) {
     this.calle = calle;
     this.altura = altura;
@@ -19,7 +19,7 @@ export class DireccionEntrega {
     this.ciudad = ciudad;
     this.provincia = provincia;
     this.pais = pais;
-    this.lat = lat;
-    this.long = long;
+    this.latitud = latitud;
+    this.longitud = longitud;
   }
 }

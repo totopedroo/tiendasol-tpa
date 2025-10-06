@@ -20,6 +20,7 @@ export default function pedidosRoutes(getController) {
 
   // Cancelación de un pedido antes de que haya sido enviado.
   // Marcado de un pedido como enviado por parte del vendedor.
+  // Marcado de un pedido como confirmado por parte del vendedor.
   // ? para el cancelado: método post (marcar como cancelado) o delete?
   router.patch(pathPedidos + "/:id", (req, res, next) => {
     getController(PedidosController).cambiarEstado(req, res, next);

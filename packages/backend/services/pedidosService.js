@@ -6,10 +6,17 @@ import {
   NotFoundError,
   ValidationError,
 } from "../error/appError.js";
+import { CambioEstadoPedido } from "../models/entities/cambioEstadoPedido.js";
+import { ESTADO_PEDIDO } from "../models/entities/estadoPedido.js";
 
 export class PedidosService {
-  constructor(pedidosRepository) {
+  /**
+   * @param {PedidosRepository} pedidosRepository
+   * @param {import('../adapters/notificacionesPublisher.js').NotificacionesPublisher|null} notiPublisher
+   */
+  constructor(pedidosRepository, notiPublisher = null) {
     this.pedidosRepository = pedidosRepository;
+    this.notiPublisher = notiPublisher;
   }
 
   async create(data) {
@@ -95,13 +102,14 @@ export class PedidosService {
     };
   }
 
-  async cancelar(id) {
-    const pedido = await this.pedidosRepository.cancelar(id);
+  async cancelar(id, motivo = null) {
+    const pedido = await this.pedidosRepository.cancelar(id, motivo);
     if (!pedido) {
       throw new NotFoundError(
         "No se encontró el pedido con el ID especificado",
       );
     }
+    await this.#publish(pedido, ESTADO_PEDIDO.CANCELADO, motivo);
     return pedido;
   }
 
@@ -112,6 +120,28 @@ export class PedidosService {
         "No se encontró el pedido con el ID especificado",
       );
     }
+    await this.#publish(pedido, ESTADO_PEDIDO.ENVIADO, null);
     return pedido;
+  }
+
+  async confirmar(id) {
+    const pedido = await this.pedidosRepository.confirmar(id);
+    if (!pedido) {
+      throw new NotFoundError("No se pudo confirmar el pedido (no existe o ya no está pendiente).");
+    }
+    await this.#publish(pedido, ESTADO_PEDIDO.CONFIRMADO, null);
+    return pedido;
+  }
+
+  // ---------- privado ----------
+  async #publish(pedido, estado, motivo /*, actor no usado */) {
+    if (!this.notiPublisher) return; // permite testear sin publisher
+    try {
+      const cambio = new CambioEstadoPedido(estado, pedido, null, motivo);
+      await this.notiPublisher.publicar(cambio);
+    } catch (e) {
+      // No bloquear el flujo de pedido por un fallo en notificaciones
+      console.error("No se pudo publicar la notificación:", e?.message ?? e);
+    }
   }
 }
