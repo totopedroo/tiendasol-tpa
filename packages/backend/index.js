@@ -16,8 +16,9 @@ import { NotificacionesPublisher } from "./adapters/notificacionesPublisher.js";
 import { PedidosController } from "./controllers/pedidosController.js";
 import { PedidosService } from "./services/pedidosService.js";
 import { PedidosRepository } from "./models/repositories/pedidosRepository.js";
-
-// MONGO
+import { ProductoController } from "./controllers/productoController.js";
+import { ProductoService } from "./services/productoService.js";
+import { ProductoRepository } from "./models/repositories/productoRepository.js";
 import { MongoDBClient } from "./config/database.js";
 
 const app = express();
@@ -44,7 +45,12 @@ server.setControllers(NotificacionesController, notiController);
 const pedidosRepository = new PedidosRepository();
 const pedidosService = new PedidosService(pedidosRepository, notiPublisher);
 const pedidosController = new PedidosController(pedidosService);
+const productoRepository = new ProductoRepository();
+const productoService = new ProductoService(productoRepository);
+const productoController = new ProductoController(productoService);
+
 server.setControllers(PedidosController, pedidosController);
+server.setControllers(ProductoController, productoController);
 
 routes.forEach((route) => server.addRoute(route));
 server.configureRoutes();
