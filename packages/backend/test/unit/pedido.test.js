@@ -30,11 +30,6 @@ describe("Pedido", () => {
     -57.954
   );
 
-  const pedidoBase = () => {
-    return new Pedido(mockComprador, MONEDA.PESO_ARG, mockDirEntrega, []);
-  };
-
-  describe("Pedido.validarStock", () => {
     const mockVendedor = new Usuario({
       id: 2,
       nombre: "Fabrizio",
@@ -43,6 +38,13 @@ describe("Pedido", () => {
       tipo: TIPO_USUARIO.VENDEDOR,
       fechaAlta: new Date(),
     });
+
+  const pedidoBase = () => {
+    return new Pedido(mockComprador, MONEDA.PESO_ARG, mockDirEntrega, []);
+  };
+
+  describe("Pedido.validarStock", () => {
+
 
     const producto = new Producto(
       mockVendedor,
