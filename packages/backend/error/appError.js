@@ -26,3 +26,9 @@ export class ConflictError extends AppError {
     super(message, 409);
   }
 }
+
+export class NegativeValueError extends AppError {
+  constructor(message = "Valor negativo no aceptado") {
+    super(message, 400);
+  }
+}
