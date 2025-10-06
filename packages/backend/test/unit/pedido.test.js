@@ -30,43 +30,41 @@ describe("Pedido", () => {
     -57.954
   );
 
-    const mockVendedor = new Usuario({
-      id: 2,
-      nombre: "Fabrizio",
-      email: "fa@gmail.com",
-      telefono: "987654321",
-      tipo: TIPO_USUARIO.VENDEDOR,
-      fechaAlta: new Date(),
-    });
+  const mockVendedor = new Usuario({
+    id: 2,
+    nombre: "Fabrizio",
+    email: "fa@gmail.com",
+    telefono: "987654321",
+    tipo: TIPO_USUARIO.VENDEDOR,
+    fechaAlta: new Date(),
+  });
 
   const pedidoBase = () => {
     return new Pedido(mockComprador, MONEDA.PESO_ARG, mockDirEntrega, []);
   };
 
+  const producto = new Producto(
+    mockVendedor,
+    "Tostadora",
+    "Tuesta pan",
+    100,
+    MONEDA.PESO_ARG,
+    true
+  );
+
+  const producto2 = new Producto(
+    mockVendedor,
+    "Sartén",
+    "Para cocinar patys",
+    25,
+    MONEDA.PESO_ARG,
+    true
+  );
+
+  producto.aumentarStock(3);
+  producto2.aumentarStock(10);
+
   describe("Pedido.validarStock", () => {
-
-
-    const producto = new Producto(
-      mockVendedor,
-      "Tostadora",
-      "Tuesta pan",
-      100,
-      MONEDA.PESO_ARG,
-      true
-    );
-
-    const producto2 = new Producto(
-      mockVendedor,
-      "Sartén",
-      "Para cocinar patys",
-      25,
-      MONEDA.PESO_ARG,
-      true
-    );
-
-    producto.aumentarStock(3);
-    producto2.aumentarStock(10);
-
     test("Hay stock disponible para todos los productos", () => {
       const pedido = pedidoBase();
 
@@ -139,6 +137,22 @@ describe("Pedido", () => {
       );
       expect(pedido.estado).toBe(ESTADO_PEDIDO.ENVIADO);
       expect(pedido.historialEstados.length).toBe(2); // Deberían haber dos entradas al historial
+    });
+  });
+
+  describe("Pedido.calcularTotal", () => {
+    test("El total de los productos es de 350", () => {
+      const pedido = pedidoBase();
+
+      const item1 = new ItemPedido(producto, 2);
+      const item2 = new ItemPedido(producto2, 6);
+
+      pedido.agregarItem(item1);
+      pedido.agregarItem(item2);
+
+      pedido.calcularTotal();
+
+      expect(pedido.total).toBe(350);
     });
   });
 });
