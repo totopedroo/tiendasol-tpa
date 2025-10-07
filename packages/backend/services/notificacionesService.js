@@ -4,12 +4,9 @@ export class NotificacionesService {
     this.repo = repo;
   }
 
-  async obtenerNoLeidas(userId, opts) {
-    return this.repo.obtenerPorUsuario(userId, { leidas: false, ...opts });
-  }
-
-  async obtenerLeidas(userId, opts) {
-    return this.repo.obtenerPorUsuario(userId, { leidas: true, ...opts });
+  async listar(userId, opts) {
+    const { leidas = false, ...rest } = opts || {};
+    return this.repo.obtenerPorUsuario(userId, { leidas, ...rest });
   }
 
   async marcarLeida(userId, notificacionId) {

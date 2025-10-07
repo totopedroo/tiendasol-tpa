@@ -11,43 +11,33 @@ export class NotificacionesController {
     this.service = service;
   }
 
-  async obtenerSinLeer(req, res, next) {
+  listar = async (req, res, next) => {
     try {
       const params = notifParamsSchema.safeParse(req.params);
-      const query  = paginacionSchema.safeParse(req.query);
-
       if (!params.success) return next(new ValidationError("Parámetros inválidos"));
-      if (!query.success)  return next(new ValidationError("Parámetros de paginación inválidos"));
 
-      const data = await this.service.obtenerNoLeidas(params.data.userId, {
-        limit: query.data.limit,
-        afterId: query.data.afterId, // null o ObjectId válido en string
+      const pag = paginacionSchema.safeParse(req.query);
+      if (!pag.success) return next(new ValidationError("Parámetros de paginación inválidos"));
+
+      const filt = filtroLeidasSchema.safeParse(req.query);
+      if (!filt.success) return next(new ValidationError(filt.error.issues?.[0]?.message ?? "Filtro inválido"));
+
+      // Derivar el boolean final
+      const leidas =
+        filt.data.leidas ??
+        (filt.data.estado ? filt.data.estado === "leidas" : false); // default: sin-leer
+
+      const data = await this.service.listar(params.data.userId, {
+        limit: pag.data.limit,
+        afterId: pag.data.afterId,
+        leidas,
       });
 
       return res.status(200).json(data);
-    } catch (error) {
-      next(error);
+    } catch (err) {
+      next(err);
     }
-  }
-
-  async obtenerLeidas(req, res, next) {
-    try {
-      const params = notifParamsSchema.safeParse(req.params);
-      const query  = paginacionSchema.safeParse(req.query);
-
-      if (!params.success) return next(new ValidationError("Parámetros inválidos"));
-      if (!query.success)  return next(new ValidationError("Parámetros de paginación inválidos"));
-
-      const data = await this.service.obtenerLeidas(params.data.userId, {
-        limit: query.data.limit,
-        afterId: query.data.afterId,
-      });
-
-      return res.status(200).json(data);
-    } catch (error) {
-      next(error);
-    }
-  }
+  };
 
   async marcarComoLeida(req, res, next) {
     try {
@@ -63,6 +53,15 @@ export class NotificacionesController {
     }
   }
 }
+
+// acepta dos formas: ?leidas=true/false o ?estado=leidas/sin-leer
+const filtroLeidasSchema = z.object({
+  leidas: z.coerce.boolean().optional(),
+  estado: z.enum(["leidas", "sin-leer"]).optional(),
+}).refine(
+  (v) => !(v.leidas !== undefined && v.estado !== undefined), 
+  { message: "Usá 'leidas' o 'estado', no ambos" }
+);
 
 const objectIdSchema = z.string().refine(
   (v) => ObjectId.isValid(String(v)),
