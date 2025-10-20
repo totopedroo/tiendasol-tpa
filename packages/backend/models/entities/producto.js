@@ -27,6 +27,7 @@ export class Producto {
     this.categorias = [];
     this.fotos = [];
     this.stock = 0;
+    this.ventas = 0;
   }
 
   /**
