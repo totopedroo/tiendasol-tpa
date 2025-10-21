@@ -1,0 +1,299 @@
+openapi: 3.0.4
+info:
+  title: Tienda Sol API
+  description: Plataforma de Comercio Electrónico
+  version: 0.1.0
+
+servers:
+  - url: http://localhost:8000/
+    description: Server local
+
+paths:
+  /productos:
+    get:
+      tags:
+        - /productos
+      summary: Obtener productos paginados.
+      parameters:
+        - name: vendedor
+          in: query
+          required: false
+          description: ID del vendedor para filtrar por vendedor
+          schema:
+            type: string
+            example: "68e2cf8b264a0031a0e54aa9"
+        - name: titulo
+          in: query
+          required: false
+          description: Buscar productos cuyo título contenga este texto
+          schema:
+            type: string
+            example: "Teclado"
+        - name: descripcion
+          in: query
+          required: false
+          description: Buscar productos cuyo descripcion contenga este texto
+          schema:
+            type: string
+            example: "Teclado"
+        - name: categorias
+          in: query
+          required: false
+          description: Nombre de la categoría a filtrar (puede ser un string o lista)
+          schema:
+            type: string
+            example: "electro"
+        - name: precioMin
+          in: query
+          required: false
+          description: Precio mínimo del producto
+          schema:
+            type: number
+            example: 10
+        - name: precioMax
+          in: query
+          required: false
+          description: Precio máximo del producto
+          schema:
+            type: number
+            example: 100
+        - name: ordenPrecio
+          in: query
+          required: false
+          description: Ordenar productos por precio
+          schema:
+            type: string
+            enum: [asc, desc]
+            example: asc
+        - name: ordenVentas
+          in: query
+          required: false
+          description: Ordenar productos por mas ventas
+          schema:
+            type: string
+            enum: [desc]
+            example: desc
+      description: Devuelve una lista paginada de productos con su vendedor y categorías.
+      responses:
+        "200":
+          description: Lista de productos obtenida correctamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductosPaginados"
+    post:
+      tags:
+        - /productos
+      summary: Crear un nuevo producto
+      description: Permite crear un producto enviando los datos requeridos.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductoInput"
+      responses:
+        "201":
+          description: Producto creado correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductoOutput"
+        "400":
+          description: Error de validación de datos enviados.
+  /productos/{id}:
+    get:
+      tags:
+        - /productos
+      summary: Obtener producto por {id}.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del producto a buscar
+          schema:
+            type: string
+            example: "68e2cf8b264a0031a0e54aa9"
+      responses:
+        "200":
+          description: Producto encontrado correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductoOutput"
+    put:
+      tags:
+        - /productos
+      summary: Actualiza un producto por {id}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del producto a actualizar
+          schema:
+            type: string
+            example: "68e2cf8b264a0031a0e54aa9"
+      description: Permite actualizar los atributos de un producto.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductoInput"
+      responses:
+        "201":
+          description: Producto actualizado correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductoOutput"
+        "400":
+          description: Error de validación de datos enviados.
+    delete:
+      tags:
+        - /productos
+      summary: Eliminar producto por {id}.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del producto a eliminar
+          schema:
+            type: string
+            example: "68e2cf8b264a0031a0e54aa9"
+      responses:
+        "200":
+          description: Producto eliminado correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductoOutput"
+components:
+  schemas:
+    ProductosPaginados:
+      type: object
+      properties:
+        pagina:
+          type: integer
+          example: 1
+        perPage:
+          type: integer
+          example: 10
+        total:
+          type: integer
+          example: 16
+        totalPaginas:
+          type: integer
+          example: 2
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProductoOutput"
+    ProductoSimple:
+      type: object
+      properties:
+        titulo:
+          type: string
+          example: Teclado Gamer
+        descripcion:
+          type: string
+          example: Teclado con luces de colores.
+        precio:
+          type: number
+          example: 20000
+        moneda:
+          type: string
+          enum: [PESO_ARG, USD]
+          example: PESO_ARG
+        activo:
+          type: boolean
+          example: true
+        fotos:
+          type: array
+          items:
+            type: string
+            example: "https://example.com/foto1.jpg"
+        stock:
+          type: integer
+          example: 10
+    ProductoOutput:
+      allOf:
+        - $ref: "#/components/schemas/ProductoSimple"
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 68e2cf8b264a0031a0e54aa9
+        vendedor:
+          $ref: "#/components/schemas/Vendedor"
+        categorias:
+          type: array
+          items:
+            $ref: "#/components/schemas/Categoria"
+        createdAt:
+          type: string
+          format: date-time
+          example: "2025-10-05T20:05:31.513Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2025-10-05T20:05:31.513Z"
+    ProductoInput:
+      allOf:
+        - $ref: "#/components/schemas/ProductoSimple"
+      type: object
+      properties:
+        vendedor:
+          type: string
+          example: 68dfb1b51ae292fad24306e4
+        categorias:
+          type: array
+          items:
+            type: string
+            example: "68dfb1b51ae292fad24306e4"
+    Vendedor:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 68dfb1b51ae292fad24306e4
+        nombre:
+          type: string
+          example: Laura Fernández
+        email:
+          type: string
+          example: laura.fernandez@email.com
+        telefono:
+          type: string
+          example: "+54 11 6789-0123"
+        tipo:
+          type: string
+          example: VENDEDOR
+        fechaAlta:
+          type: string
+          format: date
+          example: "2024-03-01T00:00:00.000Z"
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    Categoria:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 68dfb1b51ae292fad24306d8
+        nombre:
+          type: string
+          example: Electrónicos
+        createdAt:
+          type: string
+          format: date-time
+          example: "2025-10-03T11:21:25.258Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2025-10-03T11:21:25.258Z"

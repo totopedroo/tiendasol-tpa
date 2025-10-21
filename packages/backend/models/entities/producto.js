@@ -1,5 +1,6 @@
-import { Usuario } from "./usuario";
-import { MONEDA } from "./moneda";
+import { Usuario } from "./usuario.js";
+import { MONEDA } from "./moneda.js";
+import { NegativeValueError } from "../../error/appError.js";
 
 export class Producto {
   /**
@@ -15,6 +16,9 @@ export class Producto {
     this.vendedor = vendedor;
     this.titulo = titulo;
     this.descripcion = descripcion;
+    if(precio < 0){
+      throw new NegativeValueError("El valor del precio de un producto no puede ser negativo");
+    }
     this.precio = precio;
     this.moneda = moneda;
     this.activo = activo;
@@ -23,6 +27,7 @@ export class Producto {
     this.categorias = [];
     this.fotos = [];
     this.stock = 0;
+    this.ventas = 0;
   }
 
   /**
