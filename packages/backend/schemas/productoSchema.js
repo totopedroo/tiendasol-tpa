@@ -60,6 +60,11 @@ const productoSchema = new mongoose.Schema(
       type: Number,
       default: 0,
       min: 0
+    },
+    ventas: { // se agrega el campo ventas para filtar por "mas vendido"
+      type: Number,
+      default: 0,
+      min: 0
     }
   },
   {

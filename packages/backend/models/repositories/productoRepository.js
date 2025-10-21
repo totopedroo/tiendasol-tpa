@@ -51,105 +51,7 @@ export class ProductoRepository {
     }
 
     if (filtros.ordenVentas === "desc") {
-      const pipeline = [
-        { $match: filtrosMongo },
-        {
-          $lookup: {
-            from: "itemPedidos",
-            localField: "_id",
-            foreignField: "producto",
-            as: "itemsPedido",
-          },
-        },
-        {
-          $addFields: {
-            idsItemsPedido: "$itemsPedido._id",
-          },
-        },
-
-        // Buscar los Pedidos que contengan alguno de estos items y filtrar por estado CONFIRMADO o ENTREGADO
-        {
-          $lookup: {
-            from: "pedidos",
-            let: { itemsIds: "$idsItemsPedido" },
-            pipeline: [
-              {
-                $match: {
-                  $expr: {
-                    $and: [
-                      {
-                        $gt: [
-                          {
-                            $size: {
-                              $setIntersection: ["$items", "$$itemsIds"],
-                            },
-                          },
-                          0,
-                        ],
-                      },
-                      {
-                        $in: ["$estado", ["CONFIRMADO", "ENTREGADO"]],
-                      },
-                    ],
-                  },
-                },
-              },
-              { $project: { items: 1 } },
-            ],
-            as: "pedidosValidos",
-          },
-        },
-        {
-          $addFields: {
-            itemsVendidos: {
-              $filter: {
-                input: "$itemsPedido",
-                as: "item",
-                cond: {
-                  $in: [
-                    "$$item._id",
-                    {
-                      $reduce: {
-                        input: "$pedidosValidos.items",
-                        initialValue: [],
-                        in: { $concatArrays: ["$$value", "$$this"] },
-                      },
-                    },
-                  ],
-                },
-              },
-            },
-          },
-        },
-        {
-          $addFields: {
-            totalVendido: {
-              $sum: "$itemsVendidos.cantidad",
-            },
-          },
-        },
-        { $sort: { totalVendido: -1 } },
-        {
-          $lookup: {
-            from: "categorias",
-            localField: "categorias",
-            foreignField: "_id",
-            as: "categorias",
-          },
-        },
-        { $skip: (pagina - 1) * elementosPorPagina },
-        { $limit: elementosPorPagina },
-        {
-          $project: {
-            itemsPedido: 0,
-            idsItemsPedido: 0,
-            pedidosValidos: 0,
-            itemsVendidos: 0,
-          },
-        },
-      ];
-
-      return await this.model.aggregate(pipeline);
+        sort.ventas = -1;
     }
 
     if (filtros.ordenPrecio) {
@@ -204,17 +106,9 @@ export class ProductoRepository {
 
   /*   
     TODO:
-    * ORDENAMIENTO POR MAS VENDIDO -- CONSULTA DB
-    * DOCUMENTACIÓN
-    * PRUEBAS UNITARIAS
-    
-    query para los filtros:
-    {"vendedor.id": "<specified_vendedor_id>",
-     "titulo": {"$regex": "<titulo_regex>", "$options": "i"},
-     "descripcion": {"$regex": "<descripcion_regex>", "$options": "i"},
-     "categorias": "<specified_categoria>", 
-     "precio": {"$gte": <min_precio>, "$lte": <max_precio>}}
-    */
+    * Agregar logica para que otra entidad aumente la cantidad de ventas del "Producto"
+  */
+
   async contarTodos() {
     return await this.model.countDocuments();
   }
