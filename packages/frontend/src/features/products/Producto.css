@@ -1,0 +1,8 @@
+.contenido {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 64px 256px;
+  position: relative;
+}

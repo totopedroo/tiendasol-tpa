@@ -1,23 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
+import { Home } from "./features/home/Home.jsx";
+import Layout from "./features/layout/Layout.jsx";
+import { Producto } from "./features/products/Producto.jsx";
+import { Search } from "./features/search/Search.jsx";
+import { Checkout } from "./features/checkout/Checkout.jsx";
 
 function App() {
-  const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    fetch("http://localhost:8000/hello")
-      .then((response) => response.json())
-      .then((data) => setMessage(data.message))
-      .catch((error) => console.error("Error cargando mensaje.", error));
-  }, []);
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Monorepo Demo</h1>
-        <p>{message ? message : "Cargando mensaje del backend..."}</p>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="/products/:id" element={<Producto />} />
+          <Route path="/search" element={<Search/>} />
+          <Route path="/checkout" element={<Checkout/>} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

@@ -11,3 +11,9 @@ code {
   font-family:
     source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
+
+:root {
+  --danger: rgba(255, 127, 127, 1);
+  --main: rgba(255, 236, 200, 1);
+  --secondary: rgba(229, 240, 232, 1);
+}
