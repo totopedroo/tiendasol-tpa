@@ -1,7 +1,25 @@
-import "dotenv/config";
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import cors from "cors";
-import healthRoutes from "./routes/health.js"
+import { Server } from "./server.js";
+
+import routes from "./routes/routes.js";
+
+// NOTIFICACIONES
+import { NotificacionesRepository } from "./models/repositories/notificacionesRepository.js";
+import { NotificacionesService } from "./services/notificacionesService.js";
+import { NotificacionesController } from "./controllers/notificacionesController.js";
+import { NotificacionesPublisher } from "./adapters/notificacionesPublisher.js";
+// PEDIDOS
+import { PedidosController } from "./controllers/pedidosController.js";
+import { PedidosService } from "./services/pedidosService.js";
+import { PedidosRepository } from "./models/repositories/pedidosRepository.js";
+import { ProductoController } from "./controllers/productoController.js";
+import { ProductoService } from "./services/productoService.js";
+import { ProductoRepository } from "./models/repositories/productoRepository.js";
+import { MongoDBClient } from "./config/database.js";
 
 const app = express();
 app.use(express.json());
@@ -13,41 +31,29 @@ app.use(
   }),
 );
 
-app.use((req, res, next) => {
-    console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
-    next();
-});
+const port = process.env.SERVER_PORT || 3000;
+const server = new Server(app, port);
 
-app.use('/', healthRoutes);
+await MongoDBClient.connect();
 
-app.get('/', (req, res) => {
-    res.json({
-        message: 'API Tienda Sol',
-        version: '1.0.0',
-        endpoints: {
-            'GET /health': 'Informar estado del servidor',
-        }
-    });
-});
+const notiRepository = new NotificacionesRepository();
+const notiService = new NotificacionesService(notiRepository);
+const notiController = new NotificacionesController(notiService);
+const notiPublisher = new NotificacionesPublisher(notiService);
+server.setControllers(NotificacionesController, notiController);
 
-app.use((err, req, res, next) => {
-    console.error('Error no manejado:', err);
-    res.status(500).json({
-        success: false,
-        message: 'Error interno del servidor',
-        error: process.env.NODE_ENV === 'development' ? err.message : 'Algo salió mal'
-    });
-});
+const pedidosRepository = new PedidosRepository();
+const pedidosService = new PedidosService(pedidosRepository, notiPublisher);
+const pedidosController = new PedidosController(pedidosService);
+const productoRepository = new ProductoRepository();
+const productoService = new ProductoService(productoRepository);
+const productoController = new ProductoController(productoService);
 
-app.use((req, res) => {
-    res.status(404).json({
-        success: false,
-        message: 'Ruta no encontrada'
-    });
-});
+server.setControllers(PedidosController, pedidosController);
+server.setControllers(ProductoController, productoController);
 
-app.listen(process.env.SERVER_PORT, () => {
-  console.log(`Backend escuchando en puerto ${process.env.SERVER_PORT}`);
-});
+routes.forEach((route) => server.addRoute(route));
+server.configureRoutes();
+server.launch();
 
 export default app;

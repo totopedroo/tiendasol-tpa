@@ -1,29 +1,33 @@
-import { Usuario } from "./usuario";
-import { MONEDA } from "./moneda";
-import { DireccionEntrega } from "./direccionEntrega";
-import { ESTADO_PEDIDO } from "./estadoPedido";
-import { CambioEstadoPedido } from "./cambioEstadoPedido";
+import { Usuario } from "./usuario.js";
+import { MONEDA } from "./moneda.js";
+import { DireccionEntrega } from "./direccionEntrega.js";
+import { ESTADO_PEDIDO } from "./estadoPedido.js";
+import { CambioEstadoPedido } from "./cambioEstadoPedido.js";
 
 export class Pedido {
-  
+  id;
+  comprador;
+  moneda;
+  direccionEntrega;
+  items;
+
+  total = 0;
+  estado = ESTADO_PEDIDO.PENDIENTE;
+  historialEstados = [];
+  fechaCreacion = new Date();
+
   /**
-   *
    * @param {Usuario} comprador
    * @param {MONEDA} moneda
    * @param {DireccionEntrega} direccionEntrega
    */
-  constructor(comprador, moneda, direccionEntrega) {
+  constructor(comprador, moneda, direccionEntrega, items) {
     this.comprador = comprador;
     this.moneda = moneda;
     this.direccionEntrega = direccionEntrega;
-
-    this.id = ""; // TODO generar un id
-    this.total = 0;
-    this.items = []; // TODO ver si la lista la pasamos de una o si la vamos llenando
-    this.estado = ESTADO_PEDIDO.PENDIENTE;
-    this.fechaCreacion = new Date();
-    this.historialEstados = [];
+    this.items = items;
   }
+
   /**
    * @return {Number}
    */
@@ -44,7 +48,7 @@ export class Pedido {
       nuevoEstado,
       this,
       quien,
-      motivo
+      motivo,
     );
     this.estado = nuevoEstado;
     this.historialEstados.push(cambioEstado);
@@ -56,19 +60,19 @@ export class Pedido {
   validarStock() {
     // return Boolean
     return this.items.every((item) =>
-      item.producto.estaDisponible(item.cantidad)
+      item.producto.estaDisponible(item.cantidad),
     );
   }
 
   /**
-   * @param {ItemPedido} item 
+   * @param {ItemPedido} item
    */
   agregarItem(item) {
-    this.items.push(item)
+    this.items.push(item);
   }
 
   /**
-   * @param {ItemPedido} item 
+   * @param {ItemPedido} item
    */
   eliminarItem(item) {
     const indice = this.items.indexOf(item);

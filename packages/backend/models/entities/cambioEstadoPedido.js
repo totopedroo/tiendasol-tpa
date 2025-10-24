@@ -1,6 +1,6 @@
-import { ESTADO_PEDIDO } from "./estadoPedido";
-import { Pedido } from "./pedido";
-import { Usuario } from "./usuario";
+import { ESTADO_PEDIDO } from "./estadoPedido.js";
+import { Pedido } from "./pedido.js";
+import { Usuario } from "./usuario.js";
 
 export class CambioEstadoPedido {
   /**
