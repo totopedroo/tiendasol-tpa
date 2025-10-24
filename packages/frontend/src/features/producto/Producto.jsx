@@ -1,11 +1,10 @@
-import { getProductos } from "../../service/productosService";
-import ProductoCard from "../../components/ProductoCard/ProducoCard";
+import { getProductoById } from "../../service/productosService";
 import {Spinner} from "react-bootstrap";
 import React, {useState, useEffect} from "react";
-import "./Home.css";
+import "./Producto.css";
 
 const Home = () => {
-  const [productos, setProductos] = useState([]);
+  const [producto, setProductos] = useState([]);
 
   const cargarProductos = async () => {
     const productosCargados = await getProductos();
@@ -13,12 +12,6 @@ const Home = () => {
     setProductos(productosCargados.data)
   } 
   useEffect(() => { cargarProductos()}, []);
-    // useEffect(() => {
-    //   fetch("http://localhost:8000/productos")
-    //     .then((response) => response.json())
-    //     .then((data) => setProductos(data))
-    //     .catch((error) => console.error("Error cargando mensaje.", error));
-    // }, []);
   return (
     <>  
     <h1>HOME</h1>
