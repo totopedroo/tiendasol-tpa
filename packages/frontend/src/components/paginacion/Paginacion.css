@@ -1,8 +1,6 @@
 .paginacion {
-  align-items: center;
   display: inline-flex;
-  gap: 32px;
-  justify-content: center;
+  gap: var(--gap-lg);
   left: 903px;
   position: relative;
   top: 6px;
@@ -14,15 +12,11 @@
   width: 24px !important;
 }
 
-.paginacion .frame {
-  align-items: center;
-  background-color: #000000;
+.paginacion .current-page {
+  background-color: var(--color-primary);
   border-radius: 24px;
-  display: flex;
-  flex-direction: column;
   gap: 10px;
   height: 35px;
-  justify-content: space-around;
   position: relative;
   width: 35px;
 }
@@ -30,28 +24,29 @@
 .paginacion .text-wrapper {
   align-items: center;
   align-self: stretch;
-  color: #ffffff;
+  color: var(--color-background-white);
   display: flex;
-  font-family: "Inter-Regular", Helvetica;
-  font-size: 20px;
+  font-family: var(--font-family-regular);
+  font-size: var(--font-size-sm);
   font-weight: 400;
   justify-content: center;
-  letter-spacing: -0.40px;
-  line-height: 29.0px;
+  letter-spacing: var(--letter-spacing-sm);
+  line-height: var(--line-height-sm);
   position: relative;
   text-align: center;
 }
 
-.paginacion .div {
+.paginacion .page-number,
+.paginacion .page-ellipsis {
   align-items: center;
-  color: #000000;
+  color: var(--color-text-primary);
   display: flex;
-  font-family: "Inter-Regular", Helvetica;
-  font-size: 20px;
+  font-family: var(--font-family-regular);
+  font-size: var(--font-size-sm);
   font-weight: 400;
   justify-content: center;
-  letter-spacing: -0.40px;
-  line-height: 29.0px;
+  letter-spacing: var(--letter-spacing-sm);
+  line-height: var(--line-height-sm);
   position: relative;
   white-space: nowrap;
   width: fit-content;

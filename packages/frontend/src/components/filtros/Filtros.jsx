@@ -9,24 +9,24 @@ export const Filtros = () => {
       </div>
 
       <div className="container-inputs">
-        <div className="div-2">
+        <div className="filter-field">
           <div className="text-wrapper-2">Categoría</div>
 
           <select></select>
         </div>
 
-        <div className="div-2">
+        <div className="filter-field">
           <div className="text-wrapper-2">Vendedor</div>
 
-        <input></input>
+          <input></input>
         </div>
 
-        <div className="div-2">
+        <div className="filter-field">
           <div className="text-wrapper-3">Precio</div>
 
-          <div className="frame-2">
-        <input></input>
-        <input></input>
+          <div className="price-range-inputs">
+            <input></input>
+            <input></input>
           </div>
         </div>
       </div>

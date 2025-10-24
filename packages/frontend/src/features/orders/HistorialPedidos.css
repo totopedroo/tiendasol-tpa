@@ -1,45 +1,37 @@
 .contenido {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
     gap: 10px;
-    padding: 64px 256px;
+    padding: var(--spacing-xxl) 0;
     position: relative;
 }
 
-.frame {
+.user-profile-section {
   align-items: flex-start;
   background-color: var(--main);
-  border-radius: 16px;
-  display: flex;
-  gap: 32px;
+  border-radius: var(--border-radius-md);
+  gap: var(--gap-lg);
   overflow: hidden;
-  padding: 64px 32px;
+  padding: var(--spacing-xxl) var(--spacing-lg);
   position: relative;
 }
 
-.frame .user-wrapper {
-  align-items: center;
-  background-color: #ffffff;
-  border-radius: 100px;
-  display: flex;
-  flex-direction: column;
+.user-profile-section .user-wrapper {
+  background-color: var(--color-background-white);
+  border-radius: var(--border-radius-lg);
   gap: 10px;
   height: 200px;
-  justify-content: space-around;
-  padding: 20px;
+  padding: var(--spacing-md);
   position: relative;
   width: 200px;
 }
 
-.frame .user-instance {
+.user-profile-section .user-instance {
   aspect-ratio: 1 !important;
   height: 128px !important;
   position: relative !important;
   width: 128px !important;
 }
 
-.frame .div {
+.user-profile-section .user-info {
   align-items: flex-start;
   align-self: stretch;
   display: inline-flex;
@@ -49,34 +41,51 @@
   position: relative;
 }
 
-.frame .text-wrapper {
+.user-profile-section .text-wrapper {
   align-items: center;
-  color: #000000;
+  color: var(--color-text-primary);
   display: flex;
-  font-family: "Inter-Bold", Helvetica;
-  font-size: 48px;
+  font-family: var(--font-family-bold);
+  font-size: var(--font-size-xl);
   font-weight: 700;
   justify-content: center;
-  letter-spacing: -0.96px;
-  line-height: 69.6px;
+  letter-spacing: var(--letter-spacing-xl);
+  line-height: var(--line-height-xl);
   position: relative;
   white-space: nowrap;
   width: fit-content;
 }
 
-.frame .text-wrapper-2 {
+.user-profile-section .text-wrapper-2 {
   align-items: center;
-  color: #000000;
+  color: var(--color-text-primary);
   display: flex;
-  font-family: "Inter-Medium", Helvetica;
-  font-size: 32px;
+  font-family: var(--font-family-medium);
+  font-size: var(--font-size-lg);
   font-weight: 500;
   justify-content: center;
-  letter-spacing: -0.64px;
-  line-height: 46.4px;
+  letter-spacing: var(--letter-spacing-lg);
+  line-height: var(--line-height-lg);
   position: relative;
   white-space: nowrap;
   width: fit-content;
+}
+
+.historial-screen {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+  position: relative;
+}
+
+.pedidos-list-container {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+  position: relative;
+  width: 100%;
 }
 
 .container-titulo {
@@ -88,14 +97,14 @@
 
 .container-titulo .titulo {
   align-items: center;
-  color: #000000;
+  color: var(--color-text-primary);
   display: flex;
-  font-family: "Inter-SemiBold", Helvetica;
-  font-size: 32px;
+  font-family: var(--font-family-semibold);
+  font-size: var(--font-size-lg);
   font-weight: 600;
   justify-content: center;
-  letter-spacing: -0.64px;
-  line-height: 46.4px;
+  letter-spacing: var(--letter-spacing-lg);
+  line-height: var(--line-height-lg);
   margin-top: -1px;
   position: relative;
   white-space: nowrap;
@@ -108,7 +117,7 @@
   display: flex;
   flex: 1;
   flex-grow: 1;
-  gap: 24px;
+  gap: var(--gap-md);
   justify-content: flex-end;
   position: relative;
 }

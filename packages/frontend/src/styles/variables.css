@@ -1,0 +1,86 @@
+/* Variables CSS Globales - TiendaSol */
+
+:root {
+  /* === COLORES === */
+  --color-primary: #000000;
+  --color-secondary: #ffffff;
+  --color-gray-light: #d9d9d9;
+  --color-text-primary: #000000;
+  --color-text-secondary: #00000073;
+  --color-border-primary: #00000073;
+  --color-border-subtle: #0000001a;
+  --color-background-main: var(--main);
+  --color-background-light: #d9d9d9;
+  --color-background-white: #ffffff;
+
+  /* === TIPOGRAFÍAS === */
+  --font-family-semibold: "Inter-SemiBold", Helvetica, sans-serif;
+  --font-family-medium: "Inter-Medium", Helvetica, sans-serif;
+  --font-family-bold: "Inter-Bold", Helvetica, sans-serif;
+  --font-family-regular: "Inter-Regular", Helvetica, sans-serif;
+
+  /* === TAMAÑOS DE FUENTE === */
+  --font-size-xs: 16px;
+  --font-size-sm: 20px;
+  --font-size-md: 24px;
+  --font-size-lg: 32px;
+  --font-size-xl: 48px;
+
+  /* === ALTURAS DE LÍNEA === */
+  --line-height-xs: 23.2px;
+  --line-height-sm: 29px;
+  --line-height-md: 34.8px;
+  --line-height-lg: 46.4px;
+  --line-height-xl: 69.6px;
+
+  /* === ESPACIADO DE LETRAS === */
+  --letter-spacing-xs: -0.32px;
+  --letter-spacing-sm: -0.40px;
+  --letter-spacing-md: -0.48px;
+  --letter-spacing-lg: -0.64px;
+  --letter-spacing-xl: -0.96px;
+
+  /* === BORDER RADIUS === */
+  --border-radius-sm: 12px;
+  --border-radius-md: 16px;
+  --border-radius-lg: 100px;
+
+  /* === ESPACIADOS === */
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 32px;
+  --spacing-xl: 48px;
+  --spacing-xxl: 64px;
+  --spacing-xxxl: 128px;
+  --spacing-xxxxl: 256px;
+
+  /* === PADDING CONTAINERS === */
+  --padding-page-main: 64px 256px;
+  --padding-page-secondary: 64px 128px;
+  --padding-section: 32px;
+  --padding-component: 16px;
+  --padding-component-vertical: 16px 0px;
+
+  /* === GAPS === */
+  --gap-xs: 8px;
+  --gap-sm: 16px;
+  --gap-md: 24px;
+  --gap-lg: 32px;
+  --gap-xl: 48px;
+  --gap-xxl: 64px;
+
+  /* === SOMBRAS === */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+  /* === BORDES === */
+  --border-sm: 1px solid var(--color-border-subtle);
+  --border-md: 1px solid var(--color-border-primary);
+
+  /* === TRANSICIONES === */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}

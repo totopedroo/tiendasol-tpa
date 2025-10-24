@@ -17,21 +17,21 @@ export const CategoryCollection = () => {
   ];
 
   return (
-    <div className="category-collection">
-      <div className="div">
-        <div className="div-wrapper">
-          <div className="text-wrapper">Categorías</div>
+    <div className="category-collection flex-center-column">
+      <div className="categories-header flex-row-between">
+        <div className="title-wrapper">
+          <div className="text-wrapper flex-row-center">Categorías</div>
         </div>
 
-        <div className="div-2">
+        <div className="view-all-link flex-row-between">
           <div className="text-wrapper-2">Ver Todas</div>
           <ArrowRight />
         </div>
       </div>
 
-      <div className="div-3">
+      <div className="categories-grid">
         {categorias.map((nombre) => (
-          <div className="div-4" key={nombre}>
+          <div className="category-item" key={nombre}>
             <div className="ellipse" />
             <div className="text-wrapper-3">{nombre}</div>
           </div>

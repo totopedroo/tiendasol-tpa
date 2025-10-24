@@ -6,18 +6,18 @@ import "./ItemCollection.css";
 export const ItemCollection = () => {
   return (
     <div className="item-collection">
-      <div className="div-2">
-        <div className="div-wrapper">
+      <div className="collection-header">
+        <div className="title-wrapper">
           <div className="text-wrapper-5">Otros productos del vendedor</div>
         </div>
 
-        <div className="div-3">
+        <div className="view-all-link">
           <div className="text-wrapper-6">Ver Todos</div>
           <ArrowRight />
         </div>
       </div>
 
-      <div className="div-4">
+      <div className="items-grid">
         <Item />
         <Item />
         <Item />

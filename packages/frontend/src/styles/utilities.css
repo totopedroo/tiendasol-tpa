@@ -1,0 +1,289 @@
+/* Clases Utilitarias - TiendaSol */
+
+/* === FLEX UTILITIES === */
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-start {
+  display: flex;
+  align-items: flex-start;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-grow {
+  flex: 1;
+  flex-grow: 1;
+}
+
+/* === CONTAINER UTILITIES === */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+.container-lg {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+.container-xl {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-xl);
+}
+
+.container-full {
+  width: 100%;
+  padding: 0 var(--spacing-md);
+}
+
+.content-center {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+/* === TYPOGRAPHY UTILITIES === */
+.text-primary {
+  color: var(--color-text-primary);
+}
+
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.text-white {
+  color: var(--color-background-white);
+}
+
+.font-semibold {
+  font-family: var(--font-family-semibold);
+  font-weight: 600;
+}
+
+.font-medium {
+  font-family: var(--font-family-medium);
+  font-weight: 500;
+}
+
+.font-bold {
+  font-family: var(--font-family-bold);
+  font-weight: 700;
+}
+
+.font-regular {
+  font-family: var(--font-family-regular);
+  font-weight: 400;
+}
+
+.text-xs {
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-xs);
+  letter-spacing: var(--letter-spacing-xs);
+}
+
+.text-sm {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-sm);
+  letter-spacing: var(--letter-spacing-sm);
+}
+
+.text-md {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-md);
+  letter-spacing: var(--letter-spacing-md);
+}
+
+.text-lg {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-lg);
+  letter-spacing: var(--letter-spacing-lg);
+}
+
+.text-xl {
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-xl);
+  letter-spacing: var(--letter-spacing-xl);
+}
+
+/* === BUTTON UTILITIES === */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-sm);
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  font-family: var(--font-family-medium);
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-background-white);
+}
+
+.btn-secondary {
+  background-color: var(--color-background-white);
+  color: var(--color-primary);
+  border: var(--border-md);
+}
+
+/* === CARD UTILITIES === */
+.card {
+  background-color: var(--color-background-white);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-lg);
+  border: var(--border-md);
+}
+
+.card-sm {
+  padding: var(--spacing-sm);
+}
+
+.card-lg {
+  padding: var(--spacing-xl);
+}
+
+/* === SPACING UTILITIES === */
+.p-xs { padding: var(--spacing-xs); }
+.p-sm { padding: var(--spacing-sm); }
+.p-md { padding: var(--spacing-md); }
+.p-lg { padding: var(--spacing-lg); }
+.p-xl { padding: var(--spacing-xl); }
+
+.px-xs { padding-left: var(--spacing-xs); padding-right: var(--spacing-xs); }
+.px-sm { padding-left: var(--spacing-sm); padding-right: var(--spacing-sm); }
+.px-md { padding-left: var(--spacing-md); padding-right: var(--spacing-md); }
+.px-lg { padding-left: var(--spacing-lg); padding-right: var(--spacing-lg); }
+
+.py-xs { padding-top: var(--spacing-xs); padding-bottom: var(--spacing-xs); }
+.py-sm { padding-top: var(--spacing-sm); padding-bottom: var(--spacing-sm); }
+.py-md { padding-top: var(--spacing-md); padding-bottom: var(--spacing-md); }
+.py-lg { padding-top: var(--spacing-lg); padding-bottom: var(--spacing-lg); }
+
+.m-xs { margin: var(--spacing-xs); }
+.m-sm { margin: var(--spacing-sm); }
+.m-md { margin: var(--spacing-md); }
+.m-lg { margin: var(--spacing-lg); }
+
+.gap-xs { gap: var(--gap-xs); }
+.gap-sm { gap: var(--gap-sm); }
+.gap-md { gap: var(--gap-md); }
+.gap-lg { gap: var(--gap-lg); }
+.gap-xl { gap: var(--gap-xl); }
+
+/* === LAYOUT UTILITIES === */
+.container-main {
+  padding: var(--padding-page-main);
+}
+
+.container-secondary {
+  padding: var(--padding-page-secondary);
+}
+
+.section {
+  padding: var(--padding-section);
+}
+
+/* === BORDER UTILITIES === */
+.border-sm {
+  border-radius: var(--border-radius-sm);
+}
+
+.border-md {
+  border-radius: var(--border-radius-md);
+}
+
+.border-lg {
+  border-radius: var(--border-radius-lg);
+}
+
+/* === BACKGROUND UTILITIES === */
+.bg-primary {
+  background-color: var(--color-primary);
+}
+
+.bg-secondary {
+  background-color: var(--color-background-white);
+}
+
+.bg-gray-light {
+  background-color: var(--color-background-light);
+}
+
+.bg-main {
+  background-color: var(--color-background-main);
+}
+
+/* === COMPONENT PATTERNS === */
+.search-input {
+  display: flex;
+  align-items: center;
+  background-color: var(--color-background-white);
+  border: var(--border-md);
+  border-radius: var(--border-radius-sm);
+  padding: 0 var(--spacing-sm);
+  justify-content: space-between;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-regular);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-sm);
+  letter-spacing: var(--letter-spacing-sm);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.nav-link:hover {
+  color: var(--color-text-secondary);
+}
+
+.page-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.items-grid {
+  display: flex;
+  gap: var(--gap-md);
+  flex-wrap: wrap;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xs);
+}

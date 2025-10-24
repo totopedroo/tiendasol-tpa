@@ -4,12 +4,12 @@ import "./ItemDetail.css";
 
 export const ItemDetail = () => {
   return (
-    <div className="item-detail">
+    <div className="item-detail flex-row-start">
       <img className="img" alt="Detalle" src="image.png" />
 
-      <div className="div">
-        <div className="div-2">
-          <div className="text-wrapper">Categoría</div>
+      <div className="product-info flex-center-column">
+        <div className="product-details flex-center-column">
+          <div className="text-wrapper flex-row-center">Categoría</div>
 
           <div className="text-wrapper-2">Titulo</div>
 
@@ -31,16 +31,16 @@ export const ItemDetail = () => {
           </p>
         </div>
 
-        <div className="div-3">
-          <div className="div-4">
+        <div className="product-actions">
+          <div className="quantity-selector">
             <div className="text-wrapper-4">0</div>
           </div>
 
-          <div className="div-wrapper">
+          <div className="buy-now-button">
             <div className="text-wrapper-5">Comprar ahora</div>
           </div>
 
-          <div className="div-5">
+          <div className="add-to-cart-button">
             <ShoppingCart />
             <div className="text-wrapper-4">Agregar al carrito</div>
           </div>

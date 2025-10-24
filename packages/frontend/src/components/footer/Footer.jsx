@@ -4,26 +4,28 @@ import "./Footer.css";
 export const Footer = () => {
   return (
     <div className="footer">
-      <div className="text">
-        <div className="company">
-          <div className="image" />
-          <div className="text-wrapper">TiendaSol</div>
-        </div>
-
-        <div className="nav">
-          <div className="div">Vender</div>
-          <div className="div">Categorías</div>
-          <div className="div">Contacto</div>
-        </div>
-
-        {/* <div className="social-links">
-          <div className="social-link">
-            <Github className="size-24" color="black" opacity="0.45" />
+      <div className="container">
+        <div className="text">
+          <div className="company">
+            <div className="image" />
+            <div className="text-wrapper">TiendaSol</div>
           </div>
-          <div className="social-link-2">
-            <img className="vector" alt="Vector" src={image} />
+
+          <div className="nav">
+            <div className="nav-link">Vender</div>
+            <div className="nav-link">Categorías</div>
+            <div className="nav-link">Contacto</div>
           </div>
-        </div> */}
+
+          {/* <div className="social-links">
+            <div className="social-link">
+              <Github className="size-24" color="black" opacity="0.45" />
+            </div>
+            <div className="social-link-2">
+              <img className="vector" alt="Vector" src={image} />
+            </div>
+          </div> */}
+        </div>
       </div>
     </div>
   );

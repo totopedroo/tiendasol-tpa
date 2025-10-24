@@ -1,28 +1,24 @@
-.frame {
+.pedido-container {
   align-items: flex-start;
   border: 1px solid;
-  border-color: #00000073;
-  border-radius: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  border-color: var(--color-text-primary)73;
+  border-radius: var(--border-radius-md);
+  gap: var(--gap-sm);
   overflow: hidden;
-  padding: 32px;
+  padding: var(--spacing-lg);
   position: relative;
   top: 10px;
 }
 
-.frame .div {
+.pedido-header {
   align-items: flex-start;
   align-self: stretch;
-  display: flex;
   flex: 0 0 auto;
-  justify-content: space-between;
   position: relative;
   width: 100%;
 }
 
-.frame .div-2 {
+.pedido-info {
   align-items: flex-start;
   display: inline-flex;
   flex: 0 0 auto;
@@ -30,38 +26,38 @@
   position: relative;
 }
 
-.frame .text-wrapper {
+.pedido-info .text-wrapper {
   align-items: center;
-  color: #000000;
+  color: var(--color-text-primary);
   display: flex;
-  font-family: "Inter-SemiBold", Helvetica;
-  font-size: 24px;
+  font-family: var(--font-family-semibold);
+  font-size: var(--font-size-md);
   font-weight: 600;
   justify-content: center;
-  letter-spacing: -0.48px;
-  line-height: 34.8px;
+  letter-spacing: var(--letter-spacing-md);
+  line-height: var(--line-height-md);
   margin-top: -1.00px;
   position: relative;
   white-space: nowrap;
   width: fit-content;
 }
 
-.frame .p {
+.pedido-info .p {
   align-items: center;
-  color: #000000;
+  color: var(--color-text-primary);
   display: flex;
-  font-family: "Inter-Regular", Helvetica;
-  font-size: 20px;
+  font-family: var(--font-family-regular);
+  font-size: var(--font-size-sm);
   font-weight: 400;
   justify-content: center;
-  letter-spacing: -0.40px;
-  line-height: 29.0px;
+  letter-spacing: var(--letter-spacing-sm);
+  line-height: var(--line-height-sm);
   position: relative;
   white-space: nowrap;
   width: fit-content;
 }
 
-.frame .div-wrapper {
+.status-badge {
   align-items: center;
   background-color: var(--color-background-warning-secondary);
   border-radius: 24px;
@@ -74,60 +70,63 @@
   position: relative;
 }
 
-.frame .text-wrapper-2 {
+.status-badge .text-wrapper-2 {
   align-items: center;
   color: var(--color-text-warning-on-warning-secondary);
   display: flex;
-  font-family: "Inter-SemiBold", Helvetica;
-  font-size: 20px;
+  font-family: var(--font-family-semibold);
+  font-size: var(--font-size-sm);
   font-weight: 600;
   justify-content: center;
-  letter-spacing: -0.40px;
-  line-height: 29.0px;
+  letter-spacing: var(--letter-spacing-sm);
+  line-height: var(--line-height-sm);
   margin-top: -1.00px;
   position: relative;
   white-space: nowrap;
   width: fit-content;
 }
 
-.frame .frame-wrapper {
+.items-section {
   align-items: flex-start;
   align-self: stretch;
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
-  gap: 32px;
+  gap: var(--gap-lg);
   justify-content: center;
-  padding: 16px 0px;
+  padding: var(--spacing-sm) 0px;
   position: relative;
   width: 100%;
 }
 
-.frame .div-3 {
+/* These classes should be removed as they're part of HistorialItem component */
+
+.order-summary .total-row,
+.order-summary .address-row {
   align-items: center;
   align-self: stretch;
   border: 1px solid;
-  border-color: #00000073;
-  border-radius: 16px;
+  border-color: var(--color-text-primary)73;
+  border-radius: var(--border-radius-md);
   display: flex;
   flex: 0 0 auto;
-  gap: 16px;
+  gap: var(--gap-sm);
   overflow: hidden;
-  padding: 16px;
+  padding: var(--spacing-sm);
   position: relative;
   width: 100%;
 }
 
-.frame .rectangle {
+.order-summary .rectangle {
   aspect-ratio: 1;
-  background-color: #d9d9d9;
-  border-radius: 16px;
+  background-color: var(--color-background-light);
+  border-radius: var(--border-radius-md);
   height: 100px;
   position: relative;
   width: 100px;
 }
 
-.frame .div-4 {
+.order-summary .flex-between {
   align-items: center;
   display: flex;
   flex: 1;
@@ -136,38 +135,38 @@
   position: relative;
 }
 
-.frame .text-wrapper-3 {
+.order-summary .text-wrapper-3 {
   align-items: center;
-  color: #000000;
+  color: var(--color-text-primary);
   display: flex;
-  font-family: "Inter-Bold", Helvetica;
-  font-size: 24px;
+  font-family: var(--font-family-bold);
+  font-size: var(--font-size-md);
   font-weight: 700;
   justify-content: center;
-  letter-spacing: -0.48px;
-  line-height: 34.8px;
+  letter-spacing: var(--letter-spacing-md);
+  line-height: var(--line-height-md);
   margin-top: -1.00px;
   position: relative;
   white-space: nowrap;
   width: fit-content;
 }
 
-.frame .text-wrapper-4 {
+.order-summary .text-wrapper-4 {
   align-items: center;
-  color: #000000;
+  color: var(--color-text-primary);
   display: flex;
-  font-family: "Inter-Medium", Helvetica;
-  font-size: 20px;
+  font-family: var(--font-family-medium);
+  font-size: var(--font-size-sm);
   font-weight: 500;
   justify-content: center;
-  letter-spacing: -0.40px;
-  line-height: 29.0px;
+  letter-spacing: var(--letter-spacing-sm);
+  line-height: var(--line-height-sm);
   position: relative;
   white-space: nowrap;
   width: fit-content;
 }
 
-.frame .div-5 {
+.order-summary .summary-details {
   align-items: flex-end;
   display: inline-flex;
   flex: 0 0 auto;
@@ -176,39 +175,39 @@
   position: relative;
 }
 
-.frame .text-wrapper-5 {
+.order-summary .text-wrapper-5 {
   align-items: center;
-  color: #000000;
+  color: var(--color-text-primary);
   display: flex;
-  font-family: "Inter-Medium", Helvetica;
-  font-size: 20px;
+  font-family: var(--font-family-medium);
+  font-size: var(--font-size-sm);
   font-weight: 500;
   justify-content: center;
-  letter-spacing: -0.40px;
-  line-height: 29.0px;
+  letter-spacing: var(--letter-spacing-sm);
+  line-height: var(--line-height-sm);
   margin-top: -1.00px;
   position: relative;
   text-align: right;
   width: 180px;
 }
 
-.frame .text-wrapper-6 {
+.order-summary .text-wrapper-6 {
   align-items: center;
-  color: #000000;
+  color: var(--color-text-primary);
   display: flex;
-  font-family: "Inter-SemiBold", Helvetica;
-  font-size: 20px;
+  font-family: var(--font-family-semibold);
+  font-size: var(--font-size-sm);
   font-weight: 600;
   justify-content: center;
-  letter-spacing: -0.40px;
-  line-height: 29.0px;
+  letter-spacing: var(--letter-spacing-sm);
+  line-height: var(--line-height-sm);
   position: relative;
   text-align: right;
   white-space: nowrap;
   width: fit-content;
 }
 
-.frame .div-6 {
+.order-summary {
   align-items: flex-end;
   align-self: stretch;
   display: flex;
@@ -219,39 +218,39 @@
   width: 100%;
 }
 
-.frame .text-wrapper-7 {
+.order-summary .text-wrapper-7 {
   align-items: center;
-  color: #000000;
+  color: var(--color-text-primary);
   display: flex;
-  font-family: "Inter-Medium", Helvetica;
-  font-size: 20px;
+  font-family: var(--font-family-medium);
+  font-size: var(--font-size-sm);
   font-weight: 500;
   justify-content: center;
-  letter-spacing: -0.40px;
-  line-height: 29.0px;
+  letter-spacing: var(--letter-spacing-sm);
+  line-height: var(--line-height-sm);
   margin-top: -1.00px;
   position: relative;
   white-space: nowrap;
   width: fit-content;
 }
 
-.frame .text-wrapper-8 {
+.order-summary .text-wrapper-8 {
   align-items: center;
-  color: #000000;
+  color: var(--color-text-primary);
   display: flex;
-  font-family: "Inter-SemiBold", Helvetica;
-  font-size: 20px;
+  font-family: var(--font-family-semibold);
+  font-size: var(--font-size-sm);
   font-weight: 600;
   justify-content: center;
-  letter-spacing: -0.40px;
-  line-height: 29.0px;
+  letter-spacing: var(--letter-spacing-sm);
+  line-height: var(--line-height-sm);
   margin-top: -1.00px;
   position: relative;
   white-space: nowrap;
   width: fit-content;
 }
 
-.frame .div-7 {
+.order-actions {
   align-items: center;
   align-self: stretch;
   display: flex;
@@ -261,24 +260,24 @@
   width: 100%;
 }
 
-.frame .div-wrapper-2 {
+.history-button {
   align-items: center;
   background-color: var(--main);
-  border-radius: 16px;
+  border-radius: var(--border-radius-md);
   display: inline-flex;
   flex: 0 0 auto;
-  gap: 24px;
-  padding: 16px;
+  gap: var(--gap-md);
+  padding: var(--spacing-sm);
   position: relative;
 }
 
-.frame .div-wrapper-3 {
+.cancel-button {
   align-items: center;
   background-color: var(--danger);
-  border-radius: 16px;
+  border-radius: var(--border-radius-md);
   display: inline-flex;
   flex: 0 0 auto;
-  gap: 24px;
-  padding: 16px;
+  gap: var(--gap-md);
+  padding: var(--spacing-sm);
   position: relative;
 }

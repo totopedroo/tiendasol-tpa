@@ -1,27 +1,22 @@
 .contenido {
   align-items: flex-start;
-  display: flex;
   gap: 10px;
-  justify-content: center;
-  padding: 64px 128px;
+  padding: var(--spacing-xxl) 0;
   position: relative;
 }
 
-.contenido .container {
+.contenido .search-results-container {
   align-items: flex-end;
-  display: flex;
   flex: 1;
-  flex-direction: column;
   flex-grow: 1;
   height: 2389px;
   justify-content: flex-end;
   position: relative;
 }
 
-.contenido .frame-wrapper {
-  align-items: center;
+.contenido .bottom-pagination-wrapper {
   display: inline-flex;
-  gap: 32px;
+  gap: var(--gap-lg);
   height: 46px;
   justify-content: flex-end;
   position: relative;
@@ -32,7 +27,7 @@
   align-self: stretch;
   display: inline-flex;
   flex: 0 0 auto;
-  gap: 24px;
+  gap: var(--gap-md);
   justify-content: flex-end;
   position: relative;
 }
@@ -52,14 +47,14 @@
 
 .container-titulo .titulo {
   align-items: center;
-  color: #000000;
+  color: var(--color-text-primary);
   display: flex;
-  font-family: "Inter-SemiBold", Helvetica;
-  font-size: 32px;
+  font-family: var(--font-family-semibold);
+  font-size: var(--font-size-lg);
   font-weight: 600;
   justify-content: center;
-  letter-spacing: -0.64px;
-  line-height: 46.4px;
+  letter-spacing: var(--letter-spacing-lg);
+  line-height: var(--line-height-lg);
   margin-top: -1px;
   position: relative;
   white-space: nowrap;
@@ -72,7 +67,7 @@
   display: flex;
   flex: 1;
   flex-grow: 1;
-  gap: 24px;
+  gap: var(--gap-md);
   justify-content: flex-end;
   position: relative;
 }
@@ -92,7 +87,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  gap: 32px;
-  padding: 32px 0;
+  gap: var(--gap-lg);
+  padding: var(--spacing-lg) 0;
   position: relative;
 }

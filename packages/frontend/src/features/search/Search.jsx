@@ -8,22 +8,24 @@ export const Search = () => {
   return (
     <div className="contenido">
       <div className="container">
-        <div className="container-titulo">
-          <div className="titulo">Resultados para “busqueda”</div>
+        <div className="search-results-container">
+          <div className="container-titulo">
+            <div className="titulo">Resultados para &quot;busqueda&quot;</div>
 
-          <div className="container-paginacion">
-            <select></select>
-            <Paginacion className="navbar" />
+            <div className="container-paginacion">
+              <select></select>
+              <Paginacion className="navbar" />
+            </div>
           </div>
-        </div>
-        <div className="container-resultados">
-          <Filtros />
-          <Resultados itemCount={20} />
-        </div>
+          <div className="container-resultados">
+            <Filtros />
+            <Resultados itemCount={20} />
+          </div>
 
-        <div className="frame-wrapper">
-          <div className="paginacion-wrapper">
-            <Paginacion className="frame-8" />
+          <div className="bottom-pagination-wrapper">
+            <div className="paginacion-wrapper">
+              <Paginacion />
+            </div>
           </div>
         </div>
       </div>

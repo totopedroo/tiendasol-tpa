@@ -1,63 +1,57 @@
 .checkout-item {
   align-items: flex-start;
-  border: 1px solid #00000073;
-  border-radius: 16px;
-  display: flex;
-  gap: 16px;
+  border: var(--border-md);
+  border-radius: var(--border-radius-md);
+  gap: var(--gap-sm);
   overflow: hidden;
-  padding: 16px;
+  padding: var(--spacing-sm);
   position: relative;
   width: 864px;
 }
 
 .checkout-item .rectangle {
   aspect-ratio: 1;
-  background-color: #d9d9d9;
-  border-radius: 16px;
+  background-color: var(--color-background-light);
+  border-radius: var(--border-radius-md);
   height: 144px;
   position: relative;
   width: 144px;
 }
 
-.checkout-item .div {
+.checkout-item .item-content {
   align-items: flex-start;
   align-self: stretch;
-  display: flex;
   flex: 1;
-  flex-direction: column;
   flex-grow: 1;
   justify-content: space-between;
   position: relative;
 }
 
-.checkout-item .div-2 {
+.checkout-item .item-header {
   align-items: flex-start;
   align-self: stretch;
-  display: flex;
   flex: 0 0 auto;
-  justify-content: space-between;
   position: relative;
   width: 100%;
 }
 
-.checkout-item .div-3 {
+.checkout-item .item-title-price {
   align-items: flex-start;
   display: inline-flex;
   flex: 0 0 auto;
-  flex-direction: column;
   position: relative;
 }
 
 .checkout-item .text-wrapper {
   align-items: center;
-  color: #000000;
+  color: var(--color-text-primary);
   display: flex;
-  font-family: "Inter-Bold", Helvetica;
-  font-size: 24px;
+  font-family: var(--font-family-bold);
+  font-size: var(--font-size-md);
   font-weight: 700;
   justify-content: center;
-  letter-spacing: -0.48px;
-  line-height: 34.8px;
+  letter-spacing: var(--letter-spacing-md);
+  line-height: var(--line-height-md);
   margin-top: -1px;
   position: relative;
   white-space: nowrap;
@@ -66,14 +60,14 @@
 
 .checkout-item .text-wrapper-2 {
   align-items: center;
-  color: #000000;
+  color: var(--color-text-primary);
   display: flex;
-  font-family: "Inter-Medium", Helvetica;
-  font-size: 20px;
+  font-family: var(--font-family-medium);
+  font-size: var(--font-size-sm);
   font-weight: 500;
   justify-content: center;
-  letter-spacing: -0.40px;
-  line-height: 29px;
+  letter-spacing: var(--letter-spacing-sm);
+  line-height: var(--line-height-sm);
   position: relative;
   white-space: nowrap;
   width: fit-content;
@@ -106,14 +100,14 @@
 
 .checkout-item .text-wrapper-3 {
   align-items: center;
-  color: #000000;
+  color: var(--color-text-primary);
   display: flex;
-  font-family: "Inter-Medium", Helvetica;
-  font-size: 20px;
+  font-family: var(--font-family-medium);
+  font-size: var(--font-size-sm);
   font-weight: 500;
   justify-content: center;
-  letter-spacing: -0.40px;
-  line-height: 29px;
+  letter-spacing: var(--letter-spacing-sm);
+  line-height: var(--line-height-sm);
   margin-top: -1px;
   position: relative;
   text-align: right;
@@ -126,7 +120,7 @@
   border-radius: 24px;
   display: inline-flex;
   flex: 0 0 auto;
-  gap: 8px;
+  gap: var(--gap-xs);
   justify-content: center;
   position: relative;
 }
@@ -150,14 +144,14 @@
 
 .checkout-item .text-wrapper-4 {
   align-items: center;
-  color: #000000;
+  color: var(--color-text-primary);
   display: flex;
-  font-family: "Inter-SemiBold", Helvetica;
-  font-size: 24px;
+  font-family: var(--font-family-semibold);
+  font-size: var(--font-size-md);
   font-weight: 600;
   justify-content: center;
-  letter-spacing: -0.48px;
-  line-height: 34.8px;
+  letter-spacing: var(--letter-spacing-md);
+  line-height: var(--line-height-md);
   margin-top: -1px;
   position: relative;
   text-align: center;
@@ -182,14 +176,14 @@
 
 .checkout-item .text-wrapper-5 {
   align-items: center;
-  color: #000000;
+  color: var(--color-text-primary);
   display: flex;
-  font-family: "Inter-SemiBold", Helvetica;
-  font-size: 24px;
+  font-family: var(--font-family-semibold);
+  font-size: var(--font-size-md);
   font-weight: 600;
   justify-content: center;
-  letter-spacing: -0.48px;
-  line-height: 34.8px;
+  letter-spacing: var(--letter-spacing-md);
+  line-height: var(--line-height-md);
   position: relative;
   text-align: right;
   white-space: nowrap;
