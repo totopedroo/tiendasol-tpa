@@ -6,12 +6,12 @@ import "./CheckoutItem.css";
 
 export const CheckoutItem = () => {
   return (
-    <div className="checkout-item flex-row-start">
+    <div className="checkout-item flex items-start">
       <div className="rectangle" />
 
-      <div className="item-content flex-center-column">
-        <div className="item-header flex-row-between">
-          <div className="item-title-price flex-center-column">
+      <div className="item-content flex flex-col items-center">
+        <div className="item-header flex items-center justify-between">
+          <div className="item-title-price flex flex-col items-center">
             <div className="text-wrapper">Lorem Ipsum</div>
             <div className="text-wrapper-2">$150.000</div>
           </div>

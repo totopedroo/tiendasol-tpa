@@ -5,9 +5,9 @@ export const User = () => {
     <svg
       className="person"
       fill="none"
-      height="48"
+      height="24"
       viewBox="0 0 48 48"
-      width="48"
+      width="24"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path

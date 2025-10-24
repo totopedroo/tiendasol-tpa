@@ -4,12 +4,12 @@ import "./ItemDetail.css";
 
 export const ItemDetail = () => {
   return (
-    <div className="item-detail flex-row-start">
+    <div className="item-detail flex items-start">
       <img className="img" alt="Detalle" src="image.png" />
 
-      <div className="product-info flex-center-column">
-        <div className="product-details flex-center-column">
-          <div className="text-wrapper flex-row-center">Categoría</div>
+      <div className="product-info flex flex-col items-center">
+        <div className="product-details flex flex-col items-center">
+          <div className="text-wrapper flex items-center">Categoría</div>
 
           <div className="text-wrapper-2">Titulo</div>
 

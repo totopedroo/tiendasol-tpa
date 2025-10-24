@@ -6,18 +6,18 @@ import "./ItemCollection.css";
 export const ItemCollection = () => {
   return (
     <div className="item-collection">
-      <div className="collection-header">
+      <div className="collection-header flex items-center justify-between">
         <div className="title-wrapper">
-          <div className="text-wrapper-5">Otros productos del vendedor</div>
+          <div className="text-wrapper">Productos Destacados</div>
         </div>
 
-        <div className="view-all-link">
-          <div className="text-wrapper-6">Ver Todos</div>
+        <div className="view-all-link flex items-center gap-2">
+          <div className="text-wrapper-2">Ver Todos</div>
           <ArrowRight />
         </div>
       </div>
 
-      <div className="items-grid">
+      <div className="items-grid flex gap-6">
         <Item />
         <Item />
         <Item />

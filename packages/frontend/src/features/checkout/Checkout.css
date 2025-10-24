@@ -1,7 +1,7 @@
 .checkout-screen {
   gap: 10px;
   height: 800px;
-  padding: var(--spacing-xxl) 0;
+  padding: var(--space-16) 0;
   position: relative;
 }
 
@@ -9,7 +9,7 @@
   align-items: flex-start;
   align-self: stretch;
   flex: 0 0 auto;
-  gap: var(--gap-sm);
+  gap: var(--space-4);
   position: relative;
   width: 100%;
 }
@@ -19,12 +19,10 @@
 }
 
 .titulo .text-wrapper {
-  color: var(--color-text-primary);
-  font-family: var(--font-family-semibold);
-  font-size: var(--font-size-lg);
+  color: var(--color-text);
+  font-family: var(--font-semibold);
+  font-size: var(--text-xl);
   font-weight: 600;
-  letter-spacing: var(--letter-spacing-lg);
-  line-height: var(--line-height-lg);
   margin-top: -1.00px;
   position: relative;
   white-space: nowrap;
@@ -34,7 +32,7 @@
 .titulo .back-button-container {
   display: inline-flex;
   flex: 0 0 auto;
-  gap: var(--gap-xs);
+  gap: var(--space-2);
   position: relative;
 }
 
@@ -45,12 +43,10 @@
 }
 
 .titulo .back-button-text {
-  color: var(--color-text-primary);
-  font-family: var(--font-family-medium);
-  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  font-family: var(--font-medium);
+  font-size: var(--text-base);
   font-weight: 500;
-  letter-spacing: var(--letter-spacing-sm);
-  line-height: var(--line-height-sm);
   margin-top: -1.00px;
   position: relative;
   white-space: nowrap;
@@ -59,7 +55,7 @@
 
 .checkout-contenido {
   align-items: flex-start;
-  gap: var(--gap-lg);
+  gap: var(--space-8);
   position: relative;
 }
 
@@ -67,10 +63,10 @@
 .info-pedido {
   align-items: flex-start;
   background-color: var(--main);
-  border-radius: var(--border-radius-md);
-  gap: var(--gap-sm);
+  border-radius: var(--radius-md);
+  gap: var(--space-4);
   overflow: hidden;
-  padding: var(--spacing-lg);
+  padding: var(--space-8);
   position: relative;
   width: 512px;
 }
@@ -79,7 +75,7 @@
   align-items: flex-start;
   align-self: stretch;
   flex: 0 0 auto;
-  gap: var(--gap-sm);
+  gap: var(--space-4);
   position: relative;
   width: 100%;
 }
@@ -96,14 +92,12 @@
 
 .info-pedido .text-wrapper {
   align-items: center;
-  color: var(--color-text-primary);
+  color: var(--color-text);
   display: flex;
-  font-family: var(--font-family-semibold);
-  font-size: var(--font-size-sm);
+  font-family: var(--font-semibold);
+  font-size: var(--text-base);
   font-weight: 600;
   justify-content: center;
-  letter-spacing: var(--letter-spacing-sm);
-  line-height: var(--line-height-sm);
   margin-top: -1.00px;
   position: relative;
   white-space: nowrap;
@@ -121,14 +115,12 @@
 
 .info-pedido .text-wrapper-2 {
   align-items: center;
-  color: var(--color-text-primary);
+  color: var(--color-text);
   display: flex;
-  font-family: var(--font-family-medium);
-  font-size: var(--font-size-sm);
+  font-family: var(--font-medium);
+  font-size: var(--text-base);
   font-weight: 500;
   justify-content: center;
-  letter-spacing: var(--letter-spacing-sm);
-  line-height: var(--line-height-sm);
   margin-top: -1.00px;
   position: relative;
   white-space: nowrap;
@@ -143,14 +135,12 @@
 
 .info-pedido .text-wrapper-3 {
   align-items: center;
-  color: var(--color-text-primary);
+  color: var(--color-text);
   display: flex;
-  font-family: var(--font-family-semibold);
-  font-size: var(--font-size-md);
+  font-family: var(--font-semibold);
+  font-size: var(--text-lg);
   font-weight: 600;
   justify-content: center;
-  letter-spacing: var(--letter-spacing-md);
-  line-height: var(--line-height-md);
   margin-top: -1.00px;
   position: relative;
   white-space: nowrap;
@@ -160,29 +150,27 @@
 .info-pedido .boton {
   align-items: center;
   align-self: stretch;
-  background-color: var(--color-text-primary);
-  border-radius: var(--border-radius-md);
+  background-color: var(--color-text);
+  border-radius: var(--radius-md);
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
   gap: 10px;
   justify-content: center;
   overflow: hidden;
-  padding: var(--spacing-sm) 0px;
+  padding: var(--space-4) 0px;
   position: relative;
   width: 100%;
 }
 
 .info-pedido .text-wrapper-4 {
   align-items: center;
-  color: var(--color-background-white);
+  color: var(--color-bg-white);
   display: flex;
-  font-family: var(--font-family-semibold);
-  font-size: var(--font-size-md);
+  font-family: var(--font-semibold);
+  font-size: var(--text-lg);
   font-weight: 600;
   justify-content: center;
-  letter-spacing: var(--letter-spacing-md);
-  line-height: var(--line-height-md);
   margin-top: -1.00px;
   position: relative;
   white-space: nowrap;

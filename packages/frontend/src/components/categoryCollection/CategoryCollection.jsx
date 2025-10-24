@@ -17,13 +17,13 @@ export const CategoryCollection = () => {
   ];
 
   return (
-    <div className="category-collection flex-center-column">
-      <div className="categories-header flex-row-between">
+    <div className="category-collection flex flex-col items-center">
+      <div className="categories-header flex items-center justify-between">
         <div className="title-wrapper">
-          <div className="text-wrapper flex-row-center">Categorías</div>
+          <div className="text-wrapper flex items-center justify-center">Categorías</div>
         </div>
 
-        <div className="view-all-link flex-row-between">
+        <div className="view-all-link flex items-center justify-between">
           <div className="text-wrapper-2">Ver Todas</div>
           <ArrowRight />
         </div>

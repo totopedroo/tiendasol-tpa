@@ -2,8 +2,42 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: var(--spacing-lg) 0 16px;
+  padding: var(--space-8) 0 16px;
   width: 100%;
+  position: relative;
+}
+
+.item-collection .collection-header {
+  align-self: stretch;
+  padding: var(--space-4) 0;
+  position: relative;
+  width: 100%;
+}
+
+.item-collection .title-wrapper {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.item-collection .text-wrapper {
+  color: var(--color-text);
+  font-family: var(--font-semibold);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  position: relative;
+}
+
+.item-collection .view-all-link {
+  position: relative;
+}
+
+.item-collection .text-wrapper-2 {
+  color: var(--color-text);
+  font-family: var(--font-medium);
+  font-size: var(--text-base);
+  font-weight: 500;
   position: relative;
 }
 
@@ -12,34 +46,34 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: var(--spacing-sm) 0;
+  padding: var(--space-4) 0;
 }
 
 .item-collection .otros-productos-del-wrapper {
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
-  gap: var(--gap-xs);
+  gap: var(--space-2);
   width: auto;
 }
 
 .item-collection .otros-productos-del {
   font-family: "Inter", sans-serif;
   font-weight: 600;
-  font-size: var(--font-size-lg);
+  font-size: var(--text-xl);
   color: #000;
 }
 
 .item-collection .div-3 {
   display: flex;
   align-items: center;
-  gap: var(--gap-xs);
+  gap: var(--space-2);
 }
 
 .item-collection .text-wrapper-5 {
   font-family: "Inter", sans-serif;
   font-weight: 500;
-  font-size: var(--font-size-sm);
+  font-size: var(--text-base);
   color: #000;
 }
 
@@ -51,11 +85,17 @@
 .item-collection .div-4 {
   display: flex;
   justify-content: space-between;
-  gap: var(--gap-sm);
+  gap: var(--space-4);
   width: 100%;
-  padding: var(--spacing-sm) 0;
+  padding: var(--space-4) 0;
 }
 
 .item-collection .item-instance {
   position: relative;
+}
+
+.item-collection .items-grid {
+  width: 100%;
+  overflow-x: auto;
+  padding: var(--space-4) 0;
 }

@@ -1,6 +1,6 @@
 .paginacion {
   display: inline-flex;
-  gap: var(--gap-lg);
+  gap: var(--space-8);
   left: 903px;
   position: relative;
   top: 6px;
@@ -24,14 +24,12 @@
 .paginacion .text-wrapper {
   align-items: center;
   align-self: stretch;
-  color: var(--color-background-white);
+  color: var(--color-bg-white);
   display: flex;
-  font-family: var(--font-family-regular);
-  font-size: var(--font-size-sm);
+  font-family: var(--font-regular);
+  font-size: var(--text-base);
   font-weight: 400;
   justify-content: center;
-  letter-spacing: var(--letter-spacing-sm);
-  line-height: var(--line-height-sm);
   position: relative;
   text-align: center;
 }
@@ -39,14 +37,12 @@
 .paginacion .page-number,
 .paginacion .page-ellipsis {
   align-items: center;
-  color: var(--color-text-primary);
+  color: var(--color-text);
   display: flex;
-  font-family: var(--font-family-regular);
-  font-size: var(--font-size-sm);
+  font-family: var(--font-regular);
+  font-size: var(--text-base);
   font-weight: 400;
   justify-content: center;
-  letter-spacing: var(--letter-spacing-sm);
-  line-height: var(--line-height-sm);
   position: relative;
   white-space: nowrap;
   width: fit-content;

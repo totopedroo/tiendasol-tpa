@@ -9,9 +9,9 @@ export const Item = () => {
 
       <div className="item-content">
         <div className="item-info">
-          <div className="text-wrapper">Vendedor</div>
-          <div className="text-wrapper-2">Lorem Ipsum</div>
-          <div className="text-wrapper-3">$150.000</div>
+          <div>Vendedor</div>
+          <div className="text-wrapper-3">Lorem Ipsum</div>
+          <div className="text-wrapper-2">$150.000</div>
         </div>
 
         <div className="add-to-cart-button">

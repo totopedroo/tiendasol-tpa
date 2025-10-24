@@ -1,10 +1,10 @@
 .footer {
-  background-color: var(--color-background-white);
-  border-color: var(--color-text-primary)1a;
+  background-color: var(--color-bg-white);
+  border-color: var(--color-border-light);
   border-top-style: solid;
   border-top-width: 1px;
   height: 160px;
-  padding: var(--spacing-xl) 0;
+  padding: var(--space-12) var(--space-8);
   position: relative;
   width: 100%;
 }
@@ -12,7 +12,7 @@
 .footer .text {
   display: inline-flex;
   flex: 0 0 auto;
-  gap: var(--gap-lg);
+  gap: var(--space-8);
   position: relative;
 }
 
@@ -20,13 +20,13 @@
   align-items: center;
   display: inline-flex;
   flex: 0 0 auto;
-  gap: var(--gap-xs);
+  gap: var(--space-2);
   position: relative;
 }
 
 .footer .image {
   aspect-ratio: 1;
-  /* background-image: url("./image.png"); */
+  background-image: url("/public/images/logo.png");
   background-position: 50% 50%;
   background-size: cover;
   border-radius: 8px;
@@ -37,14 +37,12 @@
 
 .footer .text-wrapper {
   align-items: center;
-  color: var(--color-text-primary);
+  color: var(--color-text);
   display: flex;
-  font-family: var(--font-family-semibold), sans-serif;
-  font-size: var(--font-size-sm);
+  font-family: var(--font-semibold), sans-serif;
+  font-size: var(--text-base);
   font-weight: 600;
   justify-content: center;
-  letter-spacing: -0.4px;
-  line-height: var(--line-height-sm);
   position: relative;
   text-align: center;
   white-space: nowrap;
@@ -55,20 +53,18 @@
   align-items: flex-start;
   display: inline-flex;
   flex: 0 0 auto;
-  gap: var(--gap-lg);
+  gap: var(--space-8);
   position: relative;
 }
 
 .footer .div {
   align-items: center;
-  color: var(--color-text-primary)8c;
+  color: var(--color-text-muted);
   display: flex;
-  font-family: var(--font-family-medium), sans-serif;
-  font-size: var(--font-size-xs);
+  font-family: var(--font-medium), sans-serif;
+  font-size: var(--text-xs);
   font-weight: 500;
   justify-content: center;
-  letter-spacing: -0.08px;
-  line-height: var(--line-height-xs);
   margin-top: -1px;
   position: relative;
   white-space: nowrap;
@@ -79,7 +75,7 @@
   align-items: center;
   display: inline-flex;
   flex: 0 0 auto;
-  gap: var(--gap-md);
+  gap: var(--space-6);
   position: relative;
 }
 

@@ -1,6 +1,6 @@
 .item-detail {
   align-items: flex-start;
-  gap: var(--gap-lg);
+  gap: var(--space-8);
   position: relative;
 }
 
@@ -16,7 +16,7 @@
   flex: 1;
   flex-grow: 1;
   justify-content: space-between;
-  padding: 0 0 0 var(--spacing-lg);
+  padding: 0 0 0 var(--space-8);
   position: relative;
 }
 
@@ -24,18 +24,16 @@
   align-items: flex-start;
   align-self: stretch;
   flex: 0 0 auto;
-  gap: var(--gap-sm);
+  gap: var(--space-4);
   position: relative;
   width: 100%;
 }
 
 .item-detail .text-wrapper {
-  color: var(--color-text-primary);
-  font-family: var(--font-family-regular);
-  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  font-family: var(--font-regular);
+  font-size: var(--text-base);
   font-weight: 400;
-  letter-spacing: var(--letter-spacing-sm);
-  line-height: var(--line-height-sm);
   margin-top: -1px;
   position: relative;
   width: 189px;
@@ -43,13 +41,12 @@
 
 .item-detail .text-wrapper-2 {
   align-items: center;
-  color: var(--color-text-primary);
+  color: var(--color-text);
   display: flex;
   font-family: "Inter-ExtraBold", Helvetica;
   font-size: 40px;
   font-weight: 800;
   justify-content: center;
-  letter-spacing: -0.80px;
   line-height: 58px;
   position: relative;
   white-space: nowrap;
@@ -57,11 +54,10 @@
 }
 
 .item-detail .text-wrapper-3 {
-  color: var(--color-text-primary);
-  font-family: var(--font-family-regular);
+  color: var(--color-text);
+  font-family: var(--font-regular);
   font-size: 40px;
   font-weight: 400;
-  letter-spacing: -0.80px;
   line-height: 58px;
   position: relative;
   white-space: nowrap;
@@ -70,12 +66,10 @@
 
 .item-detail .descripcion {
   align-self: stretch;
-  color: var(--color-text-primary)99;
-  font-family: var(--font-family-medium);
-  font-size: var(--font-size-sm);
+  color: var(--color-text)99;
+  font-family: var(--font-medium);
+  font-size: var(--text-base);
   font-weight: 500;
-  letter-spacing: var(--letter-spacing-sm);
-  line-height: var(--line-height-sm);
   position: relative;
 }
 
@@ -83,34 +77,32 @@
   align-items: flex-end;
   align-self: stretch;
   flex: 0 0 auto;
-  gap: var(--gap-sm);
+  gap: var(--space-4);
   justify-content: flex-end;
   position: relative;
   width: 100%;
 }
 
 .item-detail .div-4 {
-  border: 2px solid var(--color-border-primary);
-  border-radius: var(--border-radius-md);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
   display: inline-flex;
   flex: 0 0 auto;
-  gap: var(--gap-md);
+  gap: var(--space-6);
   margin-bottom: -1px;
   margin-top: -1px;
-  padding: var(--spacing-sm);
+  padding: var(--space-4);
   position: relative;
 }
 
 .item-detail .text-wrapper-4 {
   align-items: center;
-  color: var(--color-text-primary);
+  color: var(--color-text);
   display: flex;
-  font-family: var(--font-family-medium);
-  font-size: var(--font-size-sm);
+  font-family: var(--font-medium);
+  font-size: var(--text-base);
   font-weight: 500;
   justify-content: center;
-  letter-spacing: var(--letter-spacing-sm);
-  line-height: var(--line-height-sm);
   margin-top: -1px;
   position: relative;
   white-space: nowrap;
@@ -125,25 +117,23 @@
 
 .item-detail .div-wrapper {
   align-items: center;
-  background-color: var(--color-text-primary);
-  border-radius: var(--border-radius-md);
+  background-color: var(--color-text);
+  border-radius: var(--radius-md);
   display: inline-flex;
   flex: 0 0 auto;
-  gap: var(--gap-md);
-  padding: var(--spacing-sm);
+  gap: var(--space-6);
+  padding: var(--space-4);
   position: relative;
 }
 
 .item-detail .text-wrapper-5 {
   align-items: center;
-  color: var(--color-background-white);
+  color: var(--color-bg-white);
   display: flex;
-  font-family: var(--font-family-medium);
-  font-size: var(--font-size-sm);
+  font-family: var(--font-medium);
+  font-size: var(--text-base);
   font-weight: 500;
   justify-content: center;
-  letter-spacing: var(--letter-spacing-sm);
-  line-height: var(--line-height-sm);
   margin-top: -1px;
   position: relative;
   white-space: nowrap;
@@ -153,11 +143,11 @@
 .item-detail .div-5 {
   align-items: center;
   background-color: var(--main);
-  border-radius: var(--border-radius-md);
+  border-radius: var(--radius-md);
   display: inline-flex;
   flex: 0 0 auto;
-  gap: var(--gap-md);
-  padding: var(--spacing-sm);
+  gap: var(--space-6);
+  padding: var(--space-4);
   position: relative;
 }
 

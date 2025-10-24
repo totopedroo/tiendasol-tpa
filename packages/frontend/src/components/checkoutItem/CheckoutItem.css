@@ -1,18 +1,18 @@
 .checkout-item {
   align-items: flex-start;
-  border: var(--border-md);
-  border-radius: var(--border-radius-md);
-  gap: var(--gap-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  gap: var(--space-4);
   overflow: hidden;
-  padding: var(--spacing-sm);
+  padding: var(--space-4);
   position: relative;
   width: 864px;
 }
 
 .checkout-item .rectangle {
   aspect-ratio: 1;
-  background-color: var(--color-background-light);
-  border-radius: var(--border-radius-md);
+  background-color: var(--color-bg-light);
+  border-radius: var(--radius-md);
   height: 144px;
   position: relative;
   width: 144px;
@@ -44,14 +44,12 @@
 
 .checkout-item .text-wrapper {
   align-items: center;
-  color: var(--color-text-primary);
+  color: var(--color-text);
   display: flex;
-  font-family: var(--font-family-bold);
-  font-size: var(--font-size-md);
+  font-family: var(--font-bold);
+  font-size: var(--text-lg);
   font-weight: 700;
   justify-content: center;
-  letter-spacing: var(--letter-spacing-md);
-  line-height: var(--line-height-md);
   margin-top: -1px;
   position: relative;
   white-space: nowrap;
@@ -60,14 +58,12 @@
 
 .checkout-item .text-wrapper-2 {
   align-items: center;
-  color: var(--color-text-primary);
+  color: var(--color-text);
   display: flex;
-  font-family: var(--font-family-medium);
-  font-size: var(--font-size-sm);
+  font-family: var(--font-medium);
+  font-size: var(--text-base);
   font-weight: 500;
   justify-content: center;
-  letter-spacing: var(--letter-spacing-sm);
-  line-height: var(--line-height-sm);
   position: relative;
   white-space: nowrap;
   width: fit-content;
@@ -100,14 +96,12 @@
 
 .checkout-item .text-wrapper-3 {
   align-items: center;
-  color: var(--color-text-primary);
+  color: var(--color-text);
   display: flex;
-  font-family: var(--font-family-medium);
-  font-size: var(--font-size-sm);
+  font-family: var(--font-medium);
+  font-size: var(--text-base);
   font-weight: 500;
   justify-content: center;
-  letter-spacing: var(--letter-spacing-sm);
-  line-height: var(--line-height-sm);
   margin-top: -1px;
   position: relative;
   text-align: right;
@@ -120,7 +114,7 @@
   border-radius: 24px;
   display: inline-flex;
   flex: 0 0 auto;
-  gap: var(--gap-xs);
+  gap: var(--space-2);
   justify-content: center;
   position: relative;
 }
@@ -144,14 +138,12 @@
 
 .checkout-item .text-wrapper-4 {
   align-items: center;
-  color: var(--color-text-primary);
+  color: var(--color-text);
   display: flex;
-  font-family: var(--font-family-semibold);
-  font-size: var(--font-size-md);
+  font-family: var(--font-semibold);
+  font-size: var(--text-lg);
   font-weight: 600;
   justify-content: center;
-  letter-spacing: var(--letter-spacing-md);
-  line-height: var(--line-height-md);
   margin-top: -1px;
   position: relative;
   text-align: center;
@@ -176,14 +168,12 @@
 
 .checkout-item .text-wrapper-5 {
   align-items: center;
-  color: var(--color-text-primary);
+  color: var(--color-text);
   display: flex;
-  font-family: var(--font-family-semibold);
-  font-size: var(--font-size-md);
+  font-family: var(--font-semibold);
+  font-size: var(--text-lg);
   font-weight: 600;
   justify-content: center;
-  letter-spacing: var(--letter-spacing-md);
-  line-height: var(--line-height-md);
   position: relative;
   text-align: right;
   white-space: nowrap;
