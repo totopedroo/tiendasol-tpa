@@ -6,6 +6,7 @@ import Layout from "./features/layout/Layout.jsx";
 import { Producto } from "./features/products/Producto.jsx";
 import { Search } from "./features/search/Search.jsx";
 import { Checkout } from "./features/checkout/Checkout.jsx";
+import { HistorialPedidos } from "./features/orders/HistorialPedidos.jsx";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/products/:id" element={<Producto />} />
           <Route path="/search" element={<Search/>} />
           <Route path="/checkout" element={<Checkout/>} />
+          <Route path="/users/:id" element={<HistorialPedidos/>} />
         </Route>
       </Routes>
     </BrowserRouter>
