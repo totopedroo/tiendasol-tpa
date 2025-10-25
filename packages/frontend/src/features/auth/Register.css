@@ -1,0 +1,77 @@
+.register-container {
+  height: calc(100vh - 80px);
+  background-color: var(--color-bg-white);
+}
+
+.register-card {
+  background-color: #faecc5;
+  padding: var(--space-8);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  width: 380px;
+}
+
+.logo-wrapper {
+  margin-bottom: var(--space-2);
+}
+
+.register-logo {
+  width: 36px;
+  height: 36px;
+}
+
+.logo-text-strong {
+  font-family: var(--font-bold);
+  font-size: 1.5rem;
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.register-title {
+  font-family: var(--font-semibold);
+  font-size: var(--text-lg);
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+}
+
+.label {
+  text-align: left;
+  font-family: var(--font-medium);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+}
+
+.btn-register {
+  background-color: var(--color-primary);
+  color: var(--color-bg-white);
+  border: none;
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-medium);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: var(--transition);
+  margin-top: var(--space-2);
+}
+
+.btn-register:hover {
+  background-color: #333;
+}
+
+.register-bottom-text {
+  margin-top: var(--space-4);
+  font-family: var(--font-regular);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.login-link {
+  font-family: var(--font-medium);
+  color: var(--color-text);
+  text-decoration: none;
+  margin-left: 0.25rem;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
