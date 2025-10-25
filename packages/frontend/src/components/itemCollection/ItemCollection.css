@@ -108,6 +108,19 @@
   will-change: transform;
 }
 
+/* Skeleton de item */
+.item-skeleton {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg-white);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
+  width: 100%;
+  max-width: 220px;
+  gap: var(--space-2);
+}
+
 /* Mensaje vacío */
 .carousel-empty {
   text-align: center;
