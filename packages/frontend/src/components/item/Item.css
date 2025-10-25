@@ -85,3 +85,10 @@
   font-weight: 500;
   white-space: nowrap;
 }
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .item {
+    width: 100%;
+  }
+}

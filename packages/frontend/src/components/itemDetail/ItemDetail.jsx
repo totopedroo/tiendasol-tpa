@@ -5,10 +5,22 @@ import "./ItemDetail.css";
 export const ItemDetail = () => {
   return (
     <div className="item-detail flex items-start">
-      <img className="img" alt="Detalle" src="image.png" />
+      <div className="image-section">
+        <div className="img-placeholder">
+          {/* Si hay imagen, usar <img>, sino mostrar el placeholder */}
+          {/* <img className="img" alt="Detalle" src="image.png" /> */}
+        </div>
 
-      <div className="product-info flex flex-col items-center">
-        <div className="product-details flex flex-col items-center">
+        <div className="image-thumbnails flex items-center gap-2">
+          <div className="thumbnail-placeholder"></div>
+          <div className="thumbnail-placeholder"></div>
+          <div className="thumbnail-placeholder"></div>
+          <div className="thumbnail-placeholder"></div>
+        </div>
+      </div>
+
+      <div className="product-info flex flex-col items-start">
+        <div className="product-details flex flex-col items-start">
           <div className="text-wrapper flex items-center">Categoría</div>
 
           <div className="text-wrapper-2">Titulo</div>
@@ -31,19 +43,31 @@ export const ItemDetail = () => {
           </p>
         </div>
 
-        <div className="product-actions">
-          <div className="quantity-selector">
-            <div className="text-wrapper-4">0</div>
+        <div className="product-actions flex items-center justify-end gap-4">
+          <div className="quantity-wrapper flex items-center gap-2">
+            <span className="quantity-label">Cantidad:</span>
+            <select className="quantity-select">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
           </div>
 
-          <div className="buy-now-button">
+          <button className="buy-now-button">
             <div className="text-wrapper-5">Comprar ahora</div>
-          </div>
+          </button>
 
-          <div className="add-to-cart-button">
+          <button className="add-to-cart-button">
             <ShoppingCart />
             <div className="text-wrapper-4">Agregar al carrito</div>
-          </div>
+          </button>
         </div>
       </div>
     </div>

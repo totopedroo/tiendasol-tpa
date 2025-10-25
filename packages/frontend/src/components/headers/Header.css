@@ -155,3 +155,53 @@
   white-space: nowrap;
   width: fit-content;
 }
+
+/* === RESPONSIVE - MOBILE === */
+@media (max-width: 768px) {
+  .header {
+    padding: var(--space-4);
+  }
+
+  .header .container-xl {
+    gap: var(--space-3);
+  }
+
+  /* Ocultar texto de TiendaSol */
+  .header .text-wrapper {
+    display: none;
+  }
+
+  /* Ocultar menú de navegación */
+  .header .navigation-menu {
+    display: none;
+  }
+
+  /* Logo más pequeño */
+  .header .company {
+    width: auto;
+    gap: 0;
+  }
+
+  .header .logo {
+    height: 32px;
+    width: 32px;
+  }
+
+  /* Search bar ocupa espacio restante */
+  .header .search-bar {
+    flex: 1;
+    width: auto;
+    max-width: none;
+  }
+
+  /* Botones más compactos */
+  .header .buttons {
+    gap: var(--space-3);
+    padding: 0;
+  }
+
+  /* Contador del carrito más pequeño */
+  .header .contador-de-items {
+    font-size: 0.625rem;
+  }
+}

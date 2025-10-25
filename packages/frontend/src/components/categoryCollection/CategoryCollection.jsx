@@ -23,7 +23,7 @@ export const CategoryCollection = () => {
           <div className="text-wrapper flex items-center justify-center">Categorías</div>
         </div>
 
-        <div className="view-all-link flex items-center justify-between">
+        <div className="view-all-link flex items-center gap-2">
           <div className="text-wrapper-2">Ver Todas</div>
           <ArrowRight />
         </div>

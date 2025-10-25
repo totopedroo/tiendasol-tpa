@@ -11,8 +11,11 @@ export const Home = () => {
         <div className="search-section">
           <div className="search-bar-container">
             <div className="search-input-wrapper">
-              <div className="text-wrapper-9">Buscar productos...</div>
-              <SearchIcon />
+              <input
+                className="search-input"
+                placeholder="Buscar productos..."
+              />
+              <SearchIcon className="search-icon" />
             </div>
           </div>
         </div>
