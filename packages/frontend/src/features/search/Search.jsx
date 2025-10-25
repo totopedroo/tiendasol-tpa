@@ -21,7 +21,6 @@ export const Search = () => {
             <Filtros />
             <Resultados itemCount={20} />
           </div>
-
           <div className="bottom-pagination-wrapper">
             <div className="paginacion-wrapper">
               <Paginacion />

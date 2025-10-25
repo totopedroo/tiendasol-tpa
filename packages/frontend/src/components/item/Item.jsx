@@ -5,8 +5,7 @@ import "./Item.css";
 export const Item = () => {
   return (
     <div className="item">
-      <div className="rectangle" />
-
+      <div className="imagen-item" />
       <div className="item-content">
         <div className="item-info">
           <div className="text-wrapper">Vendedor</div>

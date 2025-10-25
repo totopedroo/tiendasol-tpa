@@ -5,9 +5,9 @@ export const Bell = () => {
     <svg
       className="bell"
       fill="none"
-      height="48"
+      height="30"
       viewBox="0 0 48 48"
-      width="48"
+      width="40"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path

@@ -12,27 +12,14 @@
 .footer .text {
   display: inline-flex;
   flex: 0 0 auto;
+  align-items: center;
   gap: var(--gap-lg);
   position: relative;
 }
 
-.footer .company {
-  align-items: center;
-  display: inline-flex;
-  flex: 0 0 auto;
-  gap: var(--gap-xs);
-  position: relative;
-}
-
-.footer .image {
-  aspect-ratio: 1;
-  /* background-image: url("./image.png"); */
-  background-position: 50% 50%;
-  background-size: cover;
-  border-radius: 8px;
-  height: 32px;
-  position: relative;
-  width: 32px;
+.footer .container .text .nav .nav-link a{
+  text-decoration: none;
+  color: inherit;
 }
 
 .footer .text-wrapper {

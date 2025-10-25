@@ -5,7 +5,7 @@ export const SearchIcon = () => {
     <svg
       className="search"
       fill="none"
-      height="48"
+      height="25"
       viewBox="0 0 48 48"
       width="48"
       xmlns="http://www.w3.org/2000/svg"
