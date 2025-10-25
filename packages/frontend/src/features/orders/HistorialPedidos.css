@@ -1,7 +1,7 @@
 .contenido {
-    gap: 10px;
-    padding: var(--space-16) 0;
-    position: relative;
+  gap: 10px;
+  padding: var(--space-16) 0;
+  position: relative;
 }
 
 .user-profile-section {
@@ -15,20 +15,23 @@
 }
 
 .user-profile-section .user-wrapper {
+  align-items: center;
   background-color: var(--color-bg-white);
   border-radius: var(--radius-full);
+  display: flex;
   gap: 10px;
-  height: 200px;
+  height: 150px;
+  justify-content: center;
   padding: var(--space-6);
   position: relative;
-  width: 200px;
+  width: 150px;
 }
 
 .user-profile-section .user-instance {
   aspect-ratio: 1 !important;
-  height: 128px !important;
+  height: 120px !important;
   position: relative !important;
-  width: 128px !important;
+  width: 120px !important;
 }
 
 .user-profile-section .user-info {
@@ -68,11 +71,13 @@
 }
 
 .historial-screen {
-  align-items: center;
+  align-items: stretch;
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
+  margin-top: var(--space-8);
   position: relative;
+  width: 100%;
 }
 
 .pedidos-list-container {
@@ -80,6 +85,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
+  margin-bottom: var(--space-4);
   position: relative;
   width: 100%;
 }
@@ -89,6 +95,7 @@
   display: flex;
   justify-content: space-between;
   position: relative;
+  width: 100%;
 }
 
 .container-titulo .titulo {
@@ -121,8 +128,79 @@
   top: unset !important;
 }
 
+select {
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-medium);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text);
+  background-color: transparent;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  outline: none;
+  cursor: pointer;
+  min-width: 60px;
+  height: 44px;
+}
+
 .container-titulo .navbar {
   flex: 0 0 auto !important;
   left: unset !important;
   top: unset !important;
+}
+
+/* === RESPONSIVE - MOBILE === */
+@media (max-width: 768px) {
+  .contenido {
+    padding: var(--space-8) 0;
+  }
+
+  /* User profile section - foto arriba, info abajo */
+  .user-profile-section {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-8);
+  }
+
+  .user-profile-section .user-wrapper {
+    width: 120px;
+    height: 120px;
+  }
+
+  .user-profile-section .user-instance {
+    height: 90px !important;
+    width: 90px !important;
+  }
+
+  .user-profile-section .user-info {
+    align-items: center;
+    width: 100%;
+  }
+
+  .user-profile-section .text-wrapper {
+    font-size: var(--text-xl);
+  }
+
+  .user-profile-section .text-wrapper-2 {
+    font-size: var(--text-lg);
+  }
+
+  /* Título y paginación - vertical */
+  .container-titulo {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+
+  .container-titulo .container-paginacion {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: var(--space-3);
+  }
+
+  .container-titulo select {
+    width: 100%;
+  }
 }

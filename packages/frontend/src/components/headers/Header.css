@@ -95,6 +95,11 @@
   width: 20px !important;
 }
 
+.header .user-icon-header {
+  height: 24px !important;
+  width: 24px !important;
+}
+
 .header .buttons {
   display: inline-flex;
   flex: 0 0 auto;

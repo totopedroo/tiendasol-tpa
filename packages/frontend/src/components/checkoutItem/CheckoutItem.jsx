@@ -23,11 +23,15 @@ export const CheckoutItem = () => {
           <div className="quantity-section">
             <div className="text-wrapper-3">Cantidad</div>
             <div className="quantity-controls">
-              <Minus className="minus-instance" />
+              <button type="button" aria-label="Disminuir cantidad">
+                <Minus className="minus-instance" />
+              </button>
               <div className="quantity-display">
                 <div className="text-wrapper-4">2</div>
               </div>
-              <Plus className="plus-instance" />
+              <button type="button" aria-label="Aumentar cantidad">
+                <Plus className="plus-instance" />
+              </button>
             </div>
           </div>
 

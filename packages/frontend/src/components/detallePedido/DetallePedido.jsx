@@ -23,15 +23,15 @@ export const DetallePedido = () => {
 
       <div className="order-summary">
         <div className="total-row">
-          <div className="text-wrapper-7">Total</div>
+          <div className="text-wrapper-8">Total</div>
 
-          <div className="text-wrapper-8">$300.000</div>
+          <div className="text-wrapper-7">$300.000</div>
         </div>
 
         <div className="address-row">
-          <div className="text-wrapper-7">Dirección de entrega</div>
+          <div className="text-wrapper-8">Dirección de entrega</div>
 
-          <div className="text-wrapper-8">Calle Verdadera 1234</div>
+          <div className="text-wrapper-7">Calle Verdadera 1234</div>
         </div>
       </div>
 

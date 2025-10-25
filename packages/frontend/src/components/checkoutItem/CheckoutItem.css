@@ -6,7 +6,8 @@
   overflow: hidden;
   padding: var(--space-4);
   position: relative;
-  width: 864px;
+  width: 100%;
+  max-width: 864px;
 }
 
 .checkout-item .rectangle {
@@ -73,6 +74,70 @@
   height: 24px !important;
   position: relative !important;
   width: 24px !important;
+}
+
+.checkout-item .item-actions {
+  align-items: flex-end;
+  align-self: stretch;
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+}
+
+.checkout-item .quantity-section {
+  align-items: flex-start;
+  display: inline-flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+  gap: var(--space-2);
+}
+
+.checkout-item .quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.checkout-item .quantity-controls button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--color-text);
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+  padding: 0;
+}
+
+.checkout-item .quantity-controls button:hover {
+  opacity: 0.8;
+}
+
+.checkout-item .quantity-controls button svg {
+  color: var(--color-bg-white);
+}
+
+.checkout-item .quantity-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--space-3);
+}
+
+.checkout-item .subtotal-section {
+  align-items: flex-end;
+  display: inline-flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
 }
 
 .checkout-item .div-4 {
@@ -178,4 +243,39 @@
   text-align: right;
   white-space: nowrap;
   width: fit-content;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .checkout-item {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .checkout-item .rectangle {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    max-width: 150px;
+    align-self: center;
+  }
+
+  .checkout-item .item-content {
+    width: 100%;
+  }
+
+  .checkout-item .item-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .checkout-item .quantity-section {
+    width: 100%;
+  }
+
+  .checkout-item .subtotal-section {
+    width: 100%;
+    align-items: flex-start;
+  }
 }

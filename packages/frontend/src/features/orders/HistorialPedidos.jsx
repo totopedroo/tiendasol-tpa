@@ -8,7 +8,7 @@ export const HistorialPedidos = () => {
   return (
     <div className="contenido">
       <div className="container">
-        <div className="user-profile-section">
+        <div className="user-profile-section flex">
           <div className="user-wrapper">
             <User className="user-instance" />
           </div>
@@ -25,12 +25,24 @@ export const HistorialPedidos = () => {
             <div className="titulo">Historial de pedidos</div>
 
             <div className="container-paginacion">
-              <select></select>
+              <select>
+                <option value="reciente">Más reciente</option>
+                <option value="antiguo">Más antiguo</option>
+              </select>
               <Paginacion />
             </div>
           </div>
           <div className="pedidos-list-container">
             <DetallePedido />
+          </div>
+          <div className="container-titulo">
+            <div className="container-paginacion">
+              <select>
+                <option value="reciente">Más reciente</option>
+                <option value="antiguo">Más antiguo</option>
+              </select>
+              <Paginacion />
+            </div>
           </div>
         </div>
       </div>

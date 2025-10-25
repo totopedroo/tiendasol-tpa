@@ -35,7 +35,7 @@ export const Header = () => {
 
         <div className="buttons flex items-center">
           <Bell />
-          <User />
+          <User className="user-icon-header" />
           <div className="primary-button flex items-center">
             <ShoppingCart />
             <div className="contador-de-items flex items-center">0</div>
