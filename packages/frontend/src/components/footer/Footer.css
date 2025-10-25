@@ -3,8 +3,8 @@
   border-color: var(--color-border-light);
   border-top-style: solid;
   border-top-width: 1px;
-  height: 160px;
-  padding: var(--space-12) var(--space-8);
+  height: auto;
+  padding: var(--space-6) var(--space-8);
   position: relative;
   width: 100%;
 }
@@ -12,7 +12,7 @@
 .footer .text {
   display: inline-flex;
   flex: 0 0 auto;
-  gap: var(--space-8);
+  gap: var(--space-6);
   position: relative;
   align-items: center;
 }

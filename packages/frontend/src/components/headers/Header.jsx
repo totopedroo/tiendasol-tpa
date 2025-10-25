@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 import { ShoppingCart } from "../icons/ShoppingCart";
 import "./Header.css";
 import { User } from "../icons/User";
@@ -8,9 +8,18 @@ import { SearchIcon } from "../icons/Search";
 
 export const Header = () => {
   const navigate = useNavigate();
+  const isLoggedIn = false; // Temporal, más adelante vendrá de contexto o backend
 
   const irACheckout = () => {
     navigate("/checkout");
+  };
+
+  const irAUsuario = () => {
+    if (isLoggedIn) {
+      navigate("/users/1"); // Temporal, más adelante vendrá de contexto o backend :id
+    } else {
+      navigate("/login");
+    }
   };
 
   return (
@@ -27,9 +36,12 @@ export const Header = () => {
 
           <div className="nav-item flex items-center">Categorías</div>
 
-          <div className="nav-item flex items-center">Vender</div>
-
-          <div className="nav-item flex items-center">Contacto</div>
+          <Link to="/ventas" className="nav-item flex items-center">
+            Vender
+          </Link>
+          <Link to="/contacto" className="nav-item flex items-center">
+            Contacto
+          </Link>
         </div>
 
         <div className="search-bar">
@@ -42,9 +54,9 @@ export const Header = () => {
 
         <div className="buttons flex items-center">
           <Bell />
-          <Link to={`/users/1`} className="primary-button">
+          <div className="primary-button" onClick={irAUsuario}>
             <User className="user-icon-header" />
-          </Link>
+          </div>
           <div
             className="primary-button flex items-center"
             onClick={irACheckout}

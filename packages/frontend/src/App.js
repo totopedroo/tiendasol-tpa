@@ -7,6 +7,10 @@ import Layout from "./features/layout/Layout.jsx";
 import { HistorialPedidos } from "./features/orders/HistorialPedidos.jsx";
 import { Producto } from "./features/products/Producto.jsx";
 import { Search } from "./features/search/Search.jsx";
+import { Vender } from "./features/ventas/Vender.jsx";
+import { Contacto } from "./features/contacto/Contacto.jsx";
+import { Login } from "./features/auth/Login.jsx";
+import { ResetPassword } from "./features/auth/ResetPassword.jsx";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -29,7 +33,12 @@ function App() {
           <Route path="/search" element={<Search />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/users/:id" element={<HistorialPedidos />} />
+          <Route path="/ventas" element={<Vender />} />
+          <Route path="/contacto" element={<Contacto />} />
         </Route>
+        {/* Estas no llevan Layout */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
     </BrowserRouter>
   );
