@@ -4,8 +4,10 @@
   border-bottom-width: 1px;
   border-color: var(--color-border-light);
   padding: var(--space-6) var(--space-8);
-  position: relative;
+  position: sticky;
+  top: 0;
   width: 100%;
+  z-index: 100;
 }
 
 .header .company {
@@ -140,6 +142,7 @@
   flex: 0 0 auto;
   gap: var(--space-2);
   position: relative;
+  cursor: pointer;
 }
 
 .header .shopping-cart {

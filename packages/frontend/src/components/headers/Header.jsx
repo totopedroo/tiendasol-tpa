@@ -1,4 +1,5 @@
 import React from "react";
+import { Link, useNavigate } from "react-router";
 import { ShoppingCart } from "../icons/ShoppingCart";
 import "./Header.css";
 import { User } from "../icons/User";
@@ -6,14 +7,20 @@ import { Bell } from "../icons/Bell";
 import { SearchIcon } from "../icons/Search";
 
 export const Header = () => {
+  const navigate = useNavigate();
+
+  const irACheckout = () => {
+    navigate("/checkout");
+  };
+
   return (
     <div className="header">
       <div className="container-xl flex items-center justify-between">
-        <div className="company flex items-center">
+        <Link to={`/`} className="company flex items-center">
           <img className="logo" alt="Logo" src="/images/logo.png" />
 
           <div className="text-wrapper flex items-center">TiendaSol</div>
-        </div>
+        </Link>
 
         <div className="navigation-menu flex items-center">
           <div className="nav-item flex items-center">Productos</div>
@@ -35,8 +42,13 @@ export const Header = () => {
 
         <div className="buttons flex items-center">
           <Bell />
-          <User className="user-icon-header" />
-          <div className="primary-button flex items-center">
+          <Link to={`/users/1`} className="primary-button">
+            <User className="user-icon-header" />
+          </Link>
+          <div
+            className="primary-button flex items-center"
+            onClick={irACheckout}
+          >
             <ShoppingCart />
             <div className="contador-de-items flex items-center">0</div>
           </div>

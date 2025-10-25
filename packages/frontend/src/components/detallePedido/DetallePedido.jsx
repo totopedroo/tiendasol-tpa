@@ -1,6 +1,7 @@
 import React from "react";
 import "./DetallePedido.css";
 import { HistorialItem } from "../historialItem/HistorialItem";
+import { Button } from "../button/Button";
 
 export const DetallePedido = () => {
   return (
@@ -36,13 +37,9 @@ export const DetallePedido = () => {
       </div>
 
       <div className="order-actions">
-        <div className="history-button">
-          <div className="text-wrapper-7">Historial de estados</div>
-        </div>
+        <Button variant="warning">Historial de estados</Button>
 
-        <div className="cancel-button">
-          <div className="text-wrapper-7">Cancelar pedido</div>
-        </div>
+        <Button variant="danger">Cancelar pedido</Button>
       </div>
     </div>
   );

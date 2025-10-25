@@ -102,28 +102,6 @@
   gap: var(--space-2);
 }
 
-.checkout-item .quantity-controls button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background-color: var(--color-text);
-  border: none;
-  cursor: pointer;
-  transition: var(--transition);
-  padding: 0;
-}
-
-.checkout-item .quantity-controls button:hover {
-  opacity: 0.8;
-}
-
-.checkout-item .quantity-controls button svg {
-  color: var(--color-bg-white);
-}
-
 .checkout-item .quantity-display {
   display: flex;
   align-items: center;

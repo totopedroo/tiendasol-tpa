@@ -2,6 +2,7 @@ import React from "react";
 import { Minus } from "../icons/Minus";
 import { Plus } from "../icons/Plus";
 import { Delete } from "../icons/Delete";
+import { Button } from "../button/Button";
 import "./CheckoutItem.css";
 
 export const CheckoutItem = () => {
@@ -23,15 +24,21 @@ export const CheckoutItem = () => {
           <div className="quantity-section">
             <div className="text-wrapper-3">Cantidad</div>
             <div className="quantity-controls">
-              <button type="button" aria-label="Disminuir cantidad">
-                <Minus className="minus-instance" />
-              </button>
+              <Button
+                variant="icon"
+                icon={<Minus />}
+                size="small"
+                aria-label="Disminuir cantidad"
+              />
               <div className="quantity-display">
                 <div className="text-wrapper-4">2</div>
               </div>
-              <button type="button" aria-label="Aumentar cantidad">
-                <Plus className="plus-instance" />
-              </button>
+              <Button
+                variant="icon"
+                icon={<Plus />}
+                size="small"
+                aria-label="Aumentar cantidad"
+              />
             </div>
           </div>
 

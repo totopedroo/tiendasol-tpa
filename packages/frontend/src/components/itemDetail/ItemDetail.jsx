@@ -1,5 +1,6 @@
 import React from "react";
 import { ShoppingCart } from "../icons/ShoppingCart.jsx";
+import { Button } from "../button/Button.jsx";
 import "./ItemDetail.css";
 
 export const ItemDetail = () => {
@@ -60,14 +61,11 @@ export const ItemDetail = () => {
             </select>
           </div>
 
-          <button className="buy-now-button">
-            <div className="text-wrapper-5">Comprar ahora</div>
-          </button>
+          <Button variant="primary">Comprar ahora</Button>
 
-          <button className="add-to-cart-button">
-            <ShoppingCart />
-            <div className="text-wrapper-4">Agregar al carrito</div>
-          </button>
+          <Button variant="secondary" icon={<ShoppingCart />}>
+            Agregar al carrito
+          </Button>
         </div>
       </div>
     </div>

@@ -9,6 +9,15 @@
   position: relative;
   width: 256px;
   gap: var(--space-4);
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+}
+
+.item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-border);
 }
 
 .item .rectangle {
@@ -52,38 +61,6 @@
   font-family: var(--font-semibold);
   font-size: var(--text-lg);
   font-weight: 600;
-}
-
-.add-to-cart-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-2);
-  background-color: var(--main);
-  border-radius: var(--radius-sm);
-  padding: var(--space-3) var(--space-4);
-  width: 100%;
-  cursor: pointer;
-  transition: var(--transition);
-  white-space: nowrap;
-}
-
-.add-to-cart-button:hover {
-  opacity: 0.9;
-}
-
-.add-to-cart-button .shopping-cart {
-  height: 20px !important;
-  width: 20px !important;
-  flex-shrink: 0;
-}
-
-.add-to-cart-button .text-wrapper-4 {
-  color: var(--color-text);
-  font-family: var(--font-medium);
-  font-size: var(--text-sm);
-  font-weight: 500;
-  white-space: nowrap;
 }
 
 /* === RESPONSIVE === */

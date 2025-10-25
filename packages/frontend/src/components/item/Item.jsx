@@ -1,10 +1,17 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { ShoppingCart } from "../icons/ShoppingCart";
+import { Button } from "../button/Button";
 import "./Item.css";
 
 export const Item = () => {
+  const handleAddToCart = (e) => {
+    e.preventDefault(); // Evita que el Link navegue
+    alert("test");
+  };
+
   return (
-    <div className="item">
+    <Link to={`/products/1`} className="item">
       <div className="rectangle" />
 
       <div className="item-content">
@@ -14,11 +21,15 @@ export const Item = () => {
           <div className="text-wrapper-3">$150.000</div>
         </div>
 
-        <div className="add-to-cart-button">
-          <ShoppingCart />
-          <div className="text-wrapper-4">Agregar al carrito</div>
-        </div>
+        <Button
+          variant="secondary"
+          icon={<ShoppingCart />}
+          onClick={handleAddToCart}
+          fullWidth
+        >
+          Agregar al carrito
+        </Button>
       </div>
-    </div>
+    </Link>
   );
 };
