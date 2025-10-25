@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { SearchIcon } from "../../components/icons/Search";
 import { ItemCollection } from "../../components/itemCollection/ItemCollection";
 import "./Home.css";
 import { CategoryCollection } from "../../components/categoryCollection/CategoryCollection";
+import { getProductsSlowly } from "../../service/productosService";
 
 export const Home = () => {
+  const [productos, setProductos] = useState([]);
+
+  const cargarProductos = async () => {
+    const productosCargados = await getProductsSlowly();
+    setProductos(productosCargados);
+  };
+
+  useEffect(() => {
+    cargarProductos();
+  }, []);
+
   return (
     <div className="contenido">
       <div className="container">
@@ -19,8 +31,7 @@ export const Home = () => {
             </div>
           </div>
         </div>
-
-        <ItemCollection />
+        <ItemCollection items={productos} />
         <CategoryCollection />
       </div>
     </div>
