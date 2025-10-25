@@ -11,6 +11,7 @@ import { Vender } from "./features/ventas/Vender.jsx";
 import { Contacto } from "./features/contacto/Contacto.jsx";
 import { Login } from "./features/auth/Login.jsx";
 import { ResetPassword } from "./features/auth/ResetPassword.jsx";
+import { Register } from "./features/auth/Register.jsx";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -37,6 +38,7 @@ function App() {
           <Route path="/contacto" element={<Contacto />} />
         </Route>
         {/* Estas no llevan Layout */}
+        <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
