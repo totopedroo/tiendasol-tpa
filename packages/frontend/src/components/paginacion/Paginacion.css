@@ -50,6 +50,42 @@
   width: fit-content;
 }
 
+.paginacion .page-number {
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.paginacion .page-number:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.paginacion .arrow {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s;
+}
+
+.page-number .text-wrapper {
+  color: var(--color-text);
+}
+
+.paginacion .arrow:hover {
+  opacity: 0.7;
+}
+
+.paginacion .arrow.disabled {
+  cursor: not-allowed;
+  opacity: 0.3;
+}
+
+.paginacion .current-page {
+  cursor: default;
+}
+
 /* === RESPONSIVE - MOBILE === */
 @media (max-width: 768px) {
   .paginacion {

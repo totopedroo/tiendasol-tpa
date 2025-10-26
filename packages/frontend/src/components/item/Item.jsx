@@ -3,36 +3,41 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { ShoppingCart } from "../icons/ShoppingCart";
 import { Button } from "../button/Button";
+import { useCarrito } from "../../context/CarritoContext";
 import "./Item.css";
 
 export const Item = ({ item }) => {
+  const { agregarAlCarrito, estaEnCarrito } = useCarrito();
+
   const handleAddToCart = (e) => {
     e.preventDefault(); // Evita que el Link navegue
-    alert("test");
+    agregarAlCarrito(item);
   };
 
   return (
-    <Link key={item.id} to={`/products/${item.id}`} className="item">
+    <Link key={item._id} to={`/products/${item._id}`} className="item">
       <img
-        src={item.fotos[0]}
+        src={item.fotos?.[0] || "/images/logo.png"}
         alt={item.titulo || "Producto"}
         className="item-image"
       />
 
       <div className="item-content">
         <div className="item-info">
-          <div>{item.vendedor}</div>
+          <div>{item.vendedor?.nombre || "Vendedor"}</div>
           <div className="text-wrapper-2">{item.titulo}</div>
-          <div className="text-wrapper-3">${item.precio}</div>
+          <div className="text-wrapper-3">
+            ${item.precio} {item.moneda || "ARS"}
+          </div>
         </div>
 
         <Button
-          variant="secondary"
+          variant={estaEnCarrito(item._id) ? "primary" : "secondary"}
           icon={<ShoppingCart />}
           onClick={handleAddToCart}
           fullWidth
         >
-          Agregar al carrito
+          {estaEnCarrito(item._id) ? "Agregar más" : "Agregar al carrito"}
         </Button>
       </div>
     </Link>

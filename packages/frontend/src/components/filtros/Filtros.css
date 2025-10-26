@@ -3,10 +3,12 @@
   background-color: var(--main);
   border-radius: var(--radius-md);
   gap: 10px;
-  overflow: hidden;
+  overflow: visible;
   padding: var(--space-8);
   position: relative;
-  width: 464px;
+  width: 100%; /* El ancho será controlado por el contenedor padre */
+  display: flex;
+  flex-direction: column;
 }
 
 .filtros .container-titulo {
@@ -37,6 +39,15 @@
   padding: var(--space-4) 0;
   position: relative;
   width: 100%;
+}
+
+.filtros .container-inputs .filter-field button {
+  padding: 8px 16px;
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
 }
 
 .filtros .div-2 {
@@ -102,4 +113,32 @@
   left: unset !important;
   top: unset !important;
   width: unset !important;
+}
+
+.filtros .filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.filtros select,
+.filtros input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: var(--radius-md);
+  font-family: var(--font-regular);
+  font-size: var(--text-base);
+  width: 100%;
+}
+
+.filtros select:focus,
+.filtros input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.filtros .price-range-inputs {
+  display: flex;
+  gap: 8px;
 }

@@ -164,6 +164,13 @@
   width: fit-content;
 }
 
+button {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 /* === RESPONSIVE - MOBILE === */
 @media (max-width: 768px) {
   .header {
