@@ -17,23 +17,9 @@
   align-items: center;
 }
 
-.footer .company {
-  align-items: center;
-  display: inline-flex;
-  flex: 0 0 auto;
-  gap: var(--space-2);
-  position: relative;
-}
-
-.footer .image {
-  aspect-ratio: 1;
-  background-image: url("/public/images/logo.png");
-  background-position: 50% 50%;
-  background-size: cover;
-  border-radius: 8px;
-  height: 32px;
-  position: relative;
-  width: 32px;
+.footer .container .text .nav .nav-link a{
+  text-decoration: none;
+  color: inherit;
 }
 
 .footer .text-wrapper {

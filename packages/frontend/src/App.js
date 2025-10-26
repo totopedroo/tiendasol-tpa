@@ -12,6 +12,7 @@ import { Contacto } from "./features/contacto/Contacto.jsx";
 import { Login } from "./features/auth/Login.jsx";
 import { ResetPassword } from "./features/auth/ResetPassword.jsx";
 import { Register } from "./features/auth/Register.jsx";
+import { CategoryCollection } from "./components/categoryCollection/CategoryCollection.jsx";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -36,6 +37,7 @@ function App() {
           <Route path="/users/:id" element={<HistorialPedidos />} />
           <Route path="/ventas" element={<Vender />} />
           <Route path="/contacto" element={<Contacto />} />
+          <Route path="/categorias" element={<CategoryCollection/>} />
         </Route>
         {/* Estas no llevan Layout */}
         <Route path="/register" element={<Register />} />

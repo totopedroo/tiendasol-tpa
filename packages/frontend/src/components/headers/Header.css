@@ -108,16 +108,15 @@
   flex-wrap: wrap;
   gap: var(--space-6) 24px;
   justify-content: flex-end;
-  padding: 0px 0px 0px 32px;
   position: relative;
 }
 
-.header .frame-3 {
-  align-items: center;
+.header .cart-button {
   display: inline-flex;
   flex: 0 0 auto;
-  gap: 13px;
+  gap: var(--gap-xs);
   position: relative;
+  align-items: center;
 }
 
 .header .text-wrapper-3 {
@@ -127,8 +126,15 @@
   font-weight: 500;
   margin-top: -1px;
   position: relative;
+  text-align: center;
   white-space: nowrap;
   width: fit-content;
+}
+
+.header .icon-instance-node {
+  height: 20px !important;
+  position: relative !important;
+  width: 20px !important;
 }
 
 .header .size-24 {

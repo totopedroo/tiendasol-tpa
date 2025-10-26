@@ -11,6 +11,12 @@
   width: 24px !important;
 }
 
+.current-page,
+.page-number,
+.page-ellipsis {
+  flex-shrink: 0; /* evita que se aplasten o desaparezcan */
+}
+
 .paginacion .current-page {
   align-items: center;
   background-color: var(--color-primary);

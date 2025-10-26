@@ -5,6 +5,8 @@ import "./Header.css";
 import { User } from "../icons/User";
 import { Bell } from "../icons/Bell";
 import { SearchIcon } from "../icons/Search";
+import { Link } from "react-router-dom";
+import TiendaSolLogoLink from "../tiendaSolLogo/TiendaSolLogoLink";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -24,24 +26,15 @@ export const Header = () => {
 
   return (
     <div className="header">
-      <div className="container-xl flex items-center justify-between">
-        <Link to={`/`} className="company flex items-center">
-          <img className="logo" alt="Logo" src="/images/logo.png" />
-
-          <div className="text-wrapper flex items-center">TiendaSol</div>
-        </Link>
-
-        <div className="navigation-menu flex items-center">
-          <div className="nav-item flex items-center">Productos</div>
-
-          <div className="nav-item flex items-center">Categorías</div>
-
-          <Link to="/ventas" className="nav-item flex items-center">
-            Vender
-          </Link>
-          <Link to="/contacto" className="nav-item flex items-center">
-            Contacto
-          </Link>
+      <div className="navbar-content-wrapper"> 
+        <div className="nav-left-section">
+          <TiendaSolLogoLink />       
+          <div className="navigation-menu flex-row-center">
+              <Link to={'/search'} className="nav-item flex-row-center">Productos</Link>
+              <Link to={'/categorias'} className="nav-item flex-row-center">Categorías</Link>
+              <Link to={'/venta'} className="nav-item flex-row-center">Vender</Link>
+              <Link to={'/contacto'} className="nav-item flex-row-center">Contacto</Link>
+          </div>
         </div>
 
         <div className="search-bar">
@@ -64,6 +57,7 @@ export const Header = () => {
             <ShoppingCart />
             <div className="contador-de-items flex items-center">0</div>
           </div>
+          
         </div>
       </div>
     </div>

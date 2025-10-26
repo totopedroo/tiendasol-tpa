@@ -1,6 +1,7 @@
 import React from "react";
 import "./CategoryCollection.css";
 import { ArrowRight } from "../icons/ArrowRight";
+import { Link } from "react-router-dom";
 
 export const CategoryCollection = () => {
   const categorias = [
@@ -14,6 +15,7 @@ export const CategoryCollection = () => {
     "Instrumentos",
     "Consolas",
     "Bebés",
+    "Deportes",
   ];
 
   return (
@@ -32,8 +34,10 @@ export const CategoryCollection = () => {
       <div className="categories-grid">
         {categorias.map((nombre) => (
           <div className="category-item" key={nombre}>
-            <div className="ellipse" />
-            <div className="text-wrapper-3">{nombre}</div>
+            <Link to={`/search`}>
+                <div className="ellipse" />
+                  <div className="text-wrapper-3">{nombre}</div>
+            </Link>
           </div>
         ))}
       </div>

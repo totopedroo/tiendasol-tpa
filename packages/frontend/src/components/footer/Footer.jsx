@@ -1,25 +1,26 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Footer.css";
+import { Link } from "react-router";
+import TiendaSolLogoLink from "../tiendaSolLogo/TiendaSolLogoLink";
+
 
 export const Footer = () => {
   return (
     <div className="footer">
       <div className="container-xl">
         <div className="text">
-          <div className="company">
-            <div className="image" />
-            <div className="text-wrapper">TiendaSol</div>
-          </div>
-
+            <TiendaSolLogoLink/>
           <div className="nav">
-            <Link to="/ventas" className="nav-link">
-              Vender
-            </Link>
-            <div className="nav-link">Categorías</div>
-            <Link to="/contacto" className="nav-link">
-              Contacto
-            </Link>
+            <div className="nav-link">
+             <Link to={'/vender'}>Vender</Link>
+            </div>
+            <div className="nav-link">
+              <Link to={'/categorias'}>Categorías</Link>
+            </div>
+            <div className="nav-link">
+              <Link to={'/contacto'}>Contacto</Link>
+            </div>
           </div>
 
           {/* <div className="social-links">

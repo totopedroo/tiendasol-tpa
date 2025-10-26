@@ -5,7 +5,7 @@ export const ShoppingCart = () => {
     <svg
       className="shopping-cart"
       fill="none"
-      height="48"
+      height="50"
       viewBox="0 0 48 48"
       width="48"
       xmlns="http://www.w3.org/2000/svg"

@@ -4,23 +4,19 @@
 }
 
 .category-collection .categories-header {
-  align-self: stretch;
-  height: 68px;
-  padding: var(--padding-component-vertical);
+  display: flex;
+  align-items: center;
+  justify-content: center; 
   position: relative;
   width: 100%;
+  padding: var(--padding-component-vertical);
 }
 
 .category-collection .title-wrapper {
-  align-items: flex-start;
   display: flex;
-  flex-wrap: wrap;
-  gap: 0px 0px;
-  height: 46px;
-  margin-bottom: -5px;
-  margin-top: -5px;
-  position: relative;
-  width: 168px;
+  justify-content: center; 
+  align-items: center;
+  width: 100%;
 }
 
 .category-collection .text-wrapper {
@@ -29,11 +25,15 @@
   font-size: var(--text-xl);
   font-weight: 600;
   margin-top: -1px;
-  position: relative;
+  position: center;
   width: 165px;
 }
 
 .category-collection .view-all-link {
+  position: absolute;
+  right: 5%;
+  top: 50%;
+  transform: translateY(-50%);
   position: relative;
 }
 
@@ -56,6 +56,10 @@
 }
 
 .category-collection .categories-grid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  grid-auto-rows: 1fr;
+  justify-items: center;
   align-items: flex-start;
   align-self: stretch;
   display: flex;
@@ -68,17 +72,47 @@
 
 .category-collection .category-item {
   align-items: center;
-  display: inline-flex;
-  flex: 0 0 auto;
+  gap: 32px 24px;
+  width: 80%;
+  max-width: 1000px;
+  padding: 40px 0;
+}
+
+.categories-grid .category-item {
+  display: flex;
   flex-direction: column;
-  gap: 12px;
-  height: 128px;
+  align-items: center;
   justify-content: center;
-  position: relative;
+  gap: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+
+.categories-grid .category-item:hover {
+  transform: translateY(-10px); 
+}
+
+.category-item .text-wrapper-3 {
+  margin-top: 8px;
+  text-decoration: none; 
+  color: #000; 
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+.category-item a {
+  text-decoration: none; 
+  color: inherit; 
 }
 
 .category-collection .ellipse {
   aspect-ratio: 1;
+  background-color: var(--color-background-light);
+  border-radius: 50%;
+  height: 120px;
+  width: 120px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.08), 
+              0 6px 20px 0 rgba(0, 0, 0, 0.05);
   background-color: var(--color-bg-light);
   border-radius: 43px;
   height: 86px;

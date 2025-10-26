@@ -11,7 +11,7 @@ export const Search = () => {
         <div className="search-results-container">
           <div className="container-titulo">
             <div className="titulo">Resultados para &quot;busqueda&quot;</div>
-
+            
             <div className="container-paginacion">
               <select></select>
               <Paginacion className="navbar" />
@@ -21,7 +21,6 @@ export const Search = () => {
             <Filtros />
             <Resultados itemCount={20} />
           </div>
-
           <div className="bottom-pagination-wrapper">
             <div className="paginacion-wrapper">
               <Paginacion />
