@@ -1,15 +1,22 @@
 .paginacion {
-  display: inline-flex;
-  gap: var(--gap-lg);
-  left: 903px;
-  position: relative;
-  top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap; 
+  justify-content: center;
+  transform: translateX(400px);
 }
 
 .paginacion .icon-instance-node {
   height: 24px !important;
   position: relative !important;
   width: 24px !important;
+}
+
+.current-page,
+.page-number,
+.page-ellipsis {
+  flex-shrink: 0; /* evita que se aplasten o desaparezcan */
 }
 
 .paginacion .current-page {

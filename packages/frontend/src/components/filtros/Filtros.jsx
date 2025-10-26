@@ -1,10 +1,25 @@
-import React from "react";
+import React, { use } from "react";
 import "./Filtros.css";
 
-export const Filtros = () => {
+export const Filtros = ({ categoriaSeleccionada = "todas"}) => {
+
+  const categorias = [
+    "Autos",
+    "Tecnología",
+    "Ropa",
+    "Hogar",
+    "Herramientas",
+    "Cocina",
+    "Joyas",
+    "Instrumentos",
+    "Consolas",
+    "Bebés",
+    "Deportes",
+  ];
+
   return (
     <div className="filtros">
-      <div className="container-titulo">
+        <div className="container-titulo">
         <div className="titulo">Filtros</div>
       </div>
 
@@ -13,12 +28,11 @@ export const Filtros = () => {
           <div className="text-wrapper-2">Categoría</div>
           <select  className="select-categoria">
             <option value="todas">Todas las categorías</option>
-            {/* <option value="electronica">Electrónica</option>
-            <option value="ropa">Ropa</option>
-            <option value="hogar">Hogar</option>
-            <option value="deportes">Deportes</option> 
-            EJEMPLOS
-            */}
+            {categorias.map((nombre) => (
+              <option key={nombre} value={nombre.toLowerCase()}>
+                {nombre}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -28,7 +42,6 @@ export const Filtros = () => {
           className="nombre-vendedor"
           placeholder="Nombre del vendedor"
           >
-              
           </input>
         </div>
 

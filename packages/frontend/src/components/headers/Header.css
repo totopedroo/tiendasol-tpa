@@ -1,4 +1,3 @@
-/* --- Estilos Globales del Header (Sin Cambios en 'header') --- */
 .header {
   background-color: var(--main);
   border-bottom-style: solid;
@@ -11,17 +10,15 @@
   display: flex;
 }
 
-/* --- NUEVA CLASE: Contenedor Principal (Aplica la Separación Izquierda/Derecha) --- */
-.header .navbar-content-wrapper { 
+.header .navbar-content-wrapper {
   align-items: center;
   display: flex;
-  justify-content: space-between; 
+  justify-content: space-between;
   position: relative;
-  width: 98%; /* Asegura que ocupe el espacio del header */
+  width: 98%;
   padding: 0px 40px;
 }
 
-/* --- Sección Izquierda (Logo + Navegación) --- */
 .header .nav-left-section {
   display: flex;
   align-items: center;
@@ -33,15 +30,13 @@
   display: flex;
 }
 
-/* .company RENOMBRADA -> .company-logo-group */
 .header .company-logo-group {
   display: flex;
   align-items: center;
-  gap: 5px; 
+  gap: 5px;
 }
 
-/* .text-wrapper RENOMBRADA -> .company-name-text */
-.header .company-name-text { 
+.header .company-name-text {
   color: var(--color-text-primary);
   flex: 1;
   font-family: var(--font-family-semibold);
@@ -52,7 +47,6 @@
   position: relative;
 }
 
-/* Logo (Clase sin cambio) */
 .header .logo {
   aspect-ratio: 1;
   height: 40px;
@@ -62,15 +56,13 @@
   display: flex;
 }
 
-/* Menú de Navegación */
 .header .navigation-menu {
   display: flex;
-  flex-direction: row; 
+  flex-direction: row;
   padding: 0 var(--spacing-lg);
   position: relative;
 }
 
-/* Ítem Individual del Menú */
 .header .nav-item {
   color: var(--color-text-primary);
   font-family: var(--font-family-regular);
@@ -83,21 +75,18 @@
   width: fit-content;
 }
 
-/* --- Sección Derecha (Buscador + Íconos) --- */
-
 .header .search-bar-input .search-button{
   background: none;
   border: none;
   cursor: pointer;
 }
-/* NUEVA CLASE: Contenedor del grupo derecho (buscador + iconos) */
+
 .header .nav-right-section {
   display: flex;
   align-items: center;
-  gap: 25px; /* Espacio entre el buscador y el grupo de íconos */
+  gap: 25px;
 }
 
-/* .search-bar RENOMBRADA -> .search-bar-input */
 .header .search-bar-input {
   align-self: stretch;
   background-color: var(--color-background-white);
@@ -108,12 +97,11 @@
   position: relative;
   width: 400px;
   height: 50px;
-  display: flex; 
+  display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-/* .text-wrapper-2 RENOMBRADA -> .search-placeholder-text */
 .header .search-placeholder-text {
   color: var(--color-text-primary)73;
   font-family: var(--font-family-medium);
@@ -127,27 +115,23 @@
   width: fit-content;
 }
 
-/* .buttons RENOMBRADA -> .utility-buttons */
 .header .utility-buttons {
   display: inline-flex;
   flex: 0 0 auto;
   flex-wrap: wrap;
-  /* El 'gap' y 'padding' deben ser revisados para la nueva estructura Flexbox */
-  gap: 25px; 
+  gap: 25px;
   justify-content: flex-end;
   position: relative;
 }
 
-/* .primary-button RENOMBRADA -> .cart-button */
 .header .cart-button {
   display: inline-flex;
   flex: 0 0 auto;
   gap: var(--gap-xs);
   position: relative;
-  align-items: center; /* Asegura la alineación del carrito y el contador */
+  align-items: center;
 }
 
-/* .contador-de-items RENOMBRADA -> .item-counter-badge */
 .header .item-counter-badge {
   color: var(--color-text-primary);
   font-family: var(--font-family-medium);
@@ -162,7 +146,6 @@
   width: fit-content;
 }
 
-/* Estilos de Iconos (Sin cambio) */
 .header .icon-instance-node {
   height: 20px !important;
   position: relative !important;
@@ -181,13 +164,3 @@
   position: relative !important;
   width: 24px !important;
 }
-
-/* Clases antiguas eliminadas/renombradas */
-/* .header .container eliminado y reemplazado por .navbar-content-wrapper */
-/* .header .frame-3 eliminado (no se encontró su uso) */
-/* .header .text-wrapper-3 eliminado (no se encontró su uso) */
-
-/* Notas:
-   1. Se eliminó la clase antigua '.header .container' y fue reemplazada por la nueva '.header .navbar-content-wrapper' con 'justify-content: space-between'.
-   2. Se añadieron 'display: flex' y 'align-items: center' a los nuevos contenedores de sección para asegurar la alineación interna.
-*/

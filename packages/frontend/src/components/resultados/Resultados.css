@@ -1,12 +1,13 @@
 .resultados {
   align-items: flex-start;
-  display: grid;
-  flex-wrap: wrap;
+  display: flex;
+  flex-wrap:wrap;
   gap: 20px;
   position: relative;
   width: 100%;
-  flex-grow: 1;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));}
+  flex-grow: 0;
+  align-items: stretch;
+}
 
 .resultados .item-instance {
   left: unset !important;

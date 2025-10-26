@@ -14,7 +14,7 @@ export const Header = () => {
         <div className="nav-left-section">
           <TiendaSolLogoLink />       
           <div className="navigation-menu flex-row-center">
-              <Link to={'/productos'} className="nav-item flex-row-center">Productos</Link>
+              <Link to={'/search'} className="nav-item flex-row-center">Productos</Link>
               <Link to={'/categorias'} className="nav-item flex-row-center">Categorías</Link>
               <Link to={'/venta'} className="nav-item flex-row-center">Vender</Link>
               <Link to={'/contacto'} className="nav-item flex-row-center">Contacto</Link>
@@ -34,7 +34,7 @@ export const Header = () => {
 
           <div className="utility-buttons flex-row-center"> 
             <div className="notificaciones">
-              <Link to={'/notificacioens'}><Bell/></Link>
+              <Link to={'/notificaciones'}><Bell/></Link>
             </div>
             <div className="user-profile-icon">
             <Link to={'/perfil'}><User/></Link>

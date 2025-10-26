@@ -11,6 +11,12 @@ export const Resultados = () => {
         <Item />
         <Item />
         <Item />
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+        <Item />
     </div>
   );
 };
