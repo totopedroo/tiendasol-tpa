@@ -3,10 +3,21 @@ import React from "react";
 import { ShoppingCart } from "../icons/ShoppingCart.jsx";
 import { Button } from "../button/Button.jsx";
 import "./ItemDetail.css";
+import { useCarrito } from "../../context/CarritoContext";
 
 export const ItemDetail = ({ item }) => {
   // Hooks deben estar antes de cualquier return
   const [imagenSeleccionada, setImagenSeleccionada] = React.useState(0);
+  const [cantidadSeleccionada, setCantidadSeleccionada] = React.useState(1);
+  const { agregarAlCarrito } = useCarrito();
+  
+  const handleAgregarAlCarrito = (e) => {
+    e.preventDefault(); 
+    // Agregar la cantidad seleccionada veces
+    for (let i = 0; i < cantidadSeleccionada; i++) {
+      agregarAlCarrito(item);
+    }
+  };
 
   // Validar que item existe
   if (!item) {
@@ -67,7 +78,11 @@ export const ItemDetail = ({ item }) => {
           {hayStock ? (
             <div className="quantity-wrapper flex items-center gap-2">
               <span className="quantity-label">Cantidad:</span>
-              <select className="quantity-select">
+              <select 
+                className="quantity-select"
+                value={cantidadSeleccionada}
+                onChange={(e) => setCantidadSeleccionada(Number(e.target.value))}
+              >
                 {Array.from({ length: Math.min(item.stock, 10) }, (_, i) => (
                   <option key={i + 1} value={i + 1}>
                     {i + 1}
@@ -87,6 +102,7 @@ export const ItemDetail = ({ item }) => {
             variant="secondary"
             disabled={!hayStock}
             icon={<ShoppingCart />}
+            onClick={handleAgregarAlCarrito}
           >
             Agregar al carrito
           </Button>

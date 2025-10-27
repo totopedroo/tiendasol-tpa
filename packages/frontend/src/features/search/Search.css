@@ -9,11 +9,20 @@
   height: auto;
 }
 
-.search-results-container .bottom-pagination-wrapper {
-  display: flex;
-  gap: var(--space-4);
-  height: 46px;
+.contenido .search-results-container {
+  align-items: flex-end;
+  flex: 1;
+  flex-grow: 1;
+  min-height: 100vh;
   justify-content: flex-end;
+  position: relative;
+}
+
+.contenido .bottom-pagination-wrapper {
+  display: flex;
+  gap: var(--space-8);
+  height: 46px;
+  justify-content: center;
   position: relative;
   width: 100%;
   margin-top: var(--space-4);
@@ -83,52 +92,38 @@
 .search-results-container .container-resultados {
   display: flex;
   align-items: flex-start;
-  justify-content: center;
-  gap: 30px;
-  width: 100%;
-  padding: var(--spacing-lg) 0;
+  justify-content: flex-start;
+  gap: var(--space-8);
+  padding: var(--space-8) 0;
   position: relative;
-  flex-wrap: nowrap;
 }
 
-/* === RESPONSIVE - TABLET Y MÓVIL === */
+
+.container-resultados .filtros {
+  position: sticky;
+  top: 100px;
+  align-self: flex-start;
+  flex-shrink: 0;
+  width: 380px; /* Ancho fijo para los filtros */
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.container-resultados .resultados {
+  flex: 1;
+  min-width: 0;
+}
+
 @media (max-width: 1024px) {
-  /* Contenedor de resultados en columna */
-  .search-results-container .container-resultados {
-    flex-direction: column;
-    gap: var(--space-6);
-  }
-
-  /* Paginación inferior como la superior */
-  .search-results-container .bottom-pagination-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: auto;
-  }
-
-  .search-results-container .paginacion-wrapper {
-    margin-left: auto;
-  }
-}
-
-@media (max-width: 768px) {
-  .search-results-container .container-titulo {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-4);
-    margin-bottom: var(--space-6);
-  }
-
-  .search-results-container .container-titulo .container-paginacion {
+  .container-resultados .filtros {
+    position: relative;
+    top: 0;
     width: 100%;
-    justify-content: space-between;
-    margin-left: 0;
+    max-width: 100%;
   }
-
-  /* Paginación inferior */
-  .search-results-container .bottom-pagination-wrapper {
+  
+  .container-resultados {
     flex-direction: column;
-    gap: var(--space-4);
   }
 }

@@ -72,6 +72,26 @@
   gap: var(--space-4);
 }
 
+.empty-cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-16);
+  gap: var(--space-6);
+  background-color: var(--main);
+  border-radius: var(--radius-md);
+  min-height: 300px;
+  text-align: center;
+}
+
+.empty-cart p {
+  color: var(--color-text);
+  font-family: var(--font-medium);
+  font-size: var(--text-lg);
+  margin: 0;
+}
+
 .info-pedido {
   align-items: flex-start;
   background-color: var(--main);

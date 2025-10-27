@@ -1,69 +1,109 @@
-import { useState } from "react";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Filtros } from "../../components/filtros/Filtros";
 import { Paginacion } from "../../components/paginacion/Paginacion";
 import { Resultados } from "../../components/resultados/Resultados";
+import { buscarProductos } from "../../service/productosService";
 import "./Search.css";
-import { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
 
 // tiendasol.com/search?q="titulo"&categoria="celulares"
 export const Search = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [productos, setProductos] = useState([]);
-  const [productosFiltrados, setProductosFiltrados] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPaginas, setTotalPaginas] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [paginacion, setPaginacion] = useState({
+    pagina: 1,
+    perPage: 10,
+    total: 0,
+    totalPaginas: 0,
+  });
 
-  /* Hook que lee los parametros de la URL*/ 
-  const [searchParams] = useSearchParams();
+const fetchProductos = async () => {
+  setLoading(true);
+  setError(null);
+  
+  try {
+    // Construir objeto de parámetros desde la URL
+    const params = {};
+    
+    // Obtener todos los parámetros de la URL
+    for (const [key, value] of searchParams.entries()) {
+      params[key] = value;
+    }
+    
+    // Si no hay página, usar página 1 por defecto
+    if (!params.page) {
+      params.page = 1;
+    }
+    
+    // Si no hay limit, usar 10 por defecto
+    if (!params.limit) {
+      params.limit = 10;
+    }
 
-  const cargarProductos = async (page = 1) => {
-    const productosCargados = [];
-    console.log("Productos cargados:", productosCargados);
-    setProductos(productosCargados.data);
-    setProductosFiltrados(productosCargados.data);
-    setCurrentPage(page);
-    setTotalPaginas(productosCargados.totalPaginas);
+    const response = await buscarProductos(params);
+    
+    setProductos(response.data || []);
+    setPaginacion({
+      pagina: response.pagina || 1,
+      perPage: response.perPage || 10,
+      total: response.total || 0,
+      totalPaginas: response.totalPaginas || 0,
+    });
+  } catch (err) {
+    console.error("Error al buscar productos:", err);
+    setError("Error al cargar los productos. Por favor, intenta de nuevo.");
+    setProductos([]);
+  } finally {
+    setLoading(false);
+  }
+};
+  useEffect(() => { fetchProductos() }, [searchParams]);
+
+  const searchTerm = searchParams.get("titulo") || "";
+  const limit = searchParams.get("limit") || "10";
+
+  const handleLimitChange = (e) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("limit", e.target.value);
+    params.set("page", "1"); // Resetear a página 1 cuando cambie el límite
+    setSearchParams(params);
   };
-
-  const [tituloFromURL, setSearchQuery] = useState("");
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("todas");
-
-  useEffect(() => {
-      const categoryFromURL = searchParams.get('categoria');
-        if (categoryFromURL) {
-            setCategoriaSeleccionada(categoryFromURL.toLowerCase());
-        }
-        const tituloFromURL = searchParams.get('titulo');
-        if (tituloFromURL) {
-            setSearchQuery(tituloFromURL.toLocaleLowerCase());
-        }
-        cargarProductos(1, tituloFromURL, categoryFromURL);
-
-    }, [searchParams]); 
 
   return (
     <div className="contenido">
       <div className="container">
         <div className="search-results-container">
           <div className="container-titulo">
-            <div className="titulo">Resultados para {tituloFromURL}</div>
+            <div className="titulo">
+              {searchTerm
+                ? `Resultados para "${searchTerm}"`
+                : "Todos los productos"}
+            </div>
 
             <div className="container-paginacion">
-              <select>
-                <option>Mas Vendido</option>
-                <option></option>
+              <select value={limit} onChange={handleLimitChange}>
+                <option value="10">10 por página</option>
+                <option value="20">20 por página</option>
+                <option value="50">50 por página</option>
               </select>
-              <Paginacion className="navbar" />
             </div>
           </div>
           <div className="container-resultados">
-            <Filtros categoriaSeleccionada={categoriaSeleccionada} />
-            <Resultados />
+            <Filtros />
+            <Resultados 
+              productos={productos} 
+              loading={loading} 
+              error={error}
+            />
           </div>
           <div className="bottom-pagination-wrapper">
             <div className="paginacion-wrapper">
-              <Paginacion />
+              <Paginacion 
+                paginaActual={paginacion.pagina}
+                totalPaginas={paginacion.totalPaginas}
+              />
             </div>
           </div>
         </div>

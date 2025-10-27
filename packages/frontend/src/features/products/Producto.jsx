@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { ItemCollection } from "../../components/itemCollection/ItemCollection";
 import { ItemDetail } from "../../components/itemDetail/ItemDetail";
 import "./Producto.css";
-import { productos } from "../../mockdata/Productos";
+import { getProductoById } from "../../service/productosService";
 import { useParams } from "react-router";
 
 export const Producto = () => {
   const { id } = useParams();
+  const [producto, setProducto] = useState(null);
 
-  const producto = productos.find((p) => p.id === id);
+  useEffect(() => {
+    const cargarProducto = async () => {
+      const data = await getProductoById(id);
+      setProducto(data);
+    };
+    cargarProducto();
+  }, [id]);
 
   return (
     <div className="contenido">

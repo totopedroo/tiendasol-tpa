@@ -17,6 +17,7 @@
   height: 144px;
   position: relative;
   width: 144px;
+  object-fit: cover;
 }
 
 .checkout-item .item-content {
@@ -221,6 +222,10 @@
   text-align: right;
   white-space: nowrap;
   width: fit-content;
+}
+
+.checkout-contenido .info-pedido .btn-full-width {
+  width: calc(100% - 2.5rem);
 }
 
 /* Mobile responsiveness */

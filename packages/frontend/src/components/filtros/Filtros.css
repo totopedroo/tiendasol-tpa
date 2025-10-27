@@ -5,12 +5,19 @@
   border-radius: var(--radius-lg);
   overflow: hidden;
   padding: var(--spacing-lg, 24px);
+  border-radius: var(--radius-md);
+  gap: 10px;
+  overflow: visible;
+  padding: var(--space-8);
   position: relative;
   width: 320px;
   flex-shrink: 0;
   box-shadow:
     0 4px 8px 0 rgba(0, 0, 0, 0.08),
     0 6px 20px 0 rgba(0, 0, 0, 0.05);
+  width: 100%; /* El ancho será controlado por el contenedor padre */
+  display: flex;
+  flex-direction: column;
 }
 
 .filtros .container-titulo {
@@ -170,4 +177,32 @@
   .filtros .container-inputs {
     gap: var(--space-4);
   }
+}
+
+.filtros .filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.filtros select,
+.filtros input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: var(--radius-md);
+  font-family: var(--font-regular);
+  font-size: var(--text-base);
+  width: 100%;
+}
+
+.filtros select:focus,
+.filtros input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.filtros .price-range-inputs {
+  display: flex;
+  gap: 8px;
 }

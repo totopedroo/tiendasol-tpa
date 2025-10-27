@@ -13,6 +13,7 @@ import { Login } from "./features/auth/Login.jsx";
 import { ResetPassword } from "./features/auth/ResetPassword.jsx";
 import { Register } from "./features/auth/Register.jsx";
 import { CategoryCollection } from "./components/categoryCollection/CategoryCollection.jsx";
+import { CarritoProvider } from "./context/CarritoContext.jsx";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -26,25 +27,27 @@ function ScrollToTop() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <ScrollToTop />
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="/products/:id" element={<Producto />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/users/:id" element={<HistorialPedidos />} />
-          <Route path="/ventas" element={<Vender />} />
-          <Route path="/contacto" element={<Contacto />} />
-          <Route path="/categorias" element={<CategoryCollection/>} />
+    <CarritoProvider>
+      <BrowserRouter>
+        <ScrollToTop />
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="/products/:id" element={<Producto />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/users/:id" element={<HistorialPedidos />} />
+            <Route path="/ventas" element={<Vender />} />
+            <Route path="/contacto" element={<Contacto />} />
+            <Route path="/categorias" element={<CategoryCollection/>} />
         </Route>
-        {/* Estas no llevan Layout */}
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-      </Routes>
-    </BrowserRouter>
+          {/* Estas no llevan Layout */}
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+        </Routes>
+      </BrowserRouter>
+    </CarritoProvider>
   );
 }
 

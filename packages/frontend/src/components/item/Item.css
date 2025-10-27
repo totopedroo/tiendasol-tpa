@@ -62,6 +62,10 @@
   font-weight: 400;
 }
 
+.item .item-content .btn-full-width {
+  width: calc(100% - 2rem);
+}
+
 .item-info .text-wrapper-2 {
   color: var(--color-text);
   font-family: var(--font-bold);
