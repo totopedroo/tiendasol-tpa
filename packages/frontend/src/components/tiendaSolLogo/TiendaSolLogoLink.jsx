@@ -1,7 +1,6 @@
-// src/components/CompanyLogoLink.jsx
 
 import React from 'react';
-import { Link } from 'react-router-dom'; // Asegúrate de importar Link
+import { Link } from 'react-router-dom';
 import './TiendaSolLogoLink.css';
 
 const TiendaSolLogoLink = () => {

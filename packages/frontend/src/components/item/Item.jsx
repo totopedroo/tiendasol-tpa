@@ -32,7 +32,8 @@ export const Item = ({ item }) => {
           onClick={handleAddToCart}
           fullWidth
         >
-          Agregar al carrito
+          <span className="button-text-full">Agregar al carrito</span>
+          <span className="button-text-short">Agregar</span>
         </Button>
       </div>
     </Link>

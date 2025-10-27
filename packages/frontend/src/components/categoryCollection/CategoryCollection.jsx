@@ -2,22 +2,10 @@ import React from "react";
 import "./CategoryCollection.css";
 import { ArrowRight } from "../icons/ArrowRight";
 import { Link } from "react-router-dom";
+import { categorias } from "../../mockdata/Categorias";
+
 
 export const CategoryCollection = () => {
-  const categorias = [
-    "Autos",
-    "Tecnología",
-    "Ropa",
-    "Hogar",
-    "Herramientas",
-    "Cocina",
-    "Joyas",
-    "Instrumentos",
-    "Consolas",
-    "Bebés",
-    "Deportes",
-  ];
-
   return (
     <div className="category-collection flex flex-col items-center">
       <div className="categories-header flex items-center justify-between">
@@ -32,11 +20,17 @@ export const CategoryCollection = () => {
       </div>
 
       <div className="categories-grid">
-        {categorias.map((nombre) => (
-          <div className="category-item" key={nombre}>
-            <Link to={`/search`}>
-                <div className="ellipse" />
-                  <div className="text-wrapper-3">{nombre}</div>
+        {categorias.map((categoria) => (
+          <div className="category-item" key={categoria.nombre}>
+            <Link to={`/search?titulo=""&categoria=${categoria.nombre.toLowerCase()}`} className="category-link flex flex-col items-center">
+                <div className="ellipse">
+                <img 
+                src={categoria.imagen}
+                alt={categoria.nombre}
+                className="category-image"
+                />
+                </div>
+                  <div className="text-wrapper-3">{categoria.nombre}</div>
             </Link>
           </div>
         ))}

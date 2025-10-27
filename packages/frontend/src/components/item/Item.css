@@ -37,7 +37,7 @@
   background-color: var(--color-bg-light);
   border-radius: var(--radius-md);
   position: relative;
-  width: 98%; 
+  width: 98%;
 }
 
 .item-content {
@@ -76,9 +76,23 @@
   font-weight: 600;
 }
 
+/* Mostrar texto completo por defecto */
+.item .button-text-short {
+  display: none;
+}
+
 /* === RESPONSIVE === */
 @media (max-width: 768px) {
   .item {
     width: 100%;
+  }
+
+  /* Ocultar texto completo y mostrar texto corto en móvil */
+  .item .button-text-full {
+    display: none;
+  }
+
+  .item .button-text-short {
+    display: inline;
   }
 }

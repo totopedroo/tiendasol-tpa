@@ -1,15 +1,27 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect, useCallback } from "react";
-import { Skeleton } from "@mui/joy";
+import { Link } from "react-router-dom";
 import { ArrowRight } from "../icons/ArrowRight";
 import { ArrowLeft } from "../icons/ArrowLeft";
 import { Item } from "../item/Item";
+import { ItemSkeleton } from "../item/ItemSkeleton";
 import { Button } from "../button/Button";
+import { getProductsSlowly } from "../../service/productosService";
 import "./ItemCollection.css";
 
-export const ItemCollection = ({ items = [] }) => {
+export const ItemCollection = ({ titulo = "Productos Destacados", query }) => {
   const [index, setIndex] = useState(0);
+  const [items, setItems] = useState([]);
   const ITEMS_VISIBLE = 5;
+
+  // Cargar productos
+  useEffect(() => {
+    const cargarProductos = async () => {
+      const productosCargados = await getProductsSlowly(query);
+      setItems(productosCargados);
+    };
+    cargarProductos();
+  }, [query]);
 
   // Resetear índice cuando cambien los items
   useEffect(() => {
@@ -29,13 +41,16 @@ export const ItemCollection = ({ items = [] }) => {
     <div className="item-collection">
       <div className="collection-header flex items-center justify-between">
         <div className="title-wrapper">
-          <div className="text-wrapper">Productos Destacados</div>
+          <div className="text-wrapper">{titulo}</div>
         </div>
 
-        <div className="view-all-link flex items-center gap-2">
+        <Link
+          to={`/search${query || ""}`}
+          className="view-all-link flex items-center gap-2"
+        >
           <div className="text-wrapper-2">Ver Todos</div>
           <ArrowRight />
-        </div>
+        </Link>
       </div>
 
       <div className="carousel-container">
@@ -51,32 +66,7 @@ export const ItemCollection = ({ items = [] }) => {
           {!items.length ? (
             <div className="items-carousel">
               {Array.from({ length: 5 }).map((_, i) => (
-                <div key={i} className="item-skeleton">
-                  <Skeleton
-                    variant="rectangular"
-                    width="100%"
-                    sx={{
-                      borderRadius: "var(--radius-md)",
-                      aspectRatio: "1 / 1",
-                    }}
-                    animation="wave"
-                  />
-                  <Skeleton
-                    variant="text"
-                    width="60%"
-                    sx={{ mt: 1 }}
-                    animation="wave"
-                  />
-                  <Skeleton variant="text" width="80%" animation="wave" />
-                  <Skeleton variant="text" width="40%" animation="wave" />
-                  <Skeleton
-                    variant="rectangular"
-                    width="100%"
-                    height={40}
-                    sx={{ mt: 2, borderRadius: "var(--radius-md)" }}
-                    animation="wave"
-                  />
-                </div>
+                <ItemSkeleton key={i} />
               ))}
             </div>
           ) : (

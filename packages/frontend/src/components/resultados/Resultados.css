@@ -1,12 +1,33 @@
 .resultados {
-  align-items: flex-start;
-  display: flex;
-  flex-wrap:wrap;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   position: relative;
   width: 100%;
-  flex-grow: 0;
   align-items: stretch;
+  justify-items: center;
+}
+
+/* Responsive - 3 columnas en tablets */
+@media (max-width: 1024px) {
+  .resultados {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Responsive - 2 columnas en móviles */
+@media (max-width: 768px) {
+  .resultados {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+}
+
+/* Responsive - 1 columna solo en móviles muy pequeños */
+@media (max-width: 360px) {
+  .resultados {
+    grid-template-columns: 1fr;
+  }
 }
 
 .resultados .item-instance {

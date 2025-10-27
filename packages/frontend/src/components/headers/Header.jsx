@@ -5,7 +5,6 @@ import "./Header.css";
 import { User } from "../icons/User";
 import { Bell } from "../icons/Bell";
 import { SearchIcon } from "../icons/Search";
-import { Link } from "react-router-dom";
 import TiendaSolLogoLink from "../tiendaSolLogo/TiendaSolLogoLink";
 
 export const Header = () => {
@@ -32,7 +31,7 @@ export const Header = () => {
           <div className="navigation-menu flex-row-center">
               <Link to={'/search'} className="nav-item flex-row-center">Productos</Link>
               <Link to={'/categorias'} className="nav-item flex-row-center">Categorías</Link>
-              <Link to={'/venta'} className="nav-item flex-row-center">Vender</Link>
+              <Link to={'/ventas'} className="nav-item flex-row-center">Vender</Link>
               <Link to={'/contacto'} className="nav-item flex-row-center">Contacto</Link>
           </div>
         </div>

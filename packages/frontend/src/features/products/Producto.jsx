@@ -14,8 +14,21 @@ export const Producto = () => {
     <div className="contenido">
       <div className="container">
         <ItemDetail item={producto} />
-        <ItemCollection />
-        <ItemCollection />
+        <ItemCollection
+          titulo={`Más del vendedor`}
+          query={`?vendedor=${producto.vendedor}`}
+        />
+
+        {/* Generar un ItemCollection por cada categoría del producto */}
+        {producto.categorias &&
+          producto.categorias.length > 0 &&
+          producto.categorias.map((categoria) => (
+            <ItemCollection
+              key={categoria}
+              titulo={`Más de ${categoria}`}
+              query={`?categoria=${categoria}`}
+            />
+          ))}
       </div>
     </div>
   );

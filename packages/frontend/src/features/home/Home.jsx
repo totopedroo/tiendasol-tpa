@@ -1,22 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { SearchIcon } from "../../components/icons/Search";
 import { ItemCollection } from "../../components/itemCollection/ItemCollection";
 import "./Home.css";
 import { CategoryCollection } from "../../components/categoryCollection/CategoryCollection";
-import { getProductsSlowly } from "../../service/productosService";
+import { Button } from "@mui/joy";
 
 export const Home = () => {
-  const [productos, setProductos] = useState([]);
-
-  const cargarProductos = async () => {
-    const productosCargados = await getProductsSlowly();
-    setProductos(productosCargados);
-  };
-
-  useEffect(() => {
-    cargarProductos();
-  }, []);
-
   return (
     <div className="contenido">
       <div className="container">
@@ -27,11 +16,13 @@ export const Home = () => {
                 className="search-input"
                 placeholder="Buscar productos..."
               />
-              <SearchIcon className="search-icon" />
+              <Button variant="outlined" onClick={() => {}}>
+                <SearchIcon className="search-icon" />
+              </Button>
             </div>
           </div>
         </div>
-        <ItemCollection items={productos} />
+        <ItemCollection />
         <CategoryCollection />
       </div>
     </div>

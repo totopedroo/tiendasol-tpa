@@ -10,6 +10,22 @@
   z-index: 100;
 }
 
+.header .navbar-content-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-6);
+  width: 100%;
+}
+
+.header .nav-left-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-4);
+  flex: 1;
+}
+
 .header .company {
   gap: var(--space-2);
   position: relative;
@@ -35,9 +51,10 @@
 
 .header .navigation-menu {
   align-self: stretch;
-  flex: 1;
-  flex-grow: 1;
-  gap: var(--space-12);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-16);
   padding: 0 var(--space-8);
   position: relative;
 }
@@ -61,6 +78,7 @@
   display: flex;
   align-items: center;
   padding: 0 16px;
+  flex: 0 0 auto;
 }
 
 .search-input {
@@ -105,10 +123,10 @@
 .header .buttons {
   display: inline-flex;
   flex: 0 0 auto;
-  flex-wrap: wrap;
-  gap: var(--space-6) 24px;
+  gap: var(--space-6);
   justify-content: flex-end;
   position: relative;
+  align-items: center;
 }
 
 .header .cart-button {
