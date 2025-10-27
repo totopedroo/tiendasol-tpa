@@ -7,16 +7,22 @@ export const ItemSkeleton = () => {
     <div className="item-skeleton">
       <Skeleton
         variant="rectangular"
-        width="100%"
         sx={{
-          borderRadius: "var(--radius-md)",
+          width: "100%",
           aspectRatio: "1 / 1",
+          borderRadius: "var(--radius-md)",
         }}
         animation="wave"
       />
-      <Skeleton variant="text" width="60%" sx={{ mt: 1 }} animation="wave" />
-      <Skeleton variant="text" width="80%" animation="wave" />
-      <Skeleton variant="text" width="40%" animation="wave" />
+      <Skeleton
+        variant="text"
+        width="60%"
+        height={20}
+        sx={{ mt: 1 }}
+        animation="wave"
+      />
+      <Skeleton variant="text" width="80%" height={20} animation="wave" />
+      <Skeleton variant="text" width="40%" height={20} animation="wave" />
       <Skeleton
         variant="rectangular"
         width="100%"

@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { Filtros } from "../../components/filtros/Filtros";
 import { Paginacion } from "../../components/paginacion/Paginacion";
 import { Resultados } from "../../components/resultados/Resultados";
-import { buscarProductos } from "../../service/productosService";
+import { buscarProductos, getProductsSlowly } from "../../service/productosService";
 import "./Search.css";
 
 // tiendasol.com/search?q="titulo"&categoria="celulares"

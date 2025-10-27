@@ -1,6 +1,6 @@
 export const productos = [
   {
-    id: "1",
+    _id: "1",
     vendedor: "Juan Pérez",
     titulo: "Laptop Gamer Pro",
     descripcion:
@@ -14,7 +14,7 @@ export const productos = [
     fotos: ["https://via.placeholder.com/400x400?text=Laptop+Gamer"],
   },
   {
-    id: "2",
+    _id: "2",
     vendedor: "Juan Pérez",
     titulo: "Auriculares Bluetooth",
     descripcion: "Auriculares inalámbricos con cancelación de ruido activa",
@@ -27,7 +27,7 @@ export const productos = [
     fotos: ["https://via.placeholder.com/400x400?text=Auriculares"],
   },
   {
-    id: "3",
+    _id: "3",
     vendedor: "María García",
     titulo: "Teclado Mecánico RGB",
     descripcion:
@@ -41,7 +41,7 @@ export const productos = [
     fotos: ["https://via.placeholder.com/400x400?text=Teclado"],
   },
   {
-    id: "4",
+    _id: "4",
     vendedor: "María García",
     titulo: "Mouse Gamer Inalámbrico",
     descripcion:
@@ -55,7 +55,7 @@ export const productos = [
     fotos: ["https://via.placeholder.com/400x400?text=Mouse"],
   },
   {
-    id: "5",
+    _id: "5",
     vendedor: "Carlos López",
     titulo: "Monitor 27 pulgadas 144Hz",
     descripcion:
@@ -69,7 +69,7 @@ export const productos = [
     fotos: ["https://via.placeholder.com/400x400?text=Monitor"],
   },
   {
-    id: "6",
+    _id: "6",
     vendedor: "Carlos López",
     titulo: "Silla Gamer Ergonómica",
     descripcion:
@@ -83,7 +83,7 @@ export const productos = [
     fotos: ["https://via.placeholder.com/400x400?text=Silla"],
   },
   {
-    id: "7",
+    _id: "7",
     vendedor: "Juan Pérez",
     titulo: "Webcam Full HD",
     descripcion:
@@ -97,7 +97,7 @@ export const productos = [
     fotos: ["https://via.placeholder.com/400x400?text=Webcam"],
   },
   {
-    id: "8",
+    _id: "8",
     vendedor: "María García",
     titulo: "Micrófono USB Profesional",
     descripcion:

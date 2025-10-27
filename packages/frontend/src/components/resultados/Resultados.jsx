@@ -4,12 +4,26 @@ import "./Resultados.css";
 import { Item } from "../item/Item";
 import { ItemSkeleton } from "../item/ItemSkeleton";
 
-export const Resultados = ({ productos = [], loading = false, error = null }) => {
-
+export const Resultados = ({
+  productos = [],
+  loading = false,
+  error = null,
+}) => {
   if (error) {
     return (
       <div className="resultados">
         <div className="mensaje-error">{error}</div>
+      </div>
+    );
+  }
+
+  // Si está cargando, mostrar skeletons
+  if (loading) {
+    return (
+      <div className="resultados">
+        {Array.from({ length: 12 }).map((_, i) => (
+          <ItemSkeleton key={i} />
+        ))}
       </div>
     );
   }
@@ -20,17 +34,6 @@ export const Resultados = ({ productos = [], loading = false, error = null }) =>
         <div className="mensaje-estado">
           No se encontraron productos con los criterios de búsqueda.
         </div>
-      </div>
-    );
-  }
-
-  // Si está cargando o no hay items, mostrar skeletons
-  if (loading) {
-    return (
-      <div className="resultados">
-        {Array.from({ length: 12 }).map((_, i) => (
-          <ItemSkeleton key={i} />
-        ))}
       </div>
     );
   }

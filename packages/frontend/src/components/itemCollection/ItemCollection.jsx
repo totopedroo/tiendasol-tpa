@@ -9,7 +9,27 @@ import { Button } from "../button/Button";
 import { getProductsSlowly } from "../../service/productosService";
 import "./ItemCollection.css";
 
-export const ItemCollection = ({ titulo = "Productos Destacados", query }) => {
+// Función helper para convertir objeto de parámetros a query string
+const paramsToQueryString = (params) => {
+  if (!params || Object.keys(params).length === 0) return "";
+
+  const queryString = Object.entries(params)
+    .filter(
+      ([_, value]) => value !== undefined && value !== null && value !== ""
+    )
+    .map(
+      ([key, value]) =>
+        `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+    )
+    .join("&");
+
+  return queryString ? `?${queryString}` : "";
+};
+
+export const ItemCollection = ({
+  titulo = "Productos Destacados",
+  params = {},
+}) => {
   const [index, setIndex] = useState(0);
   const [items, setItems] = useState([]);
   const ITEMS_VISIBLE = 5;
@@ -17,11 +37,11 @@ export const ItemCollection = ({ titulo = "Productos Destacados", query }) => {
   // Cargar productos
   useEffect(() => {
     const cargarProductos = async () => {
-      const productosCargados = await getProductsSlowly(query);
+      const productosCargados = await getProductsSlowly(params);
       setItems(productosCargados);
     };
     cargarProductos();
-  }, [query]);
+  }, [params]);
 
   // Resetear índice cuando cambien los items
   useEffect(() => {
@@ -37,6 +57,8 @@ export const ItemCollection = ({ titulo = "Productos Destacados", query }) => {
     setIndex((prev) => Math.max(prev - 1, 0));
   }, []);
 
+  const queryString = paramsToQueryString(params);
+
   return (
     <div className="item-collection">
       <div className="collection-header flex items-center justify-between">
@@ -45,7 +67,7 @@ export const ItemCollection = ({ titulo = "Productos Destacados", query }) => {
         </div>
 
         <Link
-          to={`/search${query || ""}`}
+          to={`/search${queryString}`}
           className="view-all-link flex items-center gap-2"
         >
           <div className="text-wrapper-2">Ver Todos</div>
