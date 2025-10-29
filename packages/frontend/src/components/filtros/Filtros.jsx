@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import "./Filtros.css";
-import { categorias } from "../../mockdata/Categorias";
+import { getCategorias } from "../../service/categoriasService";
 
 export const Filtros = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -11,10 +11,13 @@ export const Filtros = () => {
   const [vendedor, setVendedor] = useState(searchParams.get("vendedor") || "");
   const [precioMin, setPrecioMin] = useState(searchParams.get("precioMin") || "");
   const [precioMax, setPrecioMax] = useState(searchParams.get("precioMax") || "");
-  const [ordenPrecio, setOrdenPrecio] = useState(searchParams.get("ordenPrecio") || "");
+  const [orden, setOrden] = useState(searchParams.get("ordenPor") || "");
+  
+  // Estado para las categorías obtenidas del backend
+  const [categorias, setCategorias] = useState([]);
 
   // Actualizar los parámetros de URL cuando cambien los filtros
-  const actualizarFiltros = () => {
+  const actualizarFiltros = useCallback(() => {
     const params = new URLSearchParams(searchParams);
     
     // Mantener el término de búsqueda si existe
@@ -46,17 +49,31 @@ export const Filtros = () => {
       params.delete("precioMax");
     }
     
-    if (ordenPrecio) {
-      params.set("ordenPrecio", ordenPrecio);
+    if (orden) {
+      params.set("ordenPor", orden);
     } else {
-      params.delete("ordenPrecio");
+      params.delete("ordenPor");
     }
     
     // Resetear a página 1 cuando cambien los filtros
     params.set("page", "1");
     
     setSearchParams(params);
-  };
+  });
+
+  // Cargar categorías del backend
+  useEffect(() => {
+    const cargarCategorias = async () => {
+      try {
+        const response = await getCategorias();
+        setCategorias(response.categorias || []);
+      } catch (error) {
+        console.error("Error al cargar categorías:", error);
+        setCategorias([]);
+      }
+    };
+    cargarCategorias();
+  }, []);
 
   // Aplicar filtros con un pequeño delay para evitar demasiadas llamadas
   useEffect(() => {
@@ -64,14 +81,14 @@ export const Filtros = () => {
       actualizarFiltros();
     }, 500);
     return () => clearTimeout(timer);
-  }, [categoria, vendedor, precioMin, precioMax, ordenPrecio]);
+  },[]);
 
   const limpiarFiltros = () => {
     setCategoria("");
     setVendedor("");
     setPrecioMin("");
     setPrecioMax("");
-    setOrdenPrecio("");
+    setOrden("");
   };
 
   return (
@@ -87,13 +104,12 @@ export const Filtros = () => {
             value={categoria} 
             onChange={(e) => setCategoria(e.target.value)}
           > 
-              <option value="todas">Todas las categorías</option>
-                {categorias.map((categoria) => (
-                  <option key={categoria.nombre} value={categoria.nombre.toLowerCase()}>
-                    {categoria.nombre}
-                  </option>  
-                ))}
-          
+            <option value="">Todas</option>
+            {categorias.map((cat) => (
+              <option key={cat._id} value={cat.nombre}>
+                {cat.nombre}
+              </option>  
+            ))}
           </select>
         </div>
 
@@ -125,19 +141,28 @@ export const Filtros = () => {
         </div>
 
         <div className="filter-field">
-          <div className="text-wrapper-2">Ordenar por precio</div>
+          <div className="text-wrapper-2">Ordenar por</div>
           <select 
-            value={ordenPrecio} 
-            onChange={(e) => setOrdenPrecio(e.target.value)}
+            value={orden} 
+            onChange={(e) => setOrden(e.target.value)}
           >
             <option value="">Sin ordenar</option>
-            <option value="asc">Menor a mayor</option>
-            <option value="desc">Mayor a menor</option>
+            <option value="MayorPrecio">Mayor precio</option>
+            <option value="MenorPrecio">Menor precio</option>
+            <option value="MasVendidos">Mas vendidos</option>
           </select>
         </div>
 
         <div className="filter-field">
-          <button 
+          <button className="btn btn-primary btn-medium" 
+            onClick={actualizarFiltros}
+          >
+            Aplicar filtros
+          </button>
+        </div>
+
+        <div className="filter-field">
+          <button className="btn btn-primary btn-medium" 
             onClick={limpiarFiltros}
           >
             Limpiar filtros

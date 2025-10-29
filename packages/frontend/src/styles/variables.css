@@ -42,6 +42,7 @@
   --space-32: 8rem; /* 128px */
 
   /* === BORDER RADIUS === */
+  --radius-xs: 0.3rem; /* 4px */
   --radius-sm: 0.5rem; /* 8px */
   --radius-md: 0.75rem; /* 12px */
   --radius-lg: 1rem; /* 16px */

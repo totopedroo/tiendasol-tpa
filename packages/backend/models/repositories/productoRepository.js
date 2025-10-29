@@ -1,5 +1,5 @@
 import { ProductoModel } from "../../schemas/productoSchema.js";
-import { CategoriaModel } from "../../schemas/productoSchema.js";
+import { CategoriaModel } from "../../schemas/categoriaSchema.js";
 import { UsuarioModel } from "../../schemas/usuarioSchema.js";
 
 export class ProductoRepository {
@@ -50,16 +50,14 @@ export class ProductoRepository {
         filtrosMongo.precio.$lte = filtros.precioMax;
     }
 
-    if (filtros.ordenVentas === "desc") {
-        sort.ventas = -1;
+    if (filtros.ordenPor === "MayorPrecio") {
+      sort.precio = -1;
     }
-
-    if (filtros.ordenPrecio) {
-      if (filtros.ordenPrecio === "asc") {
-        sort.precio = 1;
-      } else if (filtros.ordenPrecio === "desc") {
-        sort.precio = -1;
-      }
+    if (filtros.ordenPor === "MenorPrecio") {
+      sort.precio = 1;
+    }
+    if (filtros.ordenPor === "MasVendidos") {
+      sort.ventas = -1;
     }
 
     return await this.model
