@@ -83,7 +83,6 @@ export const Filtros = () => {
       try {
         const response = await getVendedores();
         setVendedores(response || []);
-        console.log(response);
       } catch (error) {
         console.error("Error al cargar categorías:", error);
         setVendedores([]);

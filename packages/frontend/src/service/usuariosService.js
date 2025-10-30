@@ -1,13 +1,12 @@
 import axios from "axios";
 
 const API_BASE_URL = process.env.REACT_APP_API_URL;
-
 export const getVendedores = async (params = {}) => {
   try {
+    // Siempre agregamos tipo: "VENDEDOR" al params
     const response = await axios.get(`${API_BASE_URL}/usuarios`, {
-      params: params,
+      params: { ...params, tipo: "VENDEDOR" },
     });
-    console.log(response)
     return response.data;
   } catch (error) {
     console.error("Error al buscar usuarios:", error);
