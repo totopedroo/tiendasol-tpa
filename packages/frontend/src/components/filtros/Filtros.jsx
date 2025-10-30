@@ -77,14 +77,14 @@ export const Filtros = () => {
     cargarCategorias();
   }, []);
 
-  // Cargar usuarios del backend
+  // Cargar vendedores del backend
   useEffect(() => {
     const cargarVendedores = async () => {
       try {
         const response = await getVendedores();
         setVendedores(response || []);
       } catch (error) {
-        console.error("Error al cargar categorías:", error);
+        console.error("Error al cargar vendedores:", error);
         setVendedores([]);
       }
     };
