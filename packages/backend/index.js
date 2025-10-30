@@ -25,6 +25,10 @@ import { CategoriaController } from "./controllers/categoriaController.js";
 import { CategoriaService } from "./services/categoriaService.js";
 import { CategoriaRepository } from "./models/repositories/categoriaRepositoty.js";
 import { MongoDBClient } from "./config/database.js";
+// USUARIOS
+import { UsuarioController } from "./controllers/usuarioController.js";
+import { UsuarioService } from "./services/usuarioService.js";
+import { UsuarioRepository } from "./models/repositories/usuarioRepository.js";
 
 const app = express();
 app.use(express.json());
@@ -55,12 +59,17 @@ const productoRepository = new ProductoRepository();
 const productoService = new ProductoService(productoRepository);
 const productoController = new ProductoController(productoService);
 
+const usuarioRepository = new UsuarioRepository();
+const usuarioService = new UsuarioService(usuarioRepository);
+const usuarioController = new UsuarioController(usuarioService);
+
 const categoriaRepository = new CategoriaRepository();
 const categoriaService = new CategoriaService(categoriaRepository);
 const categoriaController = new CategoriaController(categoriaService);
 
 server.setControllers(PedidosController, pedidosController);
 server.setControllers(ProductoController, productoController);
+server.setControllers(UsuarioController, usuarioController);
 server.setControllers(CategoriaController, categoriaController);
 
 routes.forEach((route) => server.addRoute(route));
