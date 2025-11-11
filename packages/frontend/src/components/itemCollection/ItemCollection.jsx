@@ -6,7 +6,7 @@ import { ArrowLeft } from "../icons/ArrowLeft";
 import { Item } from "../item/Item";
 import { ItemSkeleton } from "../item/ItemSkeleton";
 import { Button } from "../button/Button";
-import { getProductsSlowly } from "../../service/productosService";
+import { buscarProductos } from "../../service/productosService";
 import "./ItemCollection.css";
 
 // Función helper para convertir objeto de parámetros a query string
@@ -37,7 +37,7 @@ export const ItemCollection = ({
   // Cargar productos
   useEffect(() => {
     const cargarProductos = async () => {
-      const productosCargados = await getProductsSlowly(params);
+      const productosCargados = await buscarProductos(params);
       setItems(productosCargados);
     };
     cargarProductos();

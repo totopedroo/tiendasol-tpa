@@ -7,7 +7,9 @@
     "dev": "node --watch index.js",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "test:unit": "NODE_OPTIONS=--experimental-vm-modules jest --testPathPatterns=unit",
-    "test:integration": "NODE_OPTIONS=--experimental-vm-modules jest --testPathPatterns=integration"
+    "test:integration": "NODE_OPTIONS=--experimental-vm-modules jest --testPathPatterns=integration",
+    "seed": "node scripts/seed.js",
+    "seed:keep": "node scripts/seed.js --no-limpiar"
   },
   "keywords": [],
   "author": "",

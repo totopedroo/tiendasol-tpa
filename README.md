@@ -88,3 +88,33 @@ Para iniciar el backend en modo `dev` y el frontend simultáneamente, usá:
 ```bash
 npm run start:dev
 ```
+
+### 4. Poblar la Base de Datos (Seeder)
+
+El proyecto incluye un **seeder service** para poblar la base de datos con datos de prueba:
+
+```bash
+# Desde packages/backend
+cd packages/backend
+npm run seed
+```
+
+Esto creará:
+
+- 50 usuarios (compradores, vendedores y admins)
+- 18 categorías
+- ~160 productos con stock
+- 200 pedidos con diferentes estados
+
+**Opciones disponibles:**
+
+```bash
+# Mantener datos existentes (no limpia la BD)
+npm run seed:keep
+
+# Personalizar cantidades
+node scripts/seed.js --usuarios=100 --productos=200 --pedidos=500
+
+# Ver más opciones
+node scripts/seed.js --help
+```
