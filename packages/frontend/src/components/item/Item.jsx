@@ -27,7 +27,19 @@ export const Item = ({ item }) => {
           <div>{item.vendedor?.nombre || "Vendedor"}</div>
           <div className="text-wrapper-2">{item.titulo}</div>
           <div className="text-wrapper-3">
-            ${item.precio} {item.moneda || "ARS"}
+            {(() => {
+              switch (item.moneda) {
+                case "PESO_ARG":
+                  return "$";
+                case "DOLAR_USA":
+                  return "U$D";
+                case "REAL":
+                  return "R$";
+                default:
+                  return "$";
+              }
+            })()}
+            {item.precio}
           </div>
         </div>
 

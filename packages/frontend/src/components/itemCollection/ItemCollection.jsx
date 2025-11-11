@@ -28,19 +28,37 @@ const paramsToQueryString = (params) => {
 
 export const ItemCollection = ({
   titulo = "Productos Destacados",
-  params = {},
+  params,
 }) => {
   const [index, setIndex] = useState(0);
   const [items, setItems] = useState([]);
   const ITEMS_VISIBLE = 5;
 
   // Cargar productos
+
+  const fetchProductos = async () => {
+    try {
+      // Si no hay página, usar página 1 por defecto
+      if (!params.page) {
+        params.page = 1;
+      }
+
+      // Si no hay limit, usar 10 por defecto
+      if (!params.limit) {
+        params.limit = 10;
+      }
+
+      const response = await buscarProductos(params);
+
+      setItems(response.data || []);
+    } catch (err) {
+      console.error("Error al buscar productos:", err);
+      setItems([]);
+    }
+  };
+
   useEffect(() => {
-    const cargarProductos = async () => {
-      const productosCargados = await buscarProductos(params);
-      setItems(productosCargados);
-    };
-    cargarProductos();
+    fetchProductos();
   }, [params]);
 
   // Resetear índice cuando cambien los items

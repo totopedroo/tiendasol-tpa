@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { ItemCollection } from "../../components/itemCollection/ItemCollection";
 import { ItemDetail } from "../../components/itemDetail/ItemDetail";
 import { ItemDetailSkeleton } from "../../components/itemDetail/ItemDetailSkeleton";
@@ -14,12 +14,26 @@ export const Producto = () => {
   useEffect(() => {
     const cargarProducto = async () => {
       setLoading(true);
-      const data = await getProductoById(id);
-      setProducto(data);
+      const producto = await getProductoById(id);
+      setProducto(producto);
       setLoading(false);
     };
     cargarProducto();
   }, [id]);
+
+  const vendedorParams = useMemo(
+    () =>
+      producto?.vendedor?._id ? { vendedor: producto.vendedor._id } : null,
+    [producto?.vendedor?._id]
+  );
+
+  const categoriasParams = useMemo(() => {
+    if (!producto?.categorias || producto.categorias.length === 0) return [];
+    return producto.categorias.map((categoria) => ({
+      nombre: categoria.nombre,
+      params: { categoria: categoria.nombre },
+    }));
+  }, [producto?.categorias]);
 
   return (
     <div className="contenido">
@@ -28,21 +42,20 @@ export const Producto = () => {
 
         {!loading && producto && (
           <>
-            <ItemCollection
-              titulo={`Más del vendedor`}
-              params={{vendedor: producto.vendedor}}
-            />
+            {vendedorParams && (
+              <ItemCollection
+                titulo={`Más del vendedor`}
+                params={vendedorParams}
+              />
+            )}
 
-            {/* Generar un ItemCollection por cada categoría del producto */}
-            {producto.categorias &&
-              producto.categorias.length > 0 &&
-              producto.categorias.map((categoria) => (
-                <ItemCollection
-                  key={categoria}
-                  titulo={`Más de ${categoria}`}
-                  params={{categorias:categoria}}
-                />
-              ))}
+            {categoriasParams.map((categoria, index) => (
+              <ItemCollection
+                key={categoria.nombre}
+                titulo={`Más de ${categoria.nombre}`}
+                params={categoria.params}
+              />
+            ))}
           </>
         )}
       </div>

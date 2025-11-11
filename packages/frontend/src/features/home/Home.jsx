@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { SearchIcon } from "../../components/icons/Search";
 import { ItemCollection } from "../../components/itemCollection/ItemCollection";
 import "./Home.css";
@@ -6,6 +6,8 @@ import { CategoryCollection } from "../../components/categoryCollection/Category
 import { Button } from "@mui/joy";
 
 export const Home = () => {
+  const itemCollectionParams = useMemo(() => ({}), []);
+
   return (
     <div className="contenido">
       <div className="container">
@@ -22,7 +24,7 @@ export const Home = () => {
             </div>
           </div>
         </div>
-        <ItemCollection />
+        <ItemCollection params={itemCollectionParams} />
         <CategoryCollection />
       </div>
     </div>
