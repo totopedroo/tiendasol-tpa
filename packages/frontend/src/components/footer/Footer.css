@@ -1,0 +1,116 @@
+.footer {
+  background-color: var(--color-bg-white);
+  border-color: var(--color-border-light);
+  border-top-style: solid;
+  border-top-width: 1px;
+  height: auto;
+  padding: var(--space-6) var(--space-8);
+  position: relative;
+  width: 100%;
+}
+
+.footer .text {
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: var(--space-6);
+  position: relative;
+  align-items: center;
+}
+
+.footer .container .text .nav .nav-link a{
+  text-decoration: none;
+  color: inherit;
+}
+
+.footer .text-wrapper {
+  align-items: center;
+  color: var(--color-text);
+  display: flex;
+  font-family: var(--font-semibold), sans-serif;
+  font-size: var(--text-base);
+  font-weight: 600;
+  justify-content: center;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.footer .nav {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: var(--space-8);
+  position: relative;
+}
+
+.footer .div {
+  align-items: center;
+  color: var(--color-text-muted);
+  display: flex;
+  font-family: var(--font-medium), sans-serif;
+  font-size: var(--text-xs);
+  font-weight: 500;
+  justify-content: center;
+  margin-top: -1px;
+  position: relative;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.footer .social-links {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: var(--space-6);
+  position: relative;
+}
+
+.footer .social-link {
+  /* background-image: url("./vector.svg"); */
+  background-position: 50% 50%;
+  background-size: cover;
+  height: 24px;
+  position: relative;
+  width: 24px;
+}
+
+.footer .size-24 {
+  height: 24px !important;
+  position: relative !important;
+  width: 24px !important;
+}
+
+.footer .social-link-2 {
+  aspect-ratio: 1;
+  height: 24px;
+  position: relative;
+  width: 24px;
+}
+
+.footer .vector {
+  height: 90.4%;
+  left: 0;
+  position: absolute;
+  top: 4.8%;
+  width: 100%;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .footer {
+    height: auto;
+    padding: var(--space-6) var(--space-4);
+  }
+
+  .footer .text {
+    flex-direction: column;
+    gap: var(--space-4);
+    align-items: flex-start;
+  }
+
+  .footer .nav {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+}

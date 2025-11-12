@@ -1,0 +1,193 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    // Root workspace configurations
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Root: start:backend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start:backend"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Root: dev:backend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:backend"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "restart": true,
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Root: start:frontend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start:frontend"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Root: start:dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start:dev"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    // Backend configurations
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Backend: start",
+      "program": "${workspaceFolder}/packages/backend/index.js",
+      "cwd": "${workspaceFolder}/packages/backend",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Backend: dev",
+      "program": "${workspaceFolder}/packages/backend/index.js",
+      "cwd": "${workspaceFolder}/packages/backend",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "restart": true,
+      "skipFiles": ["<node_internals>/**"],
+      "runtimeArgs": ["--watch"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Backend: test",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "test"],
+      "cwd": "${workspaceFolder}/packages/backend",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "env": {
+        "NODE_OPTIONS": "--experimental-vm-modules"
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Backend: test:unit",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "test:unit"],
+      "cwd": "${workspaceFolder}/packages/backend",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "env": {
+        "NODE_OPTIONS": "--experimental-vm-modules"
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Backend: test:integration",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "test:integration"],
+      "cwd": "${workspaceFolder}/packages/backend",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "env": {
+        "NODE_OPTIONS": "--experimental-vm-modules"
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Backend: seed",
+      "program": "${workspaceFolder}/packages/backend/scripts/seed.js",
+      "cwd": "${workspaceFolder}/packages/backend",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Backend: seed:keep",
+      "program": "${workspaceFolder}/packages/backend/scripts/seed.js",
+      "args": ["--no-limpiar"],
+      "cwd": "${workspaceFolder}/packages/backend",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    // Frontend configurations
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Frontend: start (Chrome)",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/packages/frontend/src",
+      "preLaunchTask": "npm: start - frontend",
+      "sourceMapPathOverrides": {
+        "webpack:///src/*": "${webRoot}/*"
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Frontend: start (Node)",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["start"],
+      "cwd": "${workspaceFolder}/packages/frontend",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Frontend: build",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "build"],
+      "cwd": "${workspaceFolder}/packages/frontend",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Frontend: test",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "test"],
+      "cwd": "${workspaceFolder}/packages/frontend",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Full Stack: Dev Mode",
+      "configurations": ["Backend: dev", "Frontend: start (Node)"],
+      "presentation": {
+        "hidden": false,
+        "group": "fullstack",
+        "order": 1
+      }
+    },
+    {
+      "name": "Full Stack: Production Mode",
+      "configurations": ["Backend: start", "Frontend: start (Node)"],
+      "presentation": {
+        "hidden": false,
+        "group": "fullstack",
+        "order": 2
+      }
+    }
+  ]
+}

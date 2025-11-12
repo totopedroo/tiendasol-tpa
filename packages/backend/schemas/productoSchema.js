@@ -1,22 +1,7 @@
 import mongoose from "mongoose";
 import { MONEDA } from "../models/entities/moneda.js";
 import { Producto } from "../models/entities/producto.js";
-
-
-const categoriaSchema = new mongoose.Schema({
-  nombre: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true
-  }
-}, {
-  timestamps: true,
-  collection: "categorias",
-  versionKey: false
-});
-
-export const CategoriaModel = mongoose.model("Categoria", categoriaSchema);
+import { CategoriaModel } from "./categoriaSchema.js";
 
 const productoSchema = new mongoose.Schema(
   {

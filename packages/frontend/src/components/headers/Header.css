@@ -1,0 +1,246 @@
+.header {
+  background-color: var(--main);
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-color: var(--color-border-light);
+  padding: var(--space-6) var(--space-8);
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.header .navbar-content-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-6);
+  width: 100%;
+}
+
+.header .nav-left-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-4);
+  flex: 1;
+}
+
+.header .company {
+  gap: var(--space-2);
+  position: relative;
+  width: 172px;
+}
+
+.header .logo {
+  aspect-ratio: 1;
+  height: 40px;
+  object-fit: cover;
+  position: relative;
+  width: 40px;
+}
+
+.header .text-wrapper {
+  color: var(--color-text);
+  flex: 1;
+  font-family: var(--font-semibold);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  position: relative;
+}
+
+.header .navigation-menu {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-16);
+  padding: 0 var(--space-8);
+  position: relative;
+}
+
+.header .nav-item {
+  color: var(--color-text);
+  font-family: var(--font-regular);
+  font-size: var(--text-base);
+  font-weight: 400;
+  position: relative;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.header .search-bar {
+  position: relative;
+  background-color: var(--color-bg-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  width: 300px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  flex: 0 0 auto;
+}
+
+.search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 12px 0;
+  font-size: 14px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 16px;
+  width: 20px;
+  height: 20px;
+  color: #9ca3af;
+  pointer-events: none;
+}
+.header .text-wrapper-2 {
+  color: var(--color-text-muted);
+  font-family: var(--font-medium);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.header .icon-instance-node {
+  height: 20px !important;
+  position: relative !important;
+  width: 20px !important;
+}
+
+.header .user-icon-header {
+  height: 24px !important;
+  width: 24px !important;
+}
+
+.header .buttons {
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: var(--space-6);
+  justify-content: flex-end;
+  position: relative;
+  align-items: center;
+}
+
+.header .cart-button {
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: var(--gap-xs);
+  position: relative;
+  align-items: center;
+}
+
+.header .text-wrapper-3 {
+  color: var(--color-text);
+  font-family: var(--font-medium);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  margin-top: -1px;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.header .icon-instance-node {
+  height: 20px !important;
+  position: relative !important;
+  width: 20px !important;
+}
+
+.header .size-24 {
+  height: 24px !important;
+  position: relative !important;
+  width: 24px !important;
+}
+
+.header .primary-button {
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: var(--space-2);
+  position: relative;
+  cursor: pointer;
+}
+
+.header .shopping-cart {
+  aspect-ratio: 1 !important;
+  height: 24px !important;
+  position: relative !important;
+  width: 24px !important;
+}
+
+.header .contador-de-items {
+  color: var(--color-text);
+  font-family: var(--font-medium);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  margin-top: -0.5px;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* === RESPONSIVE - MOBILE === */
+@media (max-width: 768px) {
+  .header {
+    padding: var(--space-4);
+  }
+
+  .header .container-xl {
+    gap: var(--space-3);
+  }
+
+  /* Ocultar texto de TiendaSol */
+  .header .text-wrapper {
+    display: none;
+  }
+
+  /* Ocultar menú de navegación */
+  .header .navigation-menu {
+    display: none;
+  }
+
+  /* Logo más pequeño */
+  .header .company {
+    width: auto;
+    gap: 0;
+  }
+
+  .header .logo {
+    height: 32px;
+    width: 32px;
+  }
+
+  /* Search bar ocupa espacio restante */
+  .header .search-bar {
+    flex: 1;
+    width: auto;
+    max-width: none;
+  }
+
+  /* Botones más compactos */
+  .header .buttons {
+    gap: var(--space-3);
+    padding: 0;
+  }
+
+  /* Contador del carrito más pequeño */
+  .header .contador-de-items {
+    font-size: 0.625rem;
+  }
+}

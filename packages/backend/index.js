@@ -16,10 +16,19 @@ import { NotificacionesPublisher } from "./adapters/notificacionesPublisher.js";
 import { PedidosController } from "./controllers/pedidosController.js";
 import { PedidosService } from "./services/pedidosService.js";
 import { PedidosRepository } from "./models/repositories/pedidosRepository.js";
+// PRODUCTOS
 import { ProductoController } from "./controllers/productoController.js";
 import { ProductoService } from "./services/productoService.js";
 import { ProductoRepository } from "./models/repositories/productoRepository.js";
+// CATEGORIAS
+import { CategoriaController } from "./controllers/categoriaController.js";
+import { CategoriaService } from "./services/categoriaService.js";
+import { CategoriaRepository } from "./models/repositories/categoriaRepositoty.js";
 import { MongoDBClient } from "./config/database.js";
+// USUARIOS
+import { UsuarioController } from "./controllers/usuarioController.js";
+import { UsuarioService } from "./services/usuarioService.js";
+import { UsuarioRepository } from "./models/repositories/usuarioRepository.js";
 
 const app = express();
 app.use(express.json());
@@ -45,12 +54,23 @@ server.setControllers(NotificacionesController, notiController);
 const pedidosRepository = new PedidosRepository();
 const pedidosService = new PedidosService(pedidosRepository, notiPublisher);
 const pedidosController = new PedidosController(pedidosService);
+
 const productoRepository = new ProductoRepository();
 const productoService = new ProductoService(productoRepository);
 const productoController = new ProductoController(productoService);
 
+const usuarioRepository = new UsuarioRepository();
+const usuarioService = new UsuarioService(usuarioRepository);
+const usuarioController = new UsuarioController(usuarioService);
+
+const categoriaRepository = new CategoriaRepository();
+const categoriaService = new CategoriaService(categoriaRepository);
+const categoriaController = new CategoriaController(categoriaService);
+
 server.setControllers(PedidosController, pedidosController);
 server.setControllers(ProductoController, productoController);
+server.setControllers(UsuarioController, usuarioController);
+server.setControllers(CategoriaController, categoriaController);
 
 routes.forEach((route) => server.addRoute(route));
 server.configureRoutes();
