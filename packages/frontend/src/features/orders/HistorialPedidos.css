@@ -204,3 +204,37 @@ select {
     width: 100%;
   }
 }
+
+/* Mensajes de estado */
+.loading-message,
+.error-message,
+.empty-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-16);
+  font-family: var(--font-medium);
+  font-size: var(--text-lg);
+  width: 100%;
+}
+
+.loading-message {
+  color: var(--color-text-muted);
+}
+
+.loading-message .MuiCircularProgress-root {
+  color: var(--main) !important;
+}
+
+.error-message {
+  color: var(--color-error, #d32f2f);
+  background-color: var(--color-error-bg, #ffebee);
+  border-radius: var(--radius-md);
+}
+
+.empty-message {
+  color: var(--color-text-muted);
+  background-color: var(--color-bg-secondary, #f5f5f5);
+  border-radius: var(--radius-md);
+}

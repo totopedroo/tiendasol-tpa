@@ -35,7 +35,7 @@ export class PedidosController {
       const pedidosPaginados = this.pedidosService.findall(
         page,
         limit,
-        filtros,
+        filtros
       );
       if (pedidosPaginados === null) {
         return res.status(204).send();
@@ -103,44 +103,28 @@ export class PedidosController {
   async historialDelUsuario(req, res, next) {
     try {
       const userId = historialUsuarioSchema.safeParse(req.query);
-      const pedidosUsuario = this.pedidosService.historialDelUsuario(
-        userId.data,
+      const pedidosUsuario = await this.pedidosService.historialDelUsuario(
+        userId.data.userId
       );
       res.json(pedidosUsuario);
     } catch (error) {
       next(error);
     }
-    // // user_id = id
-    // const userIdData = historialUsuarioSchema.safeParse(req.query);
-
-    // if (userIdData.error) {
-    //   res.status(400).json(userIdData.error.issues);
-    //   return;
-    // }
-
-    // const userId = userIdData.data;
-    // const pedidosUsuario = this.pedidosService.historialDelUsuario(userId);
-    // if (!pedidosUsuario) {
-    //   res.status(404).json({
-    //     userId: userId.userId,
-    //     error: "El usuario con ese ID no existe o no tiene pedidos.",
-    //   });
-    //   return;
-    // }
-    // res.status(200).json(pedidosUsuario);
   }
 }
 
 const idTransform = z.string().transform((val, ctx) => {
-  const num = Number(val);
-  if (isNaN(num)) {
+  // Validar que sea un ObjectId válido de MongoDB (24 caracteres hexadecimales)
+  const objectIdRegex = /^[0-9a-fA-F]{24}$/;
+  if (!objectIdRegex.test(val)) {
     ctx.addIssue({
-      code: "INVALID_ID",
-      message: "El ID debe ser un número",
+      code: z.ZodIssueCode.custom,
+      message:
+        "El ID debe ser un ObjectId válido de MongoDB (24 caracteres hexadecimales)",
     });
     return z.NEVER;
   }
-  return num;
+  return val;
 });
 
 const estadoSchema = z.object({
