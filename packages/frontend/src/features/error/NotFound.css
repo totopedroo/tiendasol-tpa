@@ -1,0 +1,53 @@
+.not-found-screen {
+  min-height: 80vh;
+  padding: var(--space-16) 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.not-found-container {
+  text-align: center;
+  gap: var(--space-6);
+  padding: var(--space-16);
+}
+
+.not-found-number {
+  color: var(--color-text);
+  font-family: var(--font-bold);
+  font-size: 120px;
+  font-weight: 700;
+  line-height: 1;
+  margin: 0;
+}
+
+.not-found-message {
+  color: var(--color-text);
+  font-family: var(--font-semibold);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  margin: 0;
+}
+
+.not-found-description {
+  color: var(--color-text);
+  font-family: var(--font-regular);
+  font-size: var(--text-lg);
+  font-weight: 400;
+  margin-bottom: var(--space-4);
+  opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  .not-found-number {
+    font-size: 80px;
+  }
+
+  .not-found-message {
+    font-size: var(--text-xl);
+  }
+
+  .not-found-description {
+    font-size: var(--text-base);
+  }
+}

@@ -94,13 +94,20 @@ export const Checkout = () => {
                     <CheckoutItem key={item._id} item={item} />
                   ))}
 
-                  <Button
-                    variant="danger"
-                    onClick={limpiarCarrito}
-                    disabled={carritoItems.length === 0}
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                    }}
                   >
-                    Limpiar carrito
-                  </Button>
+                    <Button
+                      variant="danger"
+                      onClick={limpiarCarrito}
+                      disabled={carritoItems.length === 0}
+                    >
+                      Limpiar carrito
+                    </Button>
+                  </div>
                 </>
               )}
             </div>
