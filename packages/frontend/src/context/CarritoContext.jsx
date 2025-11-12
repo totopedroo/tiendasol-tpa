@@ -18,6 +18,9 @@ export const CarritoProvider = ({ children }) => {
     return savedCarrito ? JSON.parse(savedCarrito) : [];
   });
 
+  // Estado para mostrar notificación de producto agregado
+  const [ultimoProductoAgregado, setUltimoProductoAgregado] = useState(null);
+
   // Guardar en localStorage cada vez que cambie el carrito
   useEffect(() => {
     localStorage.setItem("carrito", JSON.stringify(carritoItems));
@@ -27,7 +30,7 @@ export const CarritoProvider = ({ children }) => {
   const agregarAlCarrito = (producto) => {
     setCarritoItems((prevItems) => {
       const existingItem = prevItems.find((item) => item._id === producto._id);
-      
+
       if (existingItem) {
         // Si ya existe, incrementar cantidad
         return prevItems.map((item) =>
@@ -40,6 +43,9 @@ export const CarritoProvider = ({ children }) => {
         return [...prevItems, { ...producto, cantidad: 1 }];
       }
     });
+
+    // Mostrar notificación
+    setUltimoProductoAgregado(producto);
   };
 
   // Eliminar producto del carrito
@@ -102,7 +108,11 @@ export const CarritoProvider = ({ children }) => {
     obtenerPrecioTotal,
     estaEnCarrito,
     obtenerCantidadItem,
+    ultimoProductoAgregado,
+    setUltimoProductoAgregado,
   };
 
-  return <CarritoContext.Provider value={value}>{children}</CarritoContext.Provider>;
+  return (
+    <CarritoContext.Provider value={value}>{children}</CarritoContext.Provider>
+  );
 };

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ShoppingCart } from "../icons/ShoppingCart";
 import { Button } from "../button/Button";
@@ -7,11 +7,15 @@ import { useCarrito } from "../../context/CarritoContext";
 import "./Item.css";
 
 export const Item = ({ item }) => {
-  const { agregarAlCarrito, estaEnCarrito } = useCarrito();
+  const { agregarAlCarrito } = useCarrito();
+  const [loading, setLoading] = useState(false);
 
-  const handleAddToCart = (e) => {
+  const handleAddToCart = async (e) => {
     e.preventDefault(); // Evita que el Link navegue
+    setLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 300)); // Simular delay
     agregarAlCarrito(item);
+    setLoading(false);
   };
 
   return (
@@ -44,12 +48,13 @@ export const Item = ({ item }) => {
         </div>
 
         <Button
-          variant={estaEnCarrito(item._id) ? "primary" : "secondary"}
+          variant="secondary"
           icon={<ShoppingCart />}
           onClick={handleAddToCart}
           fullWidth
+          loading={loading}
         >
-          {estaEnCarrito(item._id) ? "Agregar más" : "Agregar al carrito"}
+          Agregar al carrito
         </Button>
       </div>
     </Link>

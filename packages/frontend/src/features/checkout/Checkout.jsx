@@ -6,20 +6,58 @@ import { CheckoutItem } from "../../components/checkoutItem/CheckoutItem";
 import { Edit } from "../../components/icons/Edit";
 import { Button } from "../../components/button/Button";
 import { useCarrito } from "../../context/CarritoContext";
+import { crearPedido } from "../../service/pedidosService";
 
 export const Checkout = () => {
   const navigate = useNavigate();
-  const { carritoItems, obtenerTotalItems, obtenerPrecioTotal, vaciarCarrito } = useCarrito();
+  const { carritoItems, obtenerTotalItems, obtenerPrecioTotal, vaciarCarrito } =
+    useCarrito();
 
   const handleGoBack = () => {
-    navigate(-1); // Equivalente a history.back()
+    navigate(-1);
   };
 
-  const handleRealizarPedido = () => {
-    // Aquí podrías hacer una llamada al backend para crear el pedido
-    alert("Pedido realizado con éxito!");
+  const handleRealizarPedido = async () => {
+    try {
+      // Preparar los items del pedido
+      const items = carritoItems.map((item) => ({
+        producto: item._id,
+        cantidad: item.cantidad,
+        precioUnitario: item.precio,
+        moneda: item.moneda || "PESO_ARG",
+      }));
+
+      // Crear el objeto del pedido según el schema del backend
+      const pedidoData = {
+        moneda: "PESO_ARG", // O la moneda que uses en tu app
+        id_comprador: 1, // Deberías obtener esto del usuario logueado
+        direccionEntrega: {
+          calle: "Calle Verdadera",
+          altura: "1234",
+          piso: "",
+          departamento: "",
+          codigoPostal: "5000",
+          ciudad: "Córdoba",
+          provincia: "Córdoba",
+          pais: "Argentina",
+        },
+        items: items,
+      };
+
+      const pedido = await crearPedido(pedidoData);
+      console.log("Pedido creado:", pedido);
+
+      alert("Pedido realizado con éxito!");
+      vaciarCarrito();
+      navigate("/");
+    } catch (error) {
+      console.error("Error al realizar el pedido:", error);
+      alert("Error al realizar el pedido. Por favor intenta nuevamente.");
+    }
+  };
+
+  const limpiarCarrito = () => {
     vaciarCarrito();
-    navigate("/");
   };
 
   return (
@@ -51,9 +89,19 @@ export const Checkout = () => {
                   </Button>
                 </div>
               ) : (
-                carritoItems.map((item) => (
-                  <CheckoutItem key={item._id} item={item} />
-                ))
+                <>
+                  {carritoItems.map((item) => (
+                    <CheckoutItem key={item._id} item={item} />
+                  ))}
+
+                  <Button
+                    variant="danger"
+                    onClick={limpiarCarrito}
+                    disabled={carritoItems.length === 0}
+                  >
+                    Limpiar carrito
+                  </Button>
+                </>
               )}
             </div>
             <div className="info-pedido flex flex-col items-center">

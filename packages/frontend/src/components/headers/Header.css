@@ -129,6 +129,25 @@
   align-items: center;
 }
 
+.notificaciones-wrapper {
+  position: relative;
+}
+
+.bell-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s;
+}
+
+.bell-button:hover {
+  opacity: 0.8;
+}
+
 .header .cart-button {
   display: inline-flex;
   flex: 0 0 auto;
@@ -195,19 +214,24 @@ button {
   align-items: center;
   justify-content: center;
 }
-/* === RESPONSIVE - MOBILE === */
+
 @media (max-width: 768px) {
   .header {
     padding: var(--space-4);
   }
 
-  .header .container-xl {
+  .header .navbar-content-wrapper {
+    flex-wrap: wrap;
     gap: var(--space-3);
   }
 
-  /* Ocultar texto de TiendaSol */
-  .header .text-wrapper {
-    display: none;
+  .header .nav-left-section {
+    flex: 0 0 auto;
+    justify-content: flex-start;
+  }
+
+  .header .container-xl {
+    gap: var(--space-3);
   }
 
   /* Ocultar menú de navegación */
@@ -226,20 +250,20 @@ button {
     width: 32px;
   }
 
-  /* Search bar ocupa espacio restante */
-  .header .search-bar {
-    flex: 1;
-    width: auto;
-    max-width: none;
-  }
-
-  /* Botones más compactos */
   .header .buttons {
     gap: var(--space-3);
     padding: 0;
+    flex: 0 0 auto;
+    margin-left: auto;
   }
 
-  /* Contador del carrito más pequeño */
+  .header .search-bar {
+    width: 100%;
+    max-width: none;
+    flex: 1 1 100%;
+    order: 3;
+  }
+
   .header .contador-de-items {
     font-size: 0.625rem;
   }

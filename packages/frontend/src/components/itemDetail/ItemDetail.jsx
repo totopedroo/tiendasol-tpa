@@ -10,9 +10,10 @@ export const ItemDetail = ({ item }) => {
   const [imagenSeleccionada, setImagenSeleccionada] = React.useState(0);
   const [cantidadSeleccionada, setCantidadSeleccionada] = React.useState(1);
   const { agregarAlCarrito } = useCarrito();
-  
-  const handleAgregarAlCarrito = (e) => {
-    e.preventDefault(); 
+
+  const handleAgregarAlCarrito = async (e) => {
+    e.preventDefault();
+    await new Promise((resolve) => setTimeout(resolve, 300));
     // Agregar la cantidad seleccionada veces
     for (let i = 0; i < cantidadSeleccionada; i++) {
       agregarAlCarrito(item);
@@ -78,10 +79,12 @@ export const ItemDetail = ({ item }) => {
           {hayStock ? (
             <div className="quantity-wrapper flex items-center gap-2">
               <span className="quantity-label">Cantidad:</span>
-              <select 
+              <select
                 className="quantity-select"
                 value={cantidadSeleccionada}
-                onChange={(e) => setCantidadSeleccionada(Number(e.target.value))}
+                onChange={(e) =>
+                  setCantidadSeleccionada(Number(e.target.value))
+                }
               >
                 {Array.from({ length: Math.min(item.stock, 10) }, (_, i) => (
                   <option key={i + 1} value={i + 1}>

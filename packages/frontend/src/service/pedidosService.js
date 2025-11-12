@@ -12,3 +12,13 @@ export const getHistorialDeUsuario = async (userId) => {
     throw error;
   }
 };
+
+export const crearPedido = async (pedido) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/pedidos`, pedido);
+    return response.data;
+  } catch (error) {
+    console.error("Error al crear el pedido:", error);
+    throw error;
+  }
+};

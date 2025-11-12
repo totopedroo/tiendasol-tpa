@@ -22,11 +22,24 @@ export const CheckoutItem = ({ item }) => {
     }
   };
 
-  const quitar = () => {
+  const quitar = async () => {
+    await new Promise((resolve) => setTimeout(resolve, 300));
     eliminarDelCarrito(item._id);
   };
 
   const subtotal = item.precio * item.cantidad;
+  const moneda = (() => {
+    switch (item.moneda) {
+      case "PESO_ARG":
+        return "$";
+      case "DOLAR_USA":
+        return "U$D";
+      case "REAL":
+        return "R$";
+      default:
+        return "$";
+    }
+  })();
 
   return (
     <div className="checkout-item flex items-start">
@@ -41,12 +54,17 @@ export const CheckoutItem = ({ item }) => {
           <div className="item-title-price flex flex-col items-center">
             <div className="text-wrapper">{item.titulo}</div>
             <div className="text-wrapper-2">
-              ${item.precio.toLocaleString()} {item.moneda || "ARS"}
+              {moneda}
+              {item.precio.toLocaleString()}
             </div>
           </div>
-          <div  onClick={quitar} style={{ cursor: "pointer" }}>
-           <Delete className="delete" />
-          </div>
+          <Button
+            variant="clear"
+            icon={<Delete />}
+            size="small"
+            aria-label="Eliminar producto"
+            onClick={quitar}
+          />
         </div>
 
         <div className="item-actions">
@@ -76,7 +94,8 @@ export const CheckoutItem = ({ item }) => {
           <div className="subtotal-section">
             <div className="text-wrapper-3">Subtotal</div>
             <div className="text-wrapper-5">
-              ${subtotal.toLocaleString()} {item.moneda || "ARS"}
+              {moneda}
+              {subtotal.toLocaleString()}
             </div>
           </div>
         </div>
