@@ -4,6 +4,7 @@ import { ShoppingCart } from "../icons/ShoppingCart";
 import "./Header.css";
 import { User } from "../icons/User";
 import { Bell } from "../icons/Bell";
+import { ChevronDown } from "../icons/ChevronDown";
 import TiendaSolLogoLink from "../tiendaSolLogo/TiendaSolLogoLink";
 import { useCarrito } from "../../context/CarritoContext";
 import { Notificaciones } from "../notificaciones/Notificaciones";
@@ -24,7 +25,8 @@ export const Header = () => {
   const notifPanelRef = useRef(null);
 
   // TODO: Reemplazar con el ID real del usuario cuando se implemente sesiones
-  const userId = "68fff891aa45f11100c074d9"; // Placeholder
+  const userId = "68fff891aa45f11100c074e1"; // Placeholder
+  const nombreUsuario = "Usuario"; // Placeholder - reemplazar con nombre real
 
   useEffect(() => {
     const tituloParam = searchParams.get("titulo");
@@ -39,12 +41,13 @@ export const Header = () => {
     navigate("/checkout");
   };
 
-  const irAUsuario = () => {
-    if (isLoggedIn) {
-      navigate("/users/" + userId); // Temporal, más adelante vendrá de contexto o backend :id
-    } else {
-      navigate("/login");
-    }
+  const irAMisPedidos = () => {
+    navigate("/users/" + userId); // Temporal, más adelante vendrá de contexto o backend :id
+    // if (isLoggedIn) {
+    //   navigate("/users/" + userId); // Temporal, más adelante vendrá de contexto o backend :id
+    // } else {
+    //   navigate("/login");
+    // }
   };
 
   const handleSearch = (searchTerm) => {
@@ -61,6 +64,11 @@ export const Header = () => {
 
   const cerrarNotificaciones = () => {
     setMostrarNotificaciones(false);
+  };
+
+  const cerrarSesion = () => {
+    // TODO: Implementar lógica de cerrar sesión
+    navigate("/login");
   };
 
   const cerrarNotifCarrito = () => {
@@ -129,9 +137,6 @@ export const Header = () => {
             )}
           </div>
 
-          <div className="primary-button" onClick={irAUsuario}>
-            <User className="user-icon-header" />
-          </div>
           <div
             className="primary-button flex items-center"
             onClick={irACheckout}
@@ -139,6 +144,22 @@ export const Header = () => {
             <ShoppingCart />
             <div className="contador-de-items flex items-center">
               {obtenerTotalItems()}
+            </div>
+          </div>
+
+          <div className="user-menu-wrapper">
+            <button className="user-menu-button" aria-label="Menú de usuario">
+              <User className="user-icon-header" />
+              <span className="user-name">{nombreUsuario}</span>
+              <ChevronDown className="chevron-icon" />
+            </button>
+            <div className="user-dropdown-menu">
+              <button className="dropdown-menu-item" onClick={irAMisPedidos}>
+                Mis pedidos
+              </button>
+              <button className="dropdown-menu-item" onClick={cerrarSesion}>
+                Cerrar sesión
+              </button>
             </div>
           </div>
         </div>

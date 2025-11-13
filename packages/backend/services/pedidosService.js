@@ -1,21 +1,22 @@
-import { Pedido } from "../models/entities/pedido.js";
-import { DireccionEntrega } from "../models/entities/direccionEntrega.js";
-import { ItemPedido } from "../models/entities/itemPedido.js";
 import {
   ConflictError,
   NotFoundError,
   ValidationError,
 } from "../error/appError.js";
 import { CambioEstadoPedido } from "../models/entities/cambioEstadoPedido.js";
+import { DireccionEntrega } from "../models/entities/direccionEntrega.js";
 import { ESTADO_PEDIDO } from "../models/entities/estadoPedido.js";
+import { ItemPedido } from "../models/entities/itemPedido.js";
+import { Pedido } from "../models/entities/pedido.js";
 
 export class PedidosService {
   /**
    * @param {PedidosRepository} pedidosRepository
    * @param {import('../adapters/notificacionesPublisher.js').NotificacionesPublisher|null} notiPublisher
    */
-  constructor(pedidosRepository, notiPublisher = null) {
+  constructor(pedidosRepository, productoRepository, notiPublisher = null) {
     this.pedidosRepository = pedidosRepository;
+    this.productoRepository = productoRepository;
     this.notiPublisher = notiPublisher;
   }
 
@@ -29,24 +30,31 @@ export class PedidosService {
       d.codigoPostal,
       d.ciudad,
       d.provincia,
-      d.pais,
+      d.pais
     );
 
-    const items = data.items.map(
-      (item) =>
-        new ItemPedido(item.producto, item.cantidad, item.precioUnitario),
-    );
+    const productoIds = data.items.map((item) => item.producto);
+    const productos = await this.productoRepository.findAll({ _id: { $in: productoIds } });
+    const productosMap = new Map(productos.map(p => [p._id.toString(), p]));
+
+    const items = data.items.map((item) => {
+      const producto = productosMap.get(item.producto.toString());
+      if (!producto) {
+      throw new NotFoundError(`Producto con ID ${item.producto} no encontrado`);
+      }
+      return new ItemPedido(producto, item.cantidad, item.precioUnitario);
+    });
 
     const nuevoPedido = new Pedido(
       data.id_comprador,
       data.moneda,
       direccionEntrega,
-      items,
+      items
     );
 
     if (!nuevoPedido.validarStock()) {
       throw new ConflictError(
-        "No hay stock disponible para uno o más productos.",
+        "No hay stock disponible para uno o más productos."
       );
     }
 
@@ -59,7 +67,7 @@ export class PedidosService {
     const pedido = await this.pedidosRepository.findById(id);
     if (!pedido) {
       throw new NotFoundError(
-        "No se encontró el pedido con el ID especificado",
+        "No se encontró el pedido con el ID especificado"
       );
     }
     return pedido;
@@ -70,7 +78,7 @@ export class PedidosService {
       await this.pedidosRepository.getHistorialDeUsuario(userId);
     if (!pedidosUsuario) {
       throw new NotFoundError(
-        "El usuario con ese ID no existe o no tiene pedidos",
+        "El usuario con ese ID no existe o no tiene pedidos"
       );
     }
     return pedidosUsuario;
@@ -83,7 +91,7 @@ export class PedidosService {
     const pedidos = await this.pedidosRepository.findByPage(
       numeroPagina,
       elementosPorPagina,
-      filtros,
+      filtros
     );
 
     if (!pedidos) {
@@ -106,7 +114,7 @@ export class PedidosService {
     const pedido = await this.pedidosRepository.cancelar(id, motivo);
     if (!pedido) {
       throw new NotFoundError(
-        "No se encontró el pedido con el ID especificado",
+        "No se encontró el pedido con el ID especificado"
       );
     }
     await this.#publish(pedido, ESTADO_PEDIDO.CANCELADO, motivo);
@@ -117,7 +125,7 @@ export class PedidosService {
     const pedido = await this.pedidosRepository.marcarEnviado(id);
     if (!pedido) {
       throw new NotFoundError(
-        "No se encontró el pedido con el ID especificado",
+        "No se encontró el pedido con el ID especificado"
       );
     }
     await this.#publish(pedido, ESTADO_PEDIDO.ENVIADO, null);
@@ -127,7 +135,9 @@ export class PedidosService {
   async confirmar(id) {
     const pedido = await this.pedidosRepository.confirmar(id);
     if (!pedido) {
-      throw new NotFoundError("No se pudo confirmar el pedido (no existe o ya no está pendiente).");
+      throw new NotFoundError(
+        "No se pudo confirmar el pedido (no existe o ya no está pendiente)."
+      );
     }
     await this.#publish(pedido, ESTADO_PEDIDO.CONFIRMADO, null);
     return pedido;

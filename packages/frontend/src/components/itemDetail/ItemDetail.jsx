@@ -32,7 +32,18 @@ export const ItemDetail = ({ item }) => {
 
   const hayStock = item.stock > 0;
   const fotos = item.fotos || [];
-
+  const moneda = (() => {
+    switch (item.moneda) {
+      case "PESO_ARG":
+        return "$";
+      case "DOLAR_USA":
+        return "U$D ";
+      case "REAL":
+        return "R$ ";
+      default:
+        return "$";
+    }
+  })();
   return (
     <div className="item-detail flex items-start">
       <div className="image-section">
@@ -71,7 +82,7 @@ export const ItemDetail = ({ item }) => {
 
           <div className="text-wrapper-2">{item.titulo}</div>
 
-          <div className="text-wrapper-3">${item.precio}</div>
+          <div className="text-wrapper-3">{moneda}{item.precio}</div>
 
           <p className="descripcion">{item.descripcion}</p>
         </div>

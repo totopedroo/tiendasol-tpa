@@ -16,16 +16,7 @@ export class PedidosController {
     } catch (error) {
       next(error);
     }
-
-    // if (resultBody.error) {
-    //   return res.status(400).json({
-    //     error: resultBody.error,
-    //     message: "Error en el formato del pedido",
-    //   });
-    // }
   }
-
-  // 564321
 
   async findAll(req, res, next) {
     try {
