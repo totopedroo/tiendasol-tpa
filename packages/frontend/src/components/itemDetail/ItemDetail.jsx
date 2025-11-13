@@ -2,6 +2,7 @@
 import React from "react";
 import { ShoppingCart } from "../icons/ShoppingCart.jsx";
 import { Button } from "../button/Button.jsx";
+import { ImageWithLoader } from "../imageWithLoader/ImageWithLoader.jsx";
 import "./ItemDetail.css";
 import { useCarrito } from "../../context/CarritoContext";
 
@@ -36,7 +37,7 @@ export const ItemDetail = ({ item }) => {
     <div className="item-detail flex items-start">
       <div className="image-section">
         <div className="img-placeholder">
-          <img
+          <ImageWithLoader
             className="img"
             alt={item.titulo}
             src={

@@ -31,6 +31,18 @@
   object-fit: cover;
 }
 
+/* Estilos específicos para el loader de imagen en Item */
+.item .image-loader-container {
+  align-self: stretch;
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  width: 100%;
+}
+
+.item .image-error {
+  border-radius: var(--radius-md);
+}
+
 .item .imagen-item {
   align-self: stretch;
   aspect-ratio: 1;

@@ -43,9 +43,9 @@ export const ItemCollection = ({
         params.page = 1;
       }
 
-      // Si no hay limit, usar 10 por defecto
+      // Si no hay limit, usar 20 por defecto
       if (!params.limit) {
-        params.limit = 10;
+        params.limit = 20;
       }
 
       const response = await buscarProductos(params);

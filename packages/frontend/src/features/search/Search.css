@@ -93,9 +93,16 @@
   align-items: flex-start;
   justify-content: flex-start;
   gap: var(--space-8);
-  padding: var(--space-8) 0;
+  padding: var(--space-4) 0;
   position: relative;
   width: 100%;
+}
+
+/* Estilo para que el SearchBar ocupe el ancho completo en Search */
+.search-results-container .search-bar-full-width {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: var(--space-4);
 }
 
 .container-resultados .filtros {

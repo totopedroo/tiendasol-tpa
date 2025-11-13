@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { ShoppingCart } from "../icons/ShoppingCart";
 import { Button } from "../button/Button";
 import { useCarrito } from "../../context/CarritoContext";
+import { ImageWithLoader } from "../imageWithLoader/ImageWithLoader";
 import "./Item.css";
 
 export const Item = ({ item }) => {
@@ -20,7 +21,7 @@ export const Item = ({ item }) => {
 
   return (
     <Link key={item._id} to={`/products/${item._id}`} className="item">
-      <img
+      <ImageWithLoader
         src={item.fotos?.[0] || "/images/logo.png"}
         alt={item.titulo || "Producto"}
         className="item-image"
@@ -36,14 +37,14 @@ export const Item = ({ item }) => {
                 case "PESO_ARG":
                   return "$";
                 case "DOLAR_USA":
-                  return "U$D";
+                  return "U$D ";
                 case "REAL":
-                  return "R$";
+                  return "R$ ";
                 default:
                   return "$";
               }
             })()}
-            {item.precio}
+            {item.precio.toLocaleString()}
           </div>
         </div>
 

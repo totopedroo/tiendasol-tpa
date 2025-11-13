@@ -75,7 +75,7 @@ export const Checkout = () => {
               style={{ cursor: "pointer" }}
             >
               <ArrowLeft />
-              <div className="back-button-text">Volver atrás</div>
+              <div className="back-button-text">Seguir comprando</div>
             </div>
           </div>
 

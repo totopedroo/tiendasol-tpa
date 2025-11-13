@@ -1,73 +1,98 @@
 import React, { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { Filtros } from "../../components/filtros/Filtros";
 import { Paginacion } from "../../components/paginacion/Paginacion";
 import { Resultados } from "../../components/resultados/Resultados";
-import { buscarProductos, getProductsSlowly } from "../../service/productosService";
+import {
+  buscarProductos,
+  getProductsSlowly,
+} from "../../service/productosService";
 import "./Search.css";
+import SearchBar from "../../components/searchBar/SearchBar";
 
 // tiendasol.com/search?q="titulo"&categoria="celulares"
 export const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchValue, setSearchValue] = useState("");
   const [paginacion, setPaginacion] = useState({
     pagina: 1,
-    perPage: 10,
+    perPage: 20,
     total: 0,
     totalPaginas: 0,
   });
 
-const fetchProductos = async () => {
-  setLoading(true);
-  setError(null);
-  
-  try {
-    // Construir objeto de parámetros desde la URL
-    const params = {};
-    
-    // Obtener todos los parámetros de la URL
-    for (const [key, value] of searchParams.entries()) {
-      params[key] = value;
-    }
-    
-    // Si no hay página, usar página 1 por defecto
-    if (!params.page) {
-      params.page = 1;
-    }
-    
-    // Si no hay limit, usar 10 por defecto
-    if (!params.limit) {
-      params.limit = 10;
-    }
+  // Sincronizar el valor de búsqueda con los parámetros de la URL
+  useEffect(() => {
+    const tituloParam = searchParams.get("titulo");
+    setSearchValue(tituloParam || "");
+  }, [searchParams]);
 
-    const response = await buscarProductos(params);
-    
-    setProductos(response.data || []);
-    setPaginacion({
-      pagina: response.pagina || 1,
-      perPage: response.perPage || 10,
-      total: response.total || 0,
-      totalPaginas: response.totalPaginas || 0,
-    });
-  } catch (err) {
-    console.error("Error al buscar productos:", err);
-    setError("Error al cargar los productos. Por favor, intenta de nuevo.");
-    setProductos([]);
-  } finally {
-    setLoading(false);
-  }
-};
-  useEffect(() => { fetchProductos() }, [searchParams]);
+  const fetchProductos = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      // Construir objeto de parámetros desde la URL
+      const params = {};
+
+      // Obtener todos los parámetros de la URL
+      for (const [key, value] of searchParams.entries()) {
+        params[key] = value;
+      }
+
+      // Si no hay página, usar página 1 por defecto
+      if (!params.page) {
+        params.page = 1;
+      }
+
+      // Si no hay limit, usar 20 por defecto
+      if (!params.limit) {
+        params.limit = 20;
+      }
+
+      const response = await buscarProductos(params);
+
+      setProductos(response.data || []);
+      setPaginacion({
+        pagina: response.pagina || 1,
+        perPage: response.perPage || 20,
+        total: response.total || 0,
+        totalPaginas: response.totalPaginas || 0,
+      });
+    } catch (err) {
+      console.error("Error al buscar productos:", err);
+      setError("Error al cargar los productos. Por favor, intenta de nuevo.");
+      setProductos([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchProductos();
+  }, [searchParams]);
 
   const searchTerm = searchParams.get("titulo") || "";
-  const limit = searchParams.get("limit") || "10";
+  const limit = searchParams.get("limit") || "20";
 
   const handleLimitChange = (e) => {
     const params = new URLSearchParams(searchParams);
     params.set("limit", e.target.value);
     params.set("page", "1"); // Resetear a página 1 cuando cambie el límite
+    setSearchParams(params);
+  };
+
+  const handleSearch = (searchTerm) => {
+    const params = new URLSearchParams(searchParams);
+    if (searchTerm.trim()) {
+      params.set("titulo", searchTerm);
+    } else {
+      params.delete("titulo");
+    }
+    params.set("page", "1"); // Resetear a página 1 cuando se haga una nueva búsqueda
     setSearchParams(params);
   };
 
@@ -90,17 +115,20 @@ const fetchProductos = async () => {
               </select>
             </div>
           </div>
+          <SearchBar
+            onSearch={handleSearch}
+            placeholder="Buscar productos..."
+            className="search-bar-full-width"
+            value={searchValue}
+            onChange={setSearchValue}
+          />
           <div className="container-resultados">
             <Filtros />
-            <Resultados 
-              productos={productos} 
-              loading={loading} 
-              error={error}
-            />
+            <Resultados productos={productos} loading={loading} error={error} />
           </div>
           <div className="bottom-pagination-wrapper">
             <div className="paginacion-wrapper">
-              <Paginacion 
+              <Paginacion
                 paginaActual={paginacion.pagina}
                 totalPaginas={paginacion.totalPaginas}
               />

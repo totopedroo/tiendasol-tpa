@@ -2,6 +2,8 @@
   align-items: flex-start;
   gap: var(--space-8);
   position: relative;
+  max-width: 1200px;
+  width: 100%;
 }
 
 .item-detail .image-section {
@@ -9,6 +11,8 @@
   flex-direction: column;
   gap: var(--space-4);
   position: relative;
+  flex-shrink: 0;
+  width: 480px;
 }
 
 .item-detail .img {
@@ -32,6 +36,17 @@
   justify-content: center;
   flex-shrink: 0;
   overflow: hidden;
+}
+
+/* Estilos para el loader de imagen en ItemDetail */
+.item-detail .img-placeholder .image-loader-container {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-md);
+}
+
+.item-detail .img-placeholder .image-error {
+  border-radius: var(--radius-md);
 }
 
 .item-detail .no-image-placeholder {
@@ -79,6 +94,8 @@
   gap: var(--space-6);
   padding: 0 0 0 var(--space-8);
   position: relative;
+  max-width: calc(100% - 480px - var(--space-8));
+  min-width: 0;
 }
 
 .item-detail .product-details {
@@ -87,6 +104,7 @@
   gap: var(--space-2);
   position: relative;
   width: 100%;
+  min-width: 0;
 }
 
 .item-detail .div {
@@ -121,9 +139,11 @@
   font-family: "Inter-ExtraBold", Helvetica;
   font-size: 40px;
   font-weight: 800;
-  line-height: 58px;
+  line-height: 1.2;
   position: relative;
-  white-space: nowrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  width: 100%;
 }
 
 .item-detail .text-wrapper-3 {
@@ -131,10 +151,11 @@
   font-family: var(--font-regular);
   font-size: 40px;
   font-weight: 400;
-  line-height: 58px;
+  line-height: 1.2;
   position: relative;
-  white-space: nowrap;
-  width: fit-content;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  width: 100%;
 }
 
 .item-detail .descripcion {
@@ -222,6 +243,7 @@
   .item-detail {
     flex-direction: column;
     gap: var(--space-6);
+    max-width: 100%;
   }
 
   .item-detail .image-section {
@@ -250,6 +272,7 @@
 
   .item-detail .product-info {
     width: 100%;
+    max-width: 100%;
     padding: 0;
   }
 
@@ -260,11 +283,15 @@
   .item-detail .text-wrapper-2 {
     font-size: 32px;
     line-height: 1.2;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .item-detail .text-wrapper-3 {
     font-size: 32px;
     line-height: 1.2;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .item-detail .product-actions {
@@ -280,5 +307,31 @@
 
   .item-detail .quantity-select {
     flex: 1;
+  }
+}
+
+/* Tablet y pantallas medianas */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .item-detail {
+    max-width: 100%;
+  }
+
+  .item-detail .image-section {
+    width: 400px;
+  }
+
+  .item-detail .img-placeholder,
+  .item-detail .img {
+    width: 400px;
+    height: 400px;
+  }
+
+  .item-detail .product-info {
+    max-width: calc(100% - 400px - var(--space-8));
+  }
+
+  .item-detail .text-wrapper-2,
+  .item-detail .text-wrapper-3 {
+    font-size: 32px;
   }
 }

@@ -1,27 +1,35 @@
 import React, { useMemo } from "react";
-import { SearchIcon } from "../../components/icons/Search";
+import { useNavigate } from "react-router-dom";
 import { ItemCollection } from "../../components/itemCollection/ItemCollection";
 import "./Home.css";
 import { CategoryCollection } from "../../components/categoryCollection/CategoryCollection";
-import { Button } from "@mui/joy";
+import SearchBar from "../../components/searchBar/SearchBar";
 
 export const Home = () => {
-  const itemCollectionParams = useMemo(() => ({}), []);
+  const itemCollectionParams = useMemo(() => ({
+    ordenPor: "MasVendidos"
+  }), []);
+
+  const navigate = useNavigate();
+
+  const handleSearch = (searchTerm) => {
+    if (searchTerm.trim()) {
+      navigate(`/search?titulo=${encodeURIComponent(searchTerm)}`);
+    } else {
+      navigate("/search");
+    }
+  };
 
   return (
     <div className="contenido">
       <div className="container">
         <div className="search-section">
           <div className="search-bar-container">
-            <div className="search-input-wrapper">
-              <input
-                className="search-input"
-                placeholder="Buscar productos..."
-              />
-              <Button variant="outlined" onClick={() => {}}>
-                <SearchIcon className="search-icon" />
-              </Button>
-            </div>
+            <SearchBar
+              onSearch={handleSearch}
+              placeholder="Buscar productos..."
+              variant="default"
+            />
           </div>
         </div>
         <ItemCollection params={itemCollectionParams} />

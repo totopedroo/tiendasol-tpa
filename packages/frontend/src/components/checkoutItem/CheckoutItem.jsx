@@ -6,6 +6,7 @@ import { Delete } from "../icons/Delete";
 import { Button } from "../button/Button";
 import { useCarrito } from "../../context/CarritoContext";
 import "./CheckoutItem.css";
+import { ImageWithLoader } from "../imageWithLoader/ImageWithLoader";
 
 export const CheckoutItem = ({ item }) => {
   const { actualizarCantidad, eliminarDelCarrito } = useCarrito();
@@ -43,7 +44,7 @@ export const CheckoutItem = ({ item }) => {
 
   return (
     <div className="checkout-item flex items-start">
-      <img
+      <ImageWithLoader
         src={item.fotos?.[0] || "/images/logo.png"}
         alt={item.titulo}
         className="rectangle"

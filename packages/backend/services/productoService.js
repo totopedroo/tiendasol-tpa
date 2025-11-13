@@ -19,7 +19,7 @@ export class ProductoService {
       throw new NotFoundError("No hay ningún producto en la base de datos.");
     }
 
-    const total = await this.productoRepository.contarTodos();
+    const total = await this.productoRepository.contarTodos(filtros);
     const totalPaginas = Math.ceil(total / elementosPorPagina);
 
     return {

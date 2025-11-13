@@ -1,29 +1,39 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { ShoppingCart } from "../icons/ShoppingCart";
 import "./Header.css";
 import { User } from "../icons/User";
 import { Bell } from "../icons/Bell";
-import { SearchIcon } from "../icons/Search";
 import TiendaSolLogoLink from "../tiendaSolLogo/TiendaSolLogoLink";
 import { useCarrito } from "../../context/CarritoContext";
 import { Notificaciones } from "../notificaciones/Notificaciones";
 import { CarritoNotificacion } from "../carritoNotificacion/CarritoNotificacion";
+import SearchBar from "../searchBar/SearchBar";
 
 export const Header = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const {
     obtenerTotalItems,
     ultimoProductoAgregado,
     setUltimoProductoAgregado,
   } = useCarrito();
   const isLoggedIn = false; // Temporal, más adelante vendrá de contexto o backend
-  const [searchTerm, setSearchTerm] = useState("");
   const [mostrarNotificaciones, setMostrarNotificaciones] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
   const notifPanelRef = useRef(null);
 
   // TODO: Reemplazar con el ID real del usuario cuando se implemente sesiones
   const userId = "68fff891aa45f11100c074d9"; // Placeholder
+
+  useEffect(() => {
+    const tituloParam = searchParams.get("titulo");
+    if (tituloParam) {
+      setSearchValue(tituloParam);
+    } else {
+      setSearchValue("");
+    }
+  }, [searchParams]);
 
   const irACheckout = () => {
     navigate("/checkout");
@@ -37,18 +47,11 @@ export const Header = () => {
     }
   };
 
-  const handleSearch = (e) => {
-    e.preventDefault();
+  const handleSearch = (searchTerm) => {
     if (searchTerm.trim()) {
       navigate(`/search?titulo=${encodeURIComponent(searchTerm)}`);
     } else {
       navigate("/search");
-    }
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      handleSearch(e);
     }
   };
 
@@ -64,7 +67,6 @@ export const Header = () => {
     setUltimoProductoAgregado(null);
   };
 
-  // Cerrar el panel al hacer clic fuera
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -105,18 +107,13 @@ export const Header = () => {
           </div>
         </div>
 
-        <div className="search-bar">
-          <input
-            className="search-input"
-            placeholder="Buscar productos..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyDown={handleKeyPress}
-          />
-          <button onClick={handleSearch}>
-            <SearchIcon className="search-icon" />
-          </button>
-        </div>
+        <SearchBar
+          onSearch={handleSearch}
+          placeholder="Buscar productos..."
+          variant="inline"
+          value={searchValue}
+          onChange={setSearchValue}
+        />
 
         <div className="buttons flex items-center">
           <div className="notificaciones-wrapper" ref={notifPanelRef}>
@@ -147,7 +144,6 @@ export const Header = () => {
         </div>
       </div>
 
-      {/* Notificación de producto agregado al carrito */}
       {ultimoProductoAgregado && (
         <CarritoNotificacion
           producto={ultimoProductoAgregado}

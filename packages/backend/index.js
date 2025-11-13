@@ -46,7 +46,7 @@ app.use(
 const port = process.env.SERVER_PORT || 3000;
 const server = new Server(app, port);
 
-// await MongoDBClient.connect();
+await MongoDBClient.connect();
 
 const notiRepository = new NotificacionesRepository();
 const notiService = new NotificacionesService(notiRepository);
