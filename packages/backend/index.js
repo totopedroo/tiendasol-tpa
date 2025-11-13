@@ -29,6 +29,9 @@ import { MongoDBClient } from "./config/database.js";
 import { UsuarioController } from "./controllers/usuarioController.js";
 import { UsuarioService } from "./services/usuarioService.js";
 import { UsuarioRepository } from "./models/repositories/usuarioRepository.js";
+// AUTH
+import { AuthController } from "./controllers/authController.js";
+import { authenticateUser } from "./services/authService.js"; // Importamos el servicio mock
 
 const app = express();
 app.use(express.json());
@@ -43,13 +46,17 @@ app.use(
 const port = process.env.SERVER_PORT || 3000;
 const server = new Server(app, port);
 
-await MongoDBClient.connect();
+// await MongoDBClient.connect();
 
 const notiRepository = new NotificacionesRepository();
 const notiService = new NotificacionesService(notiRepository);
 const notiController = new NotificacionesController(notiService);
 const notiPublisher = new NotificacionesPublisher(notiService);
 server.setControllers(NotificacionesController, notiController);
+
+
+const authController = new AuthController({ authenticateUser });
+server.setControllers(AuthController, authController);
 
 const pedidosRepository = new PedidosRepository();
 const pedidosService = new PedidosService(pedidosRepository, notiPublisher);

@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import "./Contacto.css";
+import Popup from "../../components/popups/PopUp.jsx";
+import { useNavigate } from "react-router";
 
 export const Contacto = () => {
   // 🔹 Más adelante, este nombre puede venir de contexto o backend
   const nombreCliente = "Juan Martinez"; // ejemplo temporal
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     nombre: "",
@@ -13,14 +16,29 @@ export const Contacto = () => {
     descripcion: "",
   });
 
+    // Estado para el popup
+    const [mostrarPopup, setMostrarPopup] = useState(false);  
+    const [mensaje, setMensaje] = useState("");
+    const [titulo, setTitulo] = useState("");
+  
+  const handleClosePopup = () => {
+      setMostrarPopup(false);
+      if (titulo === "Éxito") { // si el login fue exitoso, que te mande a la pagina principal
+        navigate("/");
+      }
+    }
+  
+  const handleSubmit = (e) => {
+      e.preventDefault();
+      setTitulo("Éxito");
+      setMensaje("Consulta enviada con éxito ✅");
+      setMostrarPopup(true);
+    };
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert("Consulta enviada correctamente ✅");
-  };
 
   return (
     <div className="contacto-container">
@@ -85,6 +103,14 @@ export const Contacto = () => {
         <button type="submit" className="btn-contacto">
           Enviar consulta
         </button>
+        <Popup
+          title={titulo}
+          isOpen={mostrarPopup}
+          onClose={handleClosePopup}
+          mensaje={mensaje}
+          >
+          </Popup>
+
       </form>
     </div>
   );

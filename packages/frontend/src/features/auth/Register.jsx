@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
+import Popup from "../../components/popups/PopUp.jsx";
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -12,6 +13,18 @@ export const Register = () => {
     password: "",
     confirmarPassword: "",
   });
+
+  // Estado para el popup
+  const [mostrarPopup, setMostrarPopup] = useState(false);  
+  const [mensaje, setMensaje] = useState("");
+  const [titulo, setTitulo] = useState("");
+  
+  const handleClosePopup = () => {
+      setMostrarPopup(false);
+      if (titulo === "Éxito") { // si el login fue exitoso, que te mande a la pagina principal
+        navigate("/login"); // si podemos hacer que despues de registrarse quede iniciado sesión
+      }
+    }
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -25,9 +38,10 @@ export const Register = () => {
       return;
     }
 
-    // Aquí podrías agregar la llamada a tu API de registro
-    alert("✅ Cuenta creada correctamente");
-    navigate("/login");
+    // Agregar mas verificaciones => Si el correo ya esta registrado, etc. TODO
+    setTitulo("Éxito");
+    setMensaje("Cuenta creada con éxito ✅");
+    setMostrarPopup(true);
   };
 
   return (
@@ -110,6 +124,14 @@ export const Register = () => {
           <Link to="/login" className="login-link">
             Iniciar sesión
           </Link>
+
+          <Popup
+            title={titulo}
+            isOpen={mostrarPopup}
+            onClose={handleClosePopup}
+            mensaje={mensaje}
+            >
+            </Popup>
         </div>
       </div>
     </div>

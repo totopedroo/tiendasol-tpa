@@ -15,6 +15,8 @@ import { HistorialPedidos } from "./features/orders/HistorialPedidos.jsx";
 import { Producto } from "./features/products/Producto.jsx";
 import { Search } from "./features/search/Search.jsx";
 import { Vender } from "./features/ventas/Vender.jsx";
+import FiltroDeSesion from "./components/filtroDeSesion/filtroDeSesion.jsx";
+import { AuthProvider } from "./context/AuthContexto.jsx";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -28,6 +30,7 @@ function ScrollToTop() {
 
 function App() {
   return (
+    <AuthProvider>
     <CarritoProvider>
       <BrowserRouter>
         <ScrollToTop />
@@ -38,18 +41,20 @@ function App() {
             <Route path="/search" element={<Search />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/users/:id" element={<HistorialPedidos />} />
-            <Route path="/ventas" element={<Vender />} />
+            <Route element={<FiltroDeSesion />}>
+                <Route path="/ventas" element={<Vender />} /> 
+            </Route>
             <Route path="/contacto" element={<Contacto />} />
             <Route path="/categorias" element={<CategoryCollection />} />
             <Route path="*" element={<NotFound />}></Route>
           </Route>
-          {/* Estas no llevan Layout */}
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/reset-password" element={<ResetPassword />} />
         </Routes>
       </BrowserRouter>
     </CarritoProvider>
+    </AuthProvider>
   );
 }
 

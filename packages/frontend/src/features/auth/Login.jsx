@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
+import Popup from "../../components/popups/PopUp.jsx";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -14,13 +15,32 @@ export const Login = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // Estado para el popup
+  const [mostrarPopup, setMostrarPopup] = useState(false);  
+  const [mensaje, setMensaje] = useState("");
+  const [titulo, setTitulo] = useState("");
+
+  const handleClosePopup = () => {
+    setMostrarPopup(false);
+    if (titulo === "Éxito") { // si el login fue exitoso, que te mande a la pagina principal
+      navigate("/");
+    }
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // Simula login exitoso
     if (form.email && form.password) {
-      alert("Inicio de sesión exitoso ✅");
-      navigate("/");
+      setTitulo("Éxito");
+      setMensaje("Bienvenido nuevamente a TiendaSol! ✅");
+      setMostrarPopup(true);
+    }
+    else { 
+    // Por ahora manejo el error asi. TODO
+      setTitulo("Error de Credenciales");
+      setMensaje("Por favor, ingrese un correo electrónico y contraseña válidos.");
+      setMostrarPopup(true);
     }
   };
 
@@ -84,6 +104,14 @@ export const Login = () => {
             Crear una cuenta
           </Link>
         </div>
+
+        <Popup
+          title={titulo}
+          isOpen={mostrarPopup}
+          onClose={handleClosePopup}
+          mensaje={mensaje}
+          >
+          </Popup>
       </div>
     </div>
   );
