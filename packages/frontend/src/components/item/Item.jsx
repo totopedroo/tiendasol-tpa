@@ -4,15 +4,23 @@ import { Link } from "react-router-dom";
 import { ShoppingCart } from "../icons/ShoppingCart";
 import { Button } from "../button/Button";
 import { useCarrito } from "../../context/CarritoContext";
+import { useAuth } from "../../context/AuthContexto.jsx";
 import { ImageWithLoader } from "../imageWithLoader/ImageWithLoader";
 import "./Item.css";
 
 export const Item = ({ item }) => {
   const { agregarAlCarrito } = useCarrito();
+  const { isAuthenticated, openAuthModal } = useAuth();
   const [loading, setLoading] = useState(false);
 
   const handleAddToCart = async (e) => {
     e.preventDefault(); // Evita que el Link navegue
+
+    if (!isAuthenticated) {
+      openAuthModal("login");
+      return;
+    }
+
     setLoading(true);
     await new Promise((resolve) => setTimeout(resolve, 300)); // Simular delay
     agregarAlCarrito(item);

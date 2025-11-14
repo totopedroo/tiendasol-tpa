@@ -1,19 +1,27 @@
 /* eslint-disable react/prop-types */
-import React from "react";
+import React, { useState } from "react";
 import { ShoppingCart } from "../icons/ShoppingCart.jsx";
 import { Button } from "../button/Button.jsx";
 import { ImageWithLoader } from "../imageWithLoader/ImageWithLoader.jsx";
 import "./ItemDetail.css";
 import { useCarrito } from "../../context/CarritoContext";
+import { useAuth } from "../../context/AuthContexto.jsx";
 
 export const ItemDetail = ({ item }) => {
   // Hooks deben estar antes de cualquier return
   const [imagenSeleccionada, setImagenSeleccionada] = React.useState(0);
   const [cantidadSeleccionada, setCantidadSeleccionada] = React.useState(1);
   const { agregarAlCarrito } = useCarrito();
+  const { isAuthenticated, openAuthModal } = useAuth();
 
   const handleAgregarAlCarrito = async (e) => {
     e.preventDefault();
+
+    if (!isAuthenticated) {
+      openAuthModal("login");
+      return;
+    }
+
     await new Promise((resolve) => setTimeout(resolve, 300));
     // Agregar la cantidad seleccionada veces
     for (let i = 0; i < cantidadSeleccionada; i++) {
@@ -82,7 +90,10 @@ export const ItemDetail = ({ item }) => {
 
           <div className="text-wrapper-2">{item.titulo}</div>
 
-          <div className="text-wrapper-3">{moneda}{item.precio}</div>
+          <div className="text-wrapper-3">
+            {moneda}
+            {item.precio}
+          </div>
 
           <p className="descripcion">{item.descripcion}</p>
         </div>

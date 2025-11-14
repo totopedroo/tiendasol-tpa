@@ -357,3 +357,8 @@ button {
     font-size: 0.625rem;
   }
 }
+
+/* Login Button Styles */
+.header-login-button {
+  white-space: nowrap;
+}

@@ -30,31 +30,31 @@ function ScrollToTop() {
 
 function App() {
   return (
-    <AuthProvider>
-    <CarritoProvider>
-      <BrowserRouter>
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="/products/:id" element={<Producto />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/users/:id" element={<HistorialPedidos />} />
-            <Route element={<FiltroDeSesion />}>
-                <Route path="/ventas" element={<Vender />} /> 
+    <BrowserRouter>
+      <AuthProvider>
+        <CarritoProvider>
+          <ScrollToTop />
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="/products/:id" element={<Producto />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/users/:id" element={<HistorialPedidos />} />
+              <Route element={<FiltroDeSesion />}>
+                <Route path="/ventas" element={<Vender />} />
+              </Route>
+              <Route path="/contacto" element={<Contacto />} />
+              <Route path="/categorias" element={<CategoryCollection />} />
+              <Route path="*" element={<NotFound />}></Route>
             </Route>
-            <Route path="/contacto" element={<Contacto />} />
-            <Route path="/categorias" element={<CategoryCollection />} />
-            <Route path="*" element={<NotFound />}></Route>
-          </Route>
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-        </Routes>
-      </BrowserRouter>
-    </CarritoProvider>
-    </AuthProvider>
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+          </Routes>
+        </CarritoProvider>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 

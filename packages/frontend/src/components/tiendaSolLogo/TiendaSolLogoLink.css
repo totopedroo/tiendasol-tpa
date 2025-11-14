@@ -13,7 +13,7 @@
 .company-name-text {
   color: var(--color-text-primary);
   font-family: var(--font-family-semibold);
-  font-size: var(--font-size-md);
+  font-size: var(--text-base);
   font-weight: 600;
   letter-spacing: var(--letter-spacing-md);
   line-height: var(--line-height-md);

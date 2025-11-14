@@ -26,6 +26,20 @@ export const CarritoProvider = ({ children }) => {
     localStorage.setItem("carrito", JSON.stringify(carritoItems));
   }, [carritoItems]);
 
+  // Escuchar evento de logout para limpiar el carrito
+  useEffect(() => {
+    const handleLogout = () => {
+      setCarritoItems([]);
+      setUltimoProductoAgregado(null);
+    };
+
+    window.addEventListener("logout", handleLogout);
+
+    return () => {
+      window.removeEventListener("logout", handleLogout);
+    };
+  }, []);
+
   // Agregar producto al carrito
   const agregarAlCarrito = (producto) => {
     setCarritoItems((prevItems) => {

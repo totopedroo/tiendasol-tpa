@@ -146,6 +146,7 @@
 
 .btn-full-width {
   width: 100%;
+  display: flex;
 }
 
 /* === ICONOS === */

@@ -6,9 +6,12 @@ import { CategoryCollection } from "../../components/categoryCollection/Category
 import SearchBar from "../../components/searchBar/SearchBar";
 
 export const Home = () => {
-  const itemCollectionParams = useMemo(() => ({
-    ordenPor: "MasVendidos"
-  }), []);
+  const itemCollectionParams = useMemo(
+    () => ({
+      ordenPor: "MasVendidos",
+    }),
+    []
+  );
 
   const navigate = useNavigate();
 
@@ -25,6 +28,12 @@ export const Home = () => {
       <div className="container">
         <div className="search-section">
           <div className="search-bar-container">
+            <div className="welcome-text">
+              <h1 className="welcome-title">Bienvenido a TiendaSol</h1>
+              <p className="welcome-subtitle">
+                Tenemos todo lo que estás buscando
+              </p>
+            </div>
             <SearchBar
               onSearch={handleSearch}
               placeholder="Buscar productos..."

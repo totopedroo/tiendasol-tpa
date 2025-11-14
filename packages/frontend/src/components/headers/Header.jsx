@@ -11,6 +11,7 @@ import { Notificaciones } from "../notificaciones/Notificaciones";
 import { CarritoNotificacion } from "../carritoNotificacion/CarritoNotificacion";
 import SearchBar from "../searchBar/SearchBar";
 import { useAuth } from "../../context/AuthContexto.jsx";
+import { Button } from "../button/Button";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -25,11 +26,11 @@ export const Header = () => {
   const [searchValue, setSearchValue] = useState("");
   const notifPanelRef = useRef(null);
 
-  const { user, isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated, logout, openAuthModal } = useAuth();
 
-  const userId = user?._id;           // o user.id dependiendo del backend
+  const userId = user?._id; // o user.id dependiendo del backend
   const nombreUsuario = user?.nombre; // o user.username, user.firstName, etc.
-  
+
   useEffect(() => {
     const tituloParam = searchParams.get("titulo");
     if (tituloParam) {
@@ -40,6 +41,10 @@ export const Header = () => {
   }, [searchParams]);
 
   const irACheckout = () => {
+    if (!isAuthenticated) {
+      openAuthModal("login");
+      return;
+    }
     navigate("/checkout");
   };
 
@@ -61,6 +66,10 @@ export const Header = () => {
   };
 
   const toggleNotificaciones = () => {
+    if (!isAuthenticated) {
+      openAuthModal("login");
+      return;
+    }
     setMostrarNotificaciones(!mostrarNotificaciones);
   };
 
@@ -70,7 +79,7 @@ export const Header = () => {
 
   const cerrarSesion = () => {
     logout();
-    navigate("/login");
+    navigate("/");
   };
 
   const cerrarNotifCarrito = () => {
@@ -149,21 +158,32 @@ export const Header = () => {
             </div>
           </div>
 
-          <div className="user-menu-wrapper">
-            <button className="user-menu-button" aria-label="Menú de usuario">
-              <User className="user-icon-header" />
-              <span className="user-name">{nombreUsuario}</span>
-              <ChevronDown className="chevron-icon" />
-            </button>
-            <div className="user-dropdown-menu">
-              <button className="dropdown-menu-item" onClick={irAMisPedidos}>
-                Mis pedidos
+          {isAuthenticated ? (
+            <div className="user-menu-wrapper">
+              <button className="user-menu-button" aria-label="Menú de usuario">
+                <User className="user-icon-header" />
+                <span className="user-name">{nombreUsuario}</span>
+                <ChevronDown className="chevron-icon" />
               </button>
-              <button className="dropdown-menu-item" onClick={cerrarSesion}>
-                Cerrar sesión
-              </button>
+              <div className="user-dropdown-menu">
+                <button className="dropdown-menu-item" onClick={irAMisPedidos}>
+                  Mis pedidos
+                </button>
+                <button className="dropdown-menu-item" onClick={cerrarSesion}>
+                  Cerrar sesión
+                </button>
+              </div>
             </div>
-          </div>
+          ) : (
+            <Button
+              variant="primary"
+              size="medium"
+              onClick={() => openAuthModal("login")}
+              className="header-login-button"
+            >
+              Iniciar Sesión
+            </Button>
+          )}
         </div>
       </div>
 
