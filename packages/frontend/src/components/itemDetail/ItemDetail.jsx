@@ -86,7 +86,9 @@ export const ItemDetail = ({ item }) => {
 
       <div className="product-info flex flex-col items-start">
         <div className="product-details flex flex-col items-start">
-          <div className="text-wrapper flex items-center">Categoría</div>
+          <div className="text-wrapper flex items-center">
+            {item.categorias.map((cat, index) => <>{cat.nombre}, </>)}
+          </div>
 
           <div className="text-wrapper-2">{item.titulo}</div>
 

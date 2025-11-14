@@ -236,12 +236,28 @@ button {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
 .user-name {
   color: var(--color-text);
   font-family: var(--font-medium);
   font-size: var(--text-sm);
   font-weight: 500;
   white-space: nowrap;
+}
+
+.user-type {
+  color: var(--color-text-muted);
+  font-family: var(--font-bold);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  white-space: nowrap;
+  text-transform: capitalize;
 }
 
 .chevron-icon {

@@ -20,6 +20,11 @@
   height: 100px;
   position: relative;
   width: 100px;
+  overflow: hidden;
+}
+
+.historial-item-container .rectangle img {
+  border-radius: var(--radius-md);
 }
 
 .item-details {

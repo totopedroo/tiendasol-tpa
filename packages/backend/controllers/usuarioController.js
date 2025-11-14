@@ -14,6 +14,20 @@ export const usuarioSchema = z.object({
   password: z.string().min(3, "Contraseña muy corta.").optional(),
 });
 
+export const usuarioUpdateSchema = z.object({
+  nombre: z.string("Falta atributo.").min(4, "Cantidad minima 4.").optional(),
+  email: z.string("Falta email.").min(6, "Cantidad minima 4.").optional(),
+  telefono: z
+    .string("Falta telefono.")
+    .min(11, "Cantidad minima 11.")
+    .optional(),
+  tipo: z
+    .string("Falta tipo de usuario.")
+    .min(5, "Cantidad minima 5.")
+    .optional(),
+  password: z.string().min(3, "Contraseña muy corta.").optional(),
+});
+
 export class UsuarioController {
   constructor(usuarioService) {
     this.usuarioService = usuarioService;
@@ -62,7 +76,7 @@ export class UsuarioController {
 
   async update(req, res, next) {
     try {
-      const validacionBody = usuarioSchema.safeParse(req.body);
+      const validacionBody = usuarioUpdateSchema.safeParse(req.body);
       if (!validacionBody.success) {
         return res.status(400).json(validacionBody.error.issues);
       }

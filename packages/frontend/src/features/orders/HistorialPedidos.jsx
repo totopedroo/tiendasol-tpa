@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { User } from "../../components/icons/User";
+import { Button } from "../../components/button/Button";
+import Popup from "../../components/popups/PopUp";
 import "./HistorialPedidos.css";
 import { Paginacion } from "../../components/paginacion/Paginacion";
 import { DetallePedido } from "../../components/detallePedido/DetallePedido";
 import { getHistorialDeUsuario } from "../../service/pedidosService";
+import { convertirAVendedor, convertirAComprador } from "../../service/usuariosService";
 import { CircularProgress } from "@mui/joy";
 import { useAuth } from "../../context/AuthContexto.jsx";
 
@@ -11,14 +14,19 @@ export const HistorialPedidos = () => {
   const [pedidos, setPedidos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [cambiandoTipo, setCambiandoTipo] = useState(false);
+  const [mostrarPopup, setMostrarPopup] = useState(false);
+  const [mensaje, setMensaje] = useState("");
+  const [tituloPopup, setTituloPopup] = useState("");
   const [paginacion, setPaginacion] = useState({
     pagina: 1,
     perPage: 10,
     total: 0,
     totalPaginas: 0,
   });
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, refreshUser } = useAuth();
   const nombreUsuario = user?.nombre || "Usuario";
+  const tipoUsuario = user?.tipo || "Usuario";
 
   const fetchPedidos = async () => {
     setLoading(true);
@@ -46,6 +54,42 @@ export const HistorialPedidos = () => {
       fetchPedidos();
     }
   }, [user.id]);
+
+  const handleCambiarTipo = async () => {
+    setCambiandoTipo(true);
+    try {
+      const nuevoTipo = tipoUsuario === "VENDEDOR" ? "COMPRADOR" : "VENDEDOR";
+      
+      if (nuevoTipo === "VENDEDOR") {
+        await convertirAVendedor(user.id);
+      } else {
+        await convertirAComprador(user.id);
+      }
+
+      // Actualizar el usuario en el contexto refrescando el token
+      if (refreshUser) {
+        await refreshUser();
+      }
+
+      setTituloPopup("¡Éxito!");
+      setMensaje(`✅ Tu cuenta ha sido convertida a ${nuevoTipo.toLowerCase()}`);
+      setMostrarPopup(true);
+    } catch (error) {
+      console.error("Error al cambiar tipo de cuenta:", error);
+      setTituloPopup("Error");
+      setMensaje(
+        `⚠️ ${error.response?.data?.message || "Error al cambiar el tipo de cuenta. Intenta nuevamente."}`
+      );
+      setMostrarPopup(true);
+    } finally {
+      setCambiandoTipo(false);
+    }
+  };
+
+  const handleClosePopup = () => {
+    setMostrarPopup(false);
+  };
+
   return (
     <div className="contenido">
       <div className="container">
@@ -57,7 +101,18 @@ export const HistorialPedidos = () => {
           <div className="user-info">
             <div className="text-wrapper">{nombreUsuario}</div>
 
-            <div className="text-wrapper-2">Comprador</div>
+            <div className="text-wrapper-2">{tipoUsuario}</div>
+          </div>
+
+          <div className="cambiar-tipo-button">
+            <Button
+              variant="secondary"
+              size="medium"
+              onClick={handleCambiarTipo}
+              loading={cambiandoTipo}
+            >
+              Cambiar a {tipoUsuario === "VENDEDOR" ? "Comprador" : "Vendedor"}
+            </Button>
           </div>
         </div>
 
@@ -113,6 +168,13 @@ export const HistorialPedidos = () => {
           )}
         </div>
       </div>
+
+      <Popup
+        title={tituloPopup}
+        isOpen={mostrarPopup}
+        onClose={handleClosePopup}
+        mensaje={mensaje}
+      />
     </div>
   );
 };

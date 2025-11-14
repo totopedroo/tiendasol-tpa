@@ -12,6 +12,8 @@
   overflow: hidden;
   padding: var(--space-16) var(--space-8);
   position: relative;
+  display: flex;
+  justify-content: space-between;
 }
 
 .user-profile-section .user-wrapper {
@@ -68,6 +70,12 @@
   position: relative;
   white-space: nowrap;
   width: fit-content;
+}
+
+.cambiar-tipo-button {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
 }
 
 .historial-screen {

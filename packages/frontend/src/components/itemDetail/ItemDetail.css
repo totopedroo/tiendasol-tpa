@@ -144,6 +144,14 @@
   word-wrap: break-word;
   overflow-wrap: break-word;
   width: 100%;
+  /* Truncado de texto a 2 líneas */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: calc(1.2em * 2); /* 2 líneas con line-height 1.2 */
 }
 
 .item-detail .text-wrapper-3 {

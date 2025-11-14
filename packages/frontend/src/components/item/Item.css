@@ -83,6 +83,15 @@
   font-family: var(--font-regular);
   font-size: var(--text-base);
   font-weight: 400;
+  /* Truncado de texto a 2 líneas */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+  max-height: calc(1.4em * 2); /* 2 líneas */
 }
 
 .item-info .text-wrapper-3 {

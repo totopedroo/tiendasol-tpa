@@ -52,6 +52,10 @@ export const Header = () => {
     navigate("/orders");
   };
 
+  const irAMisProductos = () => {
+    navigate("/search?vendedor=" + userId);
+  };
+
   const handleSearch = (searchTerm) => {
     if (searchTerm.trim()) {
       navigate(`/search?titulo=${encodeURIComponent(searchTerm)}`);
@@ -157,12 +161,21 @@ export const Header = () => {
             <div className="user-menu-wrapper">
               <button className="user-menu-button" aria-label="Menú de usuario">
                 <User className="user-icon-header" />
-                <span className="user-name">{nombreUsuario}</span>
+                <div className="user-info">
+                  <span className="user-name">{nombreUsuario}</span>
+                  <span className="user-type">{user?.tipo || "Usuario"}</span>
+                </div>
                 <ChevronDown className="chevron-icon" />
               </button>
               <div className="user-dropdown-menu">
                 <button className="dropdown-menu-item" onClick={irAMisPedidos}>
                   Mis pedidos
+                </button>
+                <button
+                  className="dropdown-menu-item"
+                  onClick={irAMisProductos}
+                >
+                  Mis productos
                 </button>
                 <button className="dropdown-menu-item" onClick={cerrarSesion}>
                   Cerrar sesión

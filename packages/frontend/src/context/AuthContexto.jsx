@@ -78,6 +78,19 @@ export const AuthProvider = ({ children }) => {
     window.dispatchEvent(new Event("logout"));
   };
 
+  const refreshUser = useCallback(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedUser = checkTokenExpiration(token);
+      if (decodedUser) {
+        setUser(decodedUser);
+        setIsAuthenticated(true);
+      } else {
+        logout();
+      }
+    }
+  }, []);
+
   const openAuthModal = (view = "login") => {
     setAuthModalView(view);
     setShowAuthModal(true);
@@ -93,6 +106,7 @@ export const AuthProvider = ({ children }) => {
     loading,
     login,
     logout,
+    refreshUser,
     openAuthModal,
     closeAuthModal,
   };
