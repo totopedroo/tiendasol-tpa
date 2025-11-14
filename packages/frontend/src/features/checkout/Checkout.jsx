@@ -11,6 +11,8 @@ import { set } from "mongoose";
 import Popup from "../../components/popups/PopUp";
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContexto";
+import PopUpOpciones from "../../components/popups/PopUpOpciones";
+import { ca } from "zod/locales";
 
 export const Checkout = () => {
   const navigate = useNavigate();
@@ -62,12 +64,10 @@ export const Checkout = () => {
 
       const pedido = await crearPedido(pedidoData);
       console.log("Pedido creado:", pedido);
-
       setTitulo("Pedido realizado");
       setMensaje("Tu pedido ha sido realizado con éxito ✅");
       setMostrarPopup(true);
       vaciarCarrito();
-      navigate("/");
     } catch (error) {
       console.error("Error al realizar el pedido:", error);
       setTitulo("Error al realizar el pedido");
@@ -77,6 +77,21 @@ export const Checkout = () => {
       setMostrarPopup(true);
     }
   };
+
+  const [mostrarPopUpOpciones, setMostrarPopUpOpciones] = useState(false);
+  const [mensajeCarrito, setMensajeCarrito] = useState("");
+  const [tituloCarrito, setTituloCarrito] = useState("");
+
+  const handlerCerrarCarito = async (e) => {
+    e.preventDefault();
+    try {
+      setTituloCarrito("Vaciar carrito")
+      setMensajeCarrito("¿Estas seguro que quieres vaciar al carrito?");
+      setMostrarPopUpOpciones(true)
+    } catch (error) {
+      console.error("Error al vaciar el carrito:", error);
+    }
+  }
 
   const limpiarCarrito = () => {
     vaciarCarrito();
@@ -124,7 +139,7 @@ export const Checkout = () => {
                   >
                     <Button
                       variant="danger"
-                      onClick={limpiarCarrito}
+                      onClick={handlerCerrarCarito}
                       disabled={carritoItems.length === 0}
                     >
                       Limpiar carrito
@@ -177,6 +192,17 @@ export const Checkout = () => {
           isOpen={mostrarPopup}
           onClose={handleClosePopup}
           mensaje={mensaje}
+        />
+
+        <PopUpOpciones
+          title={tituloCarrito}
+          mensaje={mensajeCarrito}
+          isOpen={mostrarPopUpOpciones}
+          onClose={() => setMostrarPopUpOpciones(false)}
+          onConfirm={() => {
+            limpiarCarrito();
+            setMostrarPopUpOpciones(false);
+          }}
         />
       </div>
     </div>

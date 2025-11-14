@@ -72,10 +72,18 @@ export const Filtros = () => {
       } catch (error) {
         console.error("Error al cargar categorías:", error);
         setCategorias([]);
-      }
+      } 
     };
     cargarCategorias();
   }, []);
+
+  useEffect(() => {
+    setCategoria(searchParams.get("categoria") || "");
+    setVendedor(searchParams.get("vendedor") || "");
+    setPrecioMin(searchParams.get("precioMin") || "");
+    setPrecioMax(searchParams.get("precioMax") || "");
+    setOrden(searchParams.get("ordenPor") || "");
+  }, [searchParams]);
 
   // Cargar vendedores del backend
   useEffect(() => {
@@ -98,7 +106,7 @@ export const Filtros = () => {
       actualizarFiltros();
     }, 500);
     return () => clearTimeout(timer);
-  }, []);
+  }, [categoria, vendedor, precioMin, precioMax, orden]);
 
   const limpiarFiltros = () => {
     setCategoria("");

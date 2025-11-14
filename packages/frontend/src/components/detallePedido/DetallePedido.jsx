@@ -5,6 +5,7 @@ import { HistorialItem } from "../historialItem/HistorialItem";
 import { Button } from "../button/Button";
 import Popup from "../popups/PopUp";
 import { cancelarPedido } from "../../service/pedidosService";
+import PopUpOpciones from "../popups/PopUpOpciones";
 
 export const DetallePedido = ({ pedido, onPedidoActualizado }) => {
   const [mostrarHistorial, setMostrarHistorial] = useState(false);
@@ -12,6 +13,16 @@ export const DetallePedido = ({ pedido, onPedidoActualizado }) => {
   const [mostrarPopup, setMostrarPopup] = useState(false);
   const [mensaje, setMensaje] = useState("");
   const [tituloPopup, setTituloPopup] = useState("");
+
+  const [mostrarPopupCancelar, setMostrarPopupCancelar] = useState(false);
+  const [mensajeCancelar, setMensajeCancelar] = useState("");
+  const [tituloCancelar, setTituloCancelar] = useState("");
+
+  const handlerCancelar = async (e) => {
+      setTituloCancelar("Cancelar pedido");
+      setMensajeCancelar("¿Estás seguro que deseas cancelar este pedido?");
+      setMostrarPopupCancelar(true);
+  };
 
   if (!pedido) return null;
 
@@ -35,11 +46,8 @@ export const DetallePedido = ({ pedido, onPedidoActualizado }) => {
     setMostrarHistorial(false);
   };
 
-  const handleCancelarPedido = async () => {
-    if (!window.confirm("¿Estás seguro de que deseas cancelar este pedido?")) {
-      return;
-    }
-
+  const confirmarCancelacion = async () => {
+    setMostrarPopupCancelar(false);
     setCancelando(true);
     try {
       await cancelarPedido(pedido._id);
@@ -172,7 +180,7 @@ export const DetallePedido = ({ pedido, onPedidoActualizado }) => {
         ) : (
           <Button
             variant="danger"
-            onClick={handleCancelarPedido}
+            onClick={handlerCancelar}
             loading={cancelando}
           >
             Cancelar pedido
@@ -192,6 +200,14 @@ export const DetallePedido = ({ pedido, onPedidoActualizado }) => {
         isOpen={mostrarPopup}
         onClose={handleCerrarPopup}
         mensaje={mensaje}
+      />
+
+     <PopUpOpciones
+        title={tituloCancelar}
+        mensaje={mensajeCancelar}
+        isOpen={mostrarPopupCancelar}
+        onClose={() => setMostrarPopupCancelar(false)}
+        onConfirm={confirmarCancelacion}
       />
     </div>
   );

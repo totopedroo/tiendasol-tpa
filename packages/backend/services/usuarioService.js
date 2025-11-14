@@ -16,6 +16,10 @@ export class UsuarioService {
   }
 
   async create(data) {
+    const existente = await this.usuarioRepository.findByEmail(data.email);
+    if (existente) {
+      throw new Error("El email ya está registrado.");
+    }
     const usuario = await this.usuarioRepository.save(data);
     return usuario;
   }

@@ -4,8 +4,27 @@ import { ArrowRight } from "../icons/ArrowRight";
 import { Link } from "react-router-dom";
 import { categorias } from "../../mockdata/Categorias";
 import { ImageWithLoader } from "../imageWithLoader/ImageWithLoader";
+import { useEffect, useState } from "react";
+import { getCategorias } from "../../service/categoriasService";
 
 export const CategoryCollection = () => {
+
+  const [categorias, setCategorias] = useState([]);
+  
+  useEffect(() => {
+    const cargarCategorias = async () => {
+      try {
+        const response = await getCategorias();
+        setCategorias(response.categorias || []);
+      } catch (error) {
+        console.error("Error al cargar categorías:", error);
+        setCategorias([]);
+      } 
+    };
+    cargarCategorias();
+  }, []);
+
+
   return (
     <div className="category-collection flex flex-col items-center">
       <div className="categories-header flex items-center justify-between">
@@ -23,9 +42,9 @@ export const CategoryCollection = () => {
 
       <div className="categories-grid">
         {categorias.map((categoria) => (
-          <div className="category-item" key={categoria.nombre}>
+          <div className="category-item" key={categoria._id}>
             <Link
-              to={`/search?titulo=""&categoria=${categoria.nombre.toLowerCase()}`}
+              to={`/search?categoria=${categoria.nombre}`}
               className="category-link flex flex-col items-center"
             >
               <div className="ellipse">
