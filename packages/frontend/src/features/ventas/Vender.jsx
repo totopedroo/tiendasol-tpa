@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import "./Vender.css";
+import Popup from "../../components/popups/PopUp";
+import { useNavigate } from "react-router";
+
 
 export function Vender() {
   const [titulo, setTitulo] = useState("");
@@ -8,6 +11,18 @@ export function Vender() {
   const [moneda, setMoneda] = useState("ARS");
   const [categoria, setCategoria] = useState("");
   const [imagenes, setImagenes] = useState([]);
+  const [mostrarPopup, setMostrarPopup] = useState(false);
+  const [mensaje, setMensaje] = useState("");
+  const [tituloPopup, setTituloPopup] = useState("");
+  const navigate = useNavigate();
+  
+
+  const handleClosePopup = () => {
+      setMostrarPopup(false);
+      if (tituloPopup === "Venta exitosa") {
+        navigate("/");
+      }
+    };
 
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
@@ -29,7 +44,9 @@ export function Vender() {
       imagenes,
     };
     console.log("Publicación creada:", datos);
-    alert("✅ Publicación creada correctamente");
+    setTituloPopup("Venta exitosa");
+    setMensaje("Tu producto ha sido publicado con éxito ✅");
+    setMostrarPopup(true);
   };
 
   return (
@@ -139,6 +156,14 @@ export function Vender() {
           <button type="submit" className="btn-publicar">
             Crear publicación
           </button>
+
+           <Popup
+            title={tituloPopup}
+            isOpen={mostrarPopup}
+            onClose={handleClosePopup}
+            mensaje={mensaje}
+          />
+
         </div>
       </form>
     </div>

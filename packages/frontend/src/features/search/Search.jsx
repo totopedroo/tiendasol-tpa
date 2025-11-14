@@ -75,7 +75,7 @@ export const Search = () => {
     fetchProductos();
   }, [searchParams]);
 
-  const searchTerm = searchParams.get("titulo") || "";
+  const searchTerm = searchParams.get("titulo") || null;
   const limit = searchParams.get("limit") || "20";
 
   const handleLimitChange = (e) => {

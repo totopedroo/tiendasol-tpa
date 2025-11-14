@@ -7,6 +7,9 @@ import { Edit } from "../../components/icons/Edit";
 import { Button } from "../../components/button/Button";
 import { useCarrito } from "../../context/CarritoContext";
 import { crearPedido } from "../../service/pedidosService";
+import { set } from "mongoose";
+import Popup from "../../components/popups/PopUp";
+import { useState } from "react";
 
 export const Checkout = () => {
   const navigate = useNavigate();
@@ -15,6 +18,17 @@ export const Checkout = () => {
 
   const handleGoBack = () => {
     navigate(-1);
+  };
+
+  const [mostrarPopup, setMostrarPopup] = useState(false);
+  const [mensaje, setMensaje] = useState("");
+  const [titulo, setTitulo] = useState("");
+
+  const handleClosePopup = () => {
+    setMostrarPopup(false);
+    if (titulo === "Pedido realizado") {
+      navigate("/");
+    }
   };
 
   const handleRealizarPedido = async () => {
@@ -47,12 +61,17 @@ export const Checkout = () => {
       const pedido = await crearPedido(pedidoData);
       console.log("Pedido creado:", pedido);
 
-      alert("Pedido realizado con éxito!");
+      setTitulo("Pedido realizado");
+      setMensaje("Tu pedido ha sido realizado con éxito ✅");
+      setMostrarPopup(true);
       vaciarCarrito();
       navigate("/");
     } catch (error) {
       console.error("Error al realizar el pedido:", error);
-      alert("Error al realizar el pedido. Por favor intenta nuevamente.");
+      setTitulo("Error al realizar el pedido");
+      setMensaje("Hubo un error al procesar tu pedido. Por favor, intenta nuevamente.");
+      setMostrarPopup(true);
+      navigate("/")
     }
   };
 
@@ -150,6 +169,12 @@ export const Checkout = () => {
             </div>
           </div>
         </div>
+      <Popup
+        title={titulo}
+        isOpen={mostrarPopup}
+        onClose={handleClosePopup}
+        mensaje={mensaje}
+      />
       </div>
     </div>
   );
