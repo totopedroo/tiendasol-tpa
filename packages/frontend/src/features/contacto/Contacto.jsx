@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import "./Contacto.css";
 import Popup from "../../components/popups/PopUp.jsx";
 import { useNavigate } from "react-router";
-
+import { useAuth } from "../../context/AuthContexto.jsx";
 export const Contacto = () => {
   // 🔹 Más adelante, este nombre puede venir de contexto o backend
-  const nombreCliente = "Juan Martinez"; // ejemplo temporal
+  const nombreCliente = useAuth().user?.nombre || "Cliente";
   const navigate = useNavigate();
 
   const [form, setForm] = useState({

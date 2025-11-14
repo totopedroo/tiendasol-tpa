@@ -10,6 +10,7 @@ import { useCarrito } from "../../context/CarritoContext";
 import { Notificaciones } from "../notificaciones/Notificaciones";
 import { CarritoNotificacion } from "../carritoNotificacion/CarritoNotificacion";
 import SearchBar from "../searchBar/SearchBar";
+import { useAuth } from "../../context/AuthContexto.jsx";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -24,10 +25,11 @@ export const Header = () => {
   const [searchValue, setSearchValue] = useState("");
   const notifPanelRef = useRef(null);
 
-  // TODO: Reemplazar con el ID real del usuario cuando se implemente sesiones
-  const userId = "68fff891aa45f11100c074e1"; // Placeholder
-  const nombreUsuario = "Usuario"; // Placeholder - reemplazar con nombre real
+  const { user, isAuthenticated, logout } = useAuth();
 
+  const userId = user?._id;           // o user.id dependiendo del backend
+  const nombreUsuario = user?.nombre; // o user.username, user.firstName, etc.
+  
   useEffect(() => {
     const tituloParam = searchParams.get("titulo");
     if (tituloParam) {
@@ -67,7 +69,7 @@ export const Header = () => {
   };
 
   const cerrarSesion = () => {
-    // TODO: Implementar lógica de cerrar sesión
+    logout();
     navigate("/login");
   };
 

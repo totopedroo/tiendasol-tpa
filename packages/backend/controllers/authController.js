@@ -1,8 +1,7 @@
+import { Router } from 'express';
+import jwt from 'jsonwebtoken';
 
-/**
- * Clase controladora para manejar la autenticación.
- * Sigue el patrón de tu proyecto, aunque solo necesite el servicio de autenticación.
- */
+
 export class AuthController {
     constructor(authService) {
         // En este caso, solo necesitas el servicio de autenticación
@@ -20,13 +19,13 @@ export class AuthController {
 
         if (token) {
             // Éxito: Enviar el token al cliente
-            return res.json({ 
+            return res.status(201).json({ 
                 message: "Login exitoso", 
                 token: token,
             }); 
         } else {
             // Falla
-            return res.status(401).json({ message: "Credenciales inválidas." });
+            return res.status(401).json({ message: "No existe este usuario." });
         }
     };
 }

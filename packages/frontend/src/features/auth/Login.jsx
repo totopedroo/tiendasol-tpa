@@ -2,45 +2,54 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 import Popup from "../../components/popups/PopUp.jsx";
+import { useAuth } from "../../context/AuthContexto.jsx";
 
 export const Login = () => {
   const navigate = useNavigate();
-
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-  });
+  const { login } = useAuth();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   // Estado para el popup
-  const [mostrarPopup, setMostrarPopup] = useState(false);  
+  const [mostrarPopup, setMostrarPopup] = useState(false);
   const [mensaje, setMensaje] = useState("");
   const [titulo, setTitulo] = useState("");
+  const [loading, setLoading] = useState(false); // Estado de carga del botón
 
   const handleClosePopup = () => {
     setMostrarPopup(false);
-    if (titulo === "Éxito") { // si el login fue exitoso, que te mande a la pagina principal
+    if (titulo === "Inicio de sesión exitoso") {
       navigate("/");
     }
-  }
+  };
 
-  const handleSubmit = (e) => {
+   const [form, setForm] = useState({
+    email: "", 
+    password: "", 
+    });
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    // Simula login exitoso
-    if (form.email && form.password) {
-      setTitulo("Éxito");
-      setMensaje("Bienvenido nuevamente a TiendaSol! ✅");
-      setMostrarPopup(true);
-    }
-    else { 
-    // Por ahora manejo el error asi. TODO
+    try {
+    console.log("Enviando formulario de login:", form);
+    const user = await login(form.email, form.password);
+
+    setTitulo("Inicio de sesión exitoso");
+    setMensaje('Bienvenido de nuevo,' + user.nombre +' ✅');
+    setMostrarPopup(true);
+
+    console.log("Login exitoso desde el Login.jsx", user);
+
+    } catch (error) {
       setTitulo("Error de Credenciales");
-      setMensaje("Por favor, ingrese un correo electrónico y contraseña válidos.");
+      setMensaje(error.message || "Ocurrió un error inesperado al iniciar sesión.");
       setMostrarPopup(true);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -73,6 +82,7 @@ export const Login = () => {
             value={form.email}
             onChange={handleChange}
             required
+            disabled={loading}
           />
 
           <label className="label" htmlFor="password">
@@ -87,14 +97,15 @@ export const Login = () => {
             value={form.password}
             onChange={handleChange}
             required
+            disabled={loading}
           />
 
           <Link to="/reset-password" className="reset-link">
             ¿Olvidaste tu contraseña?
           </Link>
 
-          <button type="submit" className="btn-login">
-            Iniciar sesión
+          <button type="submit" className="btn-login"disabled={loading}>
+            {loading ? "Iniciando sesión..." : "Iniciar sesión"}
           </button>
         </form>
 

@@ -6,6 +6,7 @@ import { DetallePedido } from "../../components/detallePedido/DetallePedido";
 import { getHistorialDeUsuario } from "../../service/pedidosService";
 import { useParams } from "react-router";
 import { CircularProgress } from "@mui/joy";
+import { useAuth } from "../../context/AuthContexto.jsx";
 
 export const HistorialPedidos = () => {
   const { id: userId } = useParams(); // Renombrar 'id' a 'userId' para claridad
@@ -18,6 +19,8 @@ export const HistorialPedidos = () => {
     total: 0,
     totalPaginas: 0,
   });
+
+  const nombreUsuario = useAuth().user?.nombre || "Usuario";
 
   const fetchPedidos = async () => {
     setLoading(true);
@@ -54,7 +57,7 @@ export const HistorialPedidos = () => {
           </div>
 
           <div className="user-info">
-            <div className="text-wrapper">Juan Martinez</div>
+            <div className="text-wrapper">{nombreUsuario}</div>
 
             <div className="text-wrapper-2">Comprador</div>
           </div>

@@ -1,31 +1,82 @@
-import React from "react";
-import { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import { login as apiLogin } from "../service/authService.js";
+import { jwtDecode } from 'jwt-decode';
 
-const AuthContexto = createContext(); // creamos el contexto
+const AuthContexto = createContext();
 
-export const useAuth = () => useContext(AuthContexto); // creamos este hook personalizado para que cualquier componente pueda acceder al contexto
+export const useAuth = () => useContext(AuthContexto);
+
+const checkTokenExpiration = (token) => {
+    if (!token) return null;
+    try {
+        const decoded = jwtDecode(token);
+        if (decoded.exp * 1000 < Date.now()) {
+            return null;
+        }
+        return decoded;
+    } catch (error) {
+        return null;
+    }
+};
 
 export const AuthProvider = ({ children }) => {
-    // Verificación de si hay token 
-    const [isAuthenticated, setIsAuthenticated] = useState(
-        !!localStorage.getItem('jwt_token') // ocurre apenas se carga la página
-    );
+    const initialToken = localStorage.getItem('token');
+    const [user, setUser] = useState(checkTokenExpiration(initialToken));
+    const [isAuthenticated, setIsAuthenticated] = useState(!!user);
+    const [loading, setLoading] = useState(true);
 
-    // funcion para loguearse
-    const login = (token) => {
-        localStorage.setItem("jwt_token", token);
-        setIsAuthenticated(true);
-    } 
-
-    // función para desloguearse
-    const logout = () => {
-        localStorage.removeItem("jwt_token");
-        setIsAuthenticated(false);
+    if (isAuthenticated){
+        console.log("Usuario autenticado en AuthProvider:", user);
     }
+    useEffect(() => {
+        if (!user && initialToken) {
+            localStorage.removeItem('token');
+        }
+        setLoading(false);
+    }, [initialToken, user]);
 
-    return(
-        <AuthContexto.Provider value ={{ isAuthenticated, login, logout }}>
+    const login = useCallback(async (email, password) => {
+        try {
+
+            console.log("Intentando login con:", email, password);
+            const token = await apiLogin(email, password);
+            
+            console.log("Token recibido en AuthContexto:", token);
+            localStorage.setItem("token", token);
+
+            console.log("Decodificando token...");
+            const decodedUser = jwtDecode(token);
+            setUser(decodedUser);
+            setIsAuthenticated(true);
+            console.log("Usuario autenticado:", decodedUser);   
+            return decodedUser;
+
+        } catch (error) {
+            setIsAuthenticated(false);
+            setUser(null);
+            throw error;
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    const logout = () => {
+        localStorage.removeItem("token");
+        setIsAuthenticated(false);
+        setUser(null);
+    };
+
+    const value = {
+        user,
+        isAuthenticated,
+        loading,
+        login,
+        logout,
+    };
+
+    return (
+        <AuthContexto.Provider value={value}>
             {children}
         </AuthContexto.Provider>
-    )
+    );
 };
