@@ -17,15 +17,7 @@ export const DetallePedido = ({ pedido }) => {
     });
   };
 
-  // Calcular total
-  const calcularTotal = () => {
-    if (!pedido.items || pedido.items.length === 0) return 0;
-    return pedido.items.reduce((total, item) => {
-      return total + item.precio * item.cantidad;
-    }, 0);
-  };
-
-  const total = calcularTotal();
+  const total = pedido.total;
 
   return (
     <div className="pedido-container">
@@ -48,7 +40,7 @@ export const DetallePedido = ({ pedido }) => {
       <div className="items-section">
         {pedido.items && pedido.items.length > 0 ? (
           pedido.items.map((item, index) => (
-            <HistorialItem key={index} itemId={item} />
+            <HistorialItem key={index} item={item} />
           ))
         ) : (
           <div>No hay items en este pedido</div>
@@ -77,7 +69,11 @@ export const DetallePedido = ({ pedido }) => {
       <div className="order-actions">
         <Button variant="warning">Historial de estados</Button>
 
-        {pedido.estado === "PENDIENTE" ? <></> : <Button variant="danger">Cancelar pedido</Button>}
+        {pedido.estado === "ENTREGADO" ? (
+          <></>
+        ) : (
+          <Button variant="danger">Cancelar pedido</Button>
+        )}
       </div>
     </div>
   );

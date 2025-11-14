@@ -11,6 +11,7 @@ export const usuarioSchema = z.object({
   email: z.string("Falta email.").min(6, "Cantidad minima 4."),
   telefono: z.string("Falta telefono.").min(11, "Cantidad minima 11."),
   tipo: z.string("Falta tipo de usuario.").min(5, "Cantidad minima 5."),
+  password: z.string().min(3, "Contraseña muy corta.").optional(),
 });
 
 export class UsuarioController {
@@ -69,10 +70,7 @@ export class UsuarioController {
       if (!validacionId.success) {
         return res.status(400).json(validacionId.error.issues);
       }
-      const usuario = await this.usuarioService.update(
-        req.params.id,
-        req.body
-      );
+      const usuario = await this.usuarioService.update(req.params.id, req.body);
       res.json(usuario);
     } catch (error) {
       next(error);

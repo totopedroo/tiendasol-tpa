@@ -4,14 +4,18 @@ import { useNavigate } from "react-router-dom";
 import "./AuthForms.css";
 import Popup from "../popups/PopUp.jsx";
 import { Button } from "../button/Button.jsx";
+import { createUsuario } from "../../service/usuariosService.js";
+import { useAuth } from "../../context/AuthContexto.jsx";
 
 export const RegisterForm = ({ onClose, onSwitchToLogin }) => {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [form, setForm] = useState({
     nombre: "",
     apellido: "",
     email: "",
+    telefono: "",
     password: "",
     confirmarPassword: "",
   });
@@ -28,7 +32,7 @@ export const RegisterForm = ({ onClose, onSwitchToLogin }) => {
   const handleClosePopup = () => {
     setMostrarPopup(false);
     if (titulo === "Éxito") {
-      onSwitchToLogin();
+      onClose(); // Cerrar el modal directamente ya que el usuario estará autenticado
     }
   };
 
@@ -37,16 +41,60 @@ export const RegisterForm = ({ onClose, onSwitchToLogin }) => {
     setLoading(true);
 
     try {
+      // Validar que las contraseñas coincidan
       if (form.password !== form.confirmarPassword) {
         setTitulo("Error");
         setMensaje("⚠️ Las contraseñas no coinciden.");
         setMostrarPopup(true);
+        setLoading(false);
         return;
       }
 
-      // Agregar más verificaciones => Si el correo ya está registrado, etc. TODO
+      // Validar longitud mínima del teléfono
+      if (form.telefono.length < 11) {
+        setTitulo("Error");
+        setMensaje("⚠️ El teléfono debe tener al menos 11 caracteres.");
+        setMostrarPopup(true);
+        setLoading(false);
+        return;
+      }
+
+      // Crear el usuario en el backend
+      const nuevoUsuario = {
+        nombre: `${form.nombre} ${form.apellido}`,
+        email: form.email,
+        telefono: form.telefono,
+        password: form.password,
+        tipo: "COMPRADOR", // Por defecto los registros son compradores
+        fechaAlta: new Date(),
+      };
+
+      await createUsuario(nuevoUsuario);
+
+      // Hacer login automático con las credenciales
+      await login(form.email, form.password);
+
       setTitulo("Éxito");
-      setMensaje("Cuenta creada con éxito ✅");
+      setMensaje("✅ Cuenta creada e inicio de sesión exitoso!");
+      setMostrarPopup(true);
+    } catch (error) {
+      console.error("Error en registro:", error);
+      setTitulo("Error");
+
+      // Manejo de errores específicos
+      if (error.response?.status === 400) {
+        setMensaje(
+          "⚠️ Por favor verifica que todos los campos sean correctos.",
+        );
+      } else if (error.response?.data?.message) {
+        setMensaje(`⚠️ ${error.response.data.message}`);
+      } else if (error.message) {
+        setMensaje(`⚠️ ${error.message}`);
+      } else {
+        setMensaje(
+          "⚠️ Ocurrió un error al crear la cuenta. Por favor intenta nuevamente.",
+        );
+      }
       setMostrarPopup(true);
     } finally {
       setLoading(false);
@@ -75,7 +123,7 @@ export const RegisterForm = ({ onClose, onSwitchToLogin }) => {
           name="nombre"
           type="text"
           className="input"
-          placeholder="Texto"
+          placeholder="Ingrese su nombre"
           value={form.nombre}
           onChange={handleChange}
           required
@@ -90,7 +138,7 @@ export const RegisterForm = ({ onClose, onSwitchToLogin }) => {
           name="apellido"
           type="text"
           className="input"
-          placeholder="Texto"
+          placeholder="Ingrese su apellido"
           value={form.apellido}
           onChange={handleChange}
           required
@@ -105,11 +153,27 @@ export const RegisterForm = ({ onClose, onSwitchToLogin }) => {
           name="email"
           type="email"
           className="input"
-          placeholder="Texto"
+          placeholder="ejemplo@mail.com"
           value={form.email}
           onChange={handleChange}
           required
           disabled={loading}
+        />
+
+        <label htmlFor="telefono" className="auth-label">
+          Teléfono
+        </label>
+        <input
+          id="telefono"
+          name="telefono"
+          type="tel"
+          className="input"
+          placeholder="Ej: 11234567890"
+          value={form.telefono}
+          onChange={handleChange}
+          required
+          disabled={loading}
+          minLength={11}
         />
 
         <label htmlFor="password" className="auth-label">
@@ -120,10 +184,11 @@ export const RegisterForm = ({ onClose, onSwitchToLogin }) => {
           name="password"
           type="password"
           className="input"
-          placeholder="********"
+          placeholder="Mínimo 8 caracteres"
           value={form.password}
           onChange={handleChange}
           required
+          minLength={8}
           disabled={loading}
         />
 
@@ -135,10 +200,11 @@ export const RegisterForm = ({ onClose, onSwitchToLogin }) => {
           name="confirmarPassword"
           type="password"
           className="input"
-          placeholder="********"
+          placeholder="Mínimo 8 caracteres"
           value={form.confirmarPassword}
           onChange={handleChange}
           required
+          minLength={8}
           disabled={loading}
         />
 

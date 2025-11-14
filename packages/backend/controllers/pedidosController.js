@@ -26,7 +26,7 @@ export class PedidosController {
       const pedidosPaginados = this.pedidosService.findall(
         page,
         limit,
-        filtros
+        filtros,
       );
       if (pedidosPaginados === null) {
         return res.status(204).send();
@@ -95,7 +95,7 @@ export class PedidosController {
     try {
       const userId = historialUsuarioSchema.safeParse(req.query);
       const pedidosUsuario = await this.pedidosService.historialDelUsuario(
-        userId.data.userId
+        userId.data.userId,
       );
       res.json(pedidosUsuario);
     } catch (error) {
@@ -139,7 +139,7 @@ const direccionEntregaSchema = z.object({
 
 const pedidoSchema = z.object({
   moneda: z.enum(MONEDA),
-  id_comprador: z.number().nonnegative(),
+  id_comprador: idTransform,
   direccionEntrega: direccionEntregaSchema,
   items: z.array(z.any()).nonempty(),
 });

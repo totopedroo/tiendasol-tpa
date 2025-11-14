@@ -40,13 +40,13 @@ app.use(
     origin: process.env.ALLOWED_ORIGINS
       ? process.env.ALLOWED_ORIGINS.split(",").map((o) => o.trim())
       : true,
-  })
+  }),
 );
 
 const port = process.env.SERVER_PORT || 3000;
 const server = new Server(app, port);
 
-// await MongoDBClient.connect();
+await MongoDBClient.connect();
 
 const notiRepository = new NotificacionesRepository();
 const notiService = new NotificacionesService(notiRepository);
@@ -65,7 +65,7 @@ const pedidosRepository = new PedidosRepository();
 const pedidosService = new PedidosService(
   pedidosRepository,
   productoRepository,
-  notiPublisher
+  notiPublisher,
 );
 
 const pedidosController = new PedidosController(pedidosService);

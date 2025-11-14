@@ -4,12 +4,10 @@ import "./HistorialPedidos.css";
 import { Paginacion } from "../../components/paginacion/Paginacion";
 import { DetallePedido } from "../../components/detallePedido/DetallePedido";
 import { getHistorialDeUsuario } from "../../service/pedidosService";
-import { useParams } from "react-router";
 import { CircularProgress } from "@mui/joy";
 import { useAuth } from "../../context/AuthContexto.jsx";
 
 export const HistorialPedidos = () => {
-  const { id: userId } = useParams(); // Renombrar 'id' a 'userId' para claridad
   const [pedidos, setPedidos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -19,14 +17,14 @@ export const HistorialPedidos = () => {
     total: 0,
     totalPaginas: 0,
   });
-
-  const nombreUsuario = useAuth().user?.nombre || "Usuario";
+  const { user, isAuthenticated } = useAuth();
+  const nombreUsuario = user?.nombre || "Usuario";
 
   const fetchPedidos = async () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await getHistorialDeUsuario(userId);
+      const response = await getHistorialDeUsuario(user.id);
       setPedidos(response || []);
       setPaginacion({
         pagina: response.pagina || 1,
@@ -35,7 +33,7 @@ export const HistorialPedidos = () => {
         totalPaginas: response.totalPaginas || 0,
       });
     } catch (error) {
-      console.error(`Error al buscar pedidos de usuario ID ${userId}:`, error);
+      console.error(`Error al buscar pedidos de usuario ID ${user.id}:`, error);
       setError("Error al cargar los pedidos. Por favor, intenta de nuevo.");
       setPedidos([]);
     } finally {
@@ -44,10 +42,10 @@ export const HistorialPedidos = () => {
   };
 
   useEffect(() => {
-    if (userId) {
+    if (user.id) {
       fetchPedidos();
     }
-  }, [userId]);
+  }, [user.id]);
   return (
     <div className="contenido">
       <div className="container">

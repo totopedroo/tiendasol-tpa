@@ -10,6 +10,7 @@ import { crearPedido } from "../../service/pedidosService";
 import { set } from "mongoose";
 import Popup from "../../components/popups/PopUp";
 import { useState } from "react";
+import { useAuth } from "../../context/AuthContexto";
 
 export const Checkout = () => {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ export const Checkout = () => {
   const [mostrarPopup, setMostrarPopup] = useState(false);
   const [mensaje, setMensaje] = useState("");
   const [titulo, setTitulo] = useState("");
+  const { user } = useAuth();
 
   const handleClosePopup = () => {
     setMostrarPopup(false);
@@ -44,7 +46,7 @@ export const Checkout = () => {
       // Crear el objeto del pedido según el schema del backend
       const pedidoData = {
         moneda: "PESO_ARG", // O la moneda que uses en tu app
-        id_comprador: 1, // Deberías obtener esto del usuario logueado
+        id_comprador: user.id,
         direccionEntrega: {
           calle: "Calle Verdadera",
           altura: "1234",
@@ -69,9 +71,10 @@ export const Checkout = () => {
     } catch (error) {
       console.error("Error al realizar el pedido:", error);
       setTitulo("Error al realizar el pedido");
-      setMensaje("Hubo un error al procesar tu pedido. Por favor, intenta nuevamente.");
+      setMensaje(
+        "Hubo un error al procesar tu pedido. Por favor, intenta nuevamente.",
+      );
       setMostrarPopup(true);
-      navigate("/")
     }
   };
 
@@ -169,12 +172,12 @@ export const Checkout = () => {
             </div>
           </div>
         </div>
-      <Popup
-        title={titulo}
-        isOpen={mostrarPopup}
-        onClose={handleClosePopup}
-        mensaje={mensaje}
-      />
+        <Popup
+          title={titulo}
+          isOpen={mostrarPopup}
+          onClose={handleClosePopup}
+          mensaje={mensaje}
+        />
       </div>
     </div>
   );

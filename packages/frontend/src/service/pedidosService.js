@@ -1,10 +1,16 @@
 import axios from "axios";
 const API_BASE_URL = process.env.REACT_APP_API_URL;
 
+const getAuthHeaders = () => {
+  const token = localStorage.getItem("token");
+  return token ? { Authorization: `Bearer ${token}` } : {};
+};
+
 export const getHistorialDeUsuario = async (userId) => {
   try {
     const response = await axios.get(
-      `${API_BASE_URL}/pedidos?userId=${userId}`
+      `${API_BASE_URL}/pedidos?userId=${userId}`,
+      { headers: getAuthHeaders() },
     );
     return response.data;
   } catch (error) {
@@ -15,7 +21,9 @@ export const getHistorialDeUsuario = async (userId) => {
 
 export const crearPedido = async (pedido) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/pedidos`, pedido);
+    const response = await axios.post(`${API_BASE_URL}/pedidos`, pedido, {
+      headers: getAuthHeaders(),
+    });
     return response.data;
   } catch (error) {
     console.error("Error al crear el pedido:", error);

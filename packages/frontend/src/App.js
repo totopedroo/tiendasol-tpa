@@ -39,10 +39,10 @@ function App() {
               <Route index element={<Home />} />
               <Route path="/products/:id" element={<Producto />} />
               <Route path="/search" element={<Search />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/users/:id" element={<HistorialPedidos />} />
               <Route element={<FiltroDeSesion />}>
                 <Route path="/ventas" element={<Vender />} />
+                <Route path="/checkout" element={<Checkout />} />
+                <Route path="/orders" element={<HistorialPedidos />} />
               </Route>
               <Route path="/contacto" element={<Contacto />} />
               <Route path="/categorias" element={<CategoryCollection />} />

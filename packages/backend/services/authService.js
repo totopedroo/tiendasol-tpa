@@ -1,40 +1,34 @@
-import jwt from 'jsonwebtoken';
-import { ObjectId } from 'mongodb';
+import jwt from "jsonwebtoken";
+import { UsuarioRepository } from "../models/repositories/usuarioRepository.js";
 
-const SECRET_KEY = 'your_secret_key';
+const SECRET_KEY = process.env.JWT_SECRET || "your_secret_key";
+const usuarioRepository = new UsuarioRepository();
 
-const mockUsuarios = [
-    { email: "admin@tiendasol.com", password: "password123", id: "user_admin", nombre: "Admin", apellido: "TiendaSol" },
-    { email: "santinorondini@gmail.com", password: "123", id: "user_001", nombre: "Santino", apellido: "Rondini" }, 
-    { email: "user@tiendasol.com", password: "password123", id: "user_002", nombre: "Cliente Frecuente", apellido: "Gonzalez" }
-];
+export const authenticateUser = async (email, password) => {
+  // 1. Busca el usuario en la base de datos por email
+  const user = await usuarioRepository.findByEmail(email);
 
-export const authenticateUser = (email, password) => {
-    // 1. Busca el usuario de forma síncrona
-    const user = mockUsuarios.find(
-        (usuario) => usuario.email === email && usuario.password === password
-    );
+  // 2. Verifica que el usuario existe y la contraseña coincide
+  if (!user || user.password !== password) {
+    return null; // Credenciales inválidas
+  }
 
-    if (!user) {
-        return null; // Credenciales inválidas
-    }
+  // 3. Prepara el payload del token (solo datos públicos)
+  const payload = {
+    id: user._id.toString(),
+    email: user.email,
+    nombre: user.nombre,
+    tipo: user.tipo,
+  };
 
-    // 2. Prepara el payload del token (solo datos públicos)
-    const payload = {
-        id: user.id,
-        email: user.email,
-        nombre: user.nombre,
-        apellido: user.apellido
-    };
+  // 4. Firma el token
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
 
-    // 3. Firma el token
-    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
+  // 5. Aseguramos que el token no es un objeto
+  if (typeof token !== "string") {
+    console.error("JWT Sign failed to return a string.");
+    return null;
+  }
 
-    // 4. Aseguramos que el token no es un objeto
-    if (typeof token !== 'string') {
-        console.error("JWT Sign failed to return a string.");
-        return null;
-    }
-
-    return token;
-}
+  return token;
+};

@@ -2,18 +2,19 @@
 import React, { useEffect, useState } from "react";
 import "./HistorialItem.css";
 import { getProductoById } from "../../service/productosService";
+import { ImageWithLoader } from "../imageWithLoader/ImageWithLoader";
 
-export const HistorialItem = ({ itemId }) => {
-  const [item, setItem] = useState(null);
+export const HistorialItem = ({ item }) => {
+  const [producto, setProducto] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const fetchItem = async () => {
-    if (!itemId) return;
+    if (!item) return;
     setLoading(true);
     try {
-      const response = await getProductoById(itemId);
-      setItem(response);
+      const response = await getProductoById(item.producto);
+      setProducto(response);
     } catch (err) {
       setError(err);
     } finally {
@@ -23,16 +24,16 @@ export const HistorialItem = ({ itemId }) => {
 
   useEffect(() => {
     fetchItem();
-  }, [itemId]);
+  }, [item]);
 
-  if (!itemId) return null;
+  if (!item) return null;
   if (loading) return <div>Cargando...</div>;
   if (error) return null;
-  if (!item) return null;
+  if (!producto) return null;
 
-  const subtotal = (item.precio || 0) * (item.cantidad || 0);
+  const subtotal = (producto.precio || 0) * (item.cantidad || 0);
   const moneda = (() => {
-    switch (item.moneda) {
+    switch (producto.moneda) {
       case "PESO_ARG":
         return "$";
       case "DOLAR_USA":
@@ -46,10 +47,10 @@ export const HistorialItem = ({ itemId }) => {
   return (
     <div className="historial-item-container">
       <div className="rectangle">
-        {item.producto?.fotos?.[0] && (
-          <img
-            src={item.producto.fotos[0]}
-            alt={item.producto?.titulo || "Producto"}
+        {producto?.fotos?.[0] && (
+          <ImageWithLoader
+            src={producto.fotos[0]}
+            alt={producto?.titulo || "Producto"}
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
         )}
@@ -58,12 +59,12 @@ export const HistorialItem = ({ itemId }) => {
       <div className="item-details">
         <div className="item-title-price">
           <div className="text-wrapper-3">
-            {item.producto?.titulo || "Sin título"}
+            {producto?.titulo || "Sin título"}
           </div>
 
           <div className="text-wrapper-4">
             {moneda}
-            {(item.precio || 0).toLocaleString("es-AR")}
+            {(producto.precio || 0).toLocaleString("es-AR")}
           </div>
         </div>
 

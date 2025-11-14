@@ -28,7 +28,7 @@ export const Header = () => {
 
   const { user, isAuthenticated, logout, openAuthModal } = useAuth();
 
-  const userId = user?._id; // o user.id dependiendo del backend
+  const userId = user?.id; // o user.id dependiendo del backend
   const nombreUsuario = user?.nombre; // o user.username, user.firstName, etc.
 
   useEffect(() => {
@@ -49,12 +49,7 @@ export const Header = () => {
   };
 
   const irAMisPedidos = () => {
-    navigate("/users/" + userId); // Temporal, más adelante vendrá de contexto o backend :id
-    // if (isLoggedIn) {
-    //   navigate("/users/" + userId); // Temporal, más adelante vendrá de contexto o backend :id
-    // } else {
-    //   navigate("/login");
-    // }
+    navigate("/orders");
   };
 
   const handleSearch = (searchTerm) => {

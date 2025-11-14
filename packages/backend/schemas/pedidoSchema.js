@@ -69,6 +69,27 @@ const direccionEntregaSchema = new mongoose.Schema({
   },
 });
 
+const itemPedidoEmbebidoSchema = new mongoose.Schema(
+  {
+    producto: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Producto",
+      required: true,
+    },
+    cantidad: {
+      type: Number,
+      required: true,
+      min: 1,
+    },
+    precioUnitario: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+  },
+  { _id: true }, // Cada item tendrá su propio _id
+);
+
 const pedidoSchema = new mongoose.Schema(
   {
     comprador: {
@@ -82,18 +103,18 @@ const pedidoSchema = new mongoose.Schema(
       required: true,
     },
     direccionEntrega: direccionEntregaSchema,
-    items: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "ItemPedido",
-      },
-    ],
+    items: [itemPedidoEmbebidoSchema],
     estado: {
       type: String,
       enum: Object.values(ESTADO_PEDIDO),
       required: true,
     },
     historialEstados: [cambioEstadoPedidoSchema],
+    total: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
   },
   {
     timestamps: true,
