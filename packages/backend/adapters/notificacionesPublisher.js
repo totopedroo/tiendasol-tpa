@@ -31,12 +31,14 @@ export class NotificacionesPublisher {
 
     // Etiqueta según requerimiento + motivo si es cancelado
     const etiquetas = {
+      [ESTADO_PEDIDO.PENDIENTE]: "Nuevo pedido recibido",
       [ESTADO_PEDIDO.CONFIRMADO]: "Confirmación de pedido",
       [ESTADO_PEDIDO.ENVIADO]: "Aviso de pedido enviado",
       [ESTADO_PEDIDO.CANCELADO]: "Cancelación de pedido",
     };
     const titulo = etiquetas[estado] ?? `Pedido ${estado}`;
-    const extra = estado === ESTADO_PEDIDO.CANCELADO && motivo ? `\nMotivo: ${motivo}` : "";
+    const extra =
+      estado === ESTADO_PEDIDO.CANCELADO && motivo ? `\nMotivo: ${motivo}` : "";
     const mensaje = `${titulo}\n${noti.mensaje}${extra}`.trim();
 
     // Resolver el id del receptor
@@ -47,7 +49,7 @@ export class NotificacionesPublisher {
       usuarioDestino,
       mensaje,
       tipo: estado,
-      pedido: pedido?._id,   // opcional: referencia al pedido
+      pedido: pedido?._id, // opcional: referencia al pedido
     });
   }
 }

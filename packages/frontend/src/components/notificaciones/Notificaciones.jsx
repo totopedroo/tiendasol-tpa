@@ -6,11 +6,8 @@ import {
   marcarNotificacionComoLeida,
 } from "../../service/notificacionesService";
 import { NotificacionItem } from "./NotificacionItem";
-import { notificacionesMock } from "../../mockdata/Notificaciones";
 import { Button } from "../button/Button";
 import "./Notificaciones.css";
-
-const USE_MOCK = true; // Cambiar a false para usar el backend real
 
 export const Notificaciones = ({ userId, onClose }) => {
   const [notificaciones, setNotificaciones] = useState([]);
@@ -23,17 +20,11 @@ export const Notificaciones = ({ userId, onClose }) => {
     setLoading(true);
     setError(null);
     try {
-      if (USE_MOCK) {
-        // Simular delay de red
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        setNotificaciones(notificacionesMock.data || []);
-      } else {
-        const response = await getNotificacionesUsuario(userId, {
-          limit: 20,
-          leidas: false, // Solo notificaciones sin leer
-        });
-        setNotificaciones(response.data || []);
-      }
+      const response = await getNotificacionesUsuario(userId, {
+        limit: 20,
+        leidas: false, // Solo notificaciones sin leer
+      });
+      setNotificaciones(response.data || []);
     } catch (err) {
       console.error("Error al cargar notificaciones:", err);
       setError("Error al cargar las notificaciones");
@@ -48,8 +39,8 @@ export const Notificaciones = ({ userId, onClose }) => {
 
   const handleVerDetalle = async (notificacion) => {
     try {
-      // Marcar como leída al hacer clic (solo si no estamos usando mock)
-      if (!USE_MOCK && !notificacion.leida) {
+      // Marcar como leída al hacer clic
+      if (!notificacion.leida) {
         await marcarNotificacionComoLeida(userId, notificacion._id);
       }
     } catch (err) {

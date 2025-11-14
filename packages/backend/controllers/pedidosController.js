@@ -26,7 +26,7 @@ export class PedidosController {
       const pedidosPaginados = this.pedidosService.findall(
         page,
         limit,
-        filtros,
+        filtros
       );
       if (pedidosPaginados === null) {
         return res.status(204).send();
@@ -45,34 +45,31 @@ export class PedidosController {
     } catch (error) {
       next(error);
     }
-
-    // if (resultId.error) {
-    //   return res.status(400).json(resultId.error.issues);
-    // }
-
-    // if (!pedido) {
-    //   res.status(404).json({
-    //     error: "No se encontró un pedido con ese ID",
-    //   });
-    //   return;
-    // }
   }
 
   async cambiarEstado(req, res, next) {
     try {
       const resultId = idTransform.safeParse(req.params.id);
       const nuevoEstado = estadoSchema.safeParse(req.query);
+      const userId = req.user?.id || req.user?._id; // Get user ID from JWT token
       var pedido;
-      switch (nuevoEstado.data) {
+      switch (nuevoEstado.data.estado) {
         case "CANCELADO":
           const motivo = req.body?.motivo ?? req.query?.motivo ?? null;
-          pedido = await this.pedidosService.cancelar(resultId.data, motivo);
+          pedido = await this.pedidosService.cancelar(
+            resultId.data,
+            userId,
+            motivo
+          );
           break;
         case "ENVIADO":
-          pedido = await this.pedidosService.marcarEnviado(resultId.data);
+          pedido = await this.pedidosService.marcarEnviado(
+            resultId.data,
+            userId
+          );
           break;
         case "CONFIRMADO":
-          pedido = await this.pedidosService.confirmar(resultId.data);
+          pedido = await this.pedidosService.confirmar(resultId.data, userId);
           break;
         default:
           throw new ValidationError("Nuevo estado inválido");
@@ -81,21 +78,13 @@ export class PedidosController {
     } catch (error) {
       next(error);
     }
-
-    // if (resultId.error) {
-    //   return res.status(400).json(resultId.error.issues);
-    // }
-
-    // if (nuevoEstadoData.error) {
-    //   return res.status(400).json(nuevoEstadoData.error.issues);
-    // }
   }
 
   async historialDelUsuario(req, res, next) {
     try {
       const userId = historialUsuarioSchema.safeParse(req.query);
       const pedidosUsuario = await this.pedidosService.historialDelUsuario(
-        userId.data.userId,
+        userId.data.userId
       );
       res.json(pedidosUsuario);
     } catch (error) {

@@ -31,7 +31,7 @@ export class PedidosService {
       d.codigoPostal,
       d.ciudad,
       d.provincia,
-      d.pais,
+      d.pais
     );
 
     // 2. Obtener productos y crear ItemPedido
@@ -45,7 +45,7 @@ export class PedidosService {
       const producto = productosMap.get(item.producto.toString());
       if (!producto) {
         throw new NotFoundError(
-          `Producto con ID ${item.producto} no encontrado`,
+          `Producto con ID ${item.producto} no encontrado`
         );
       }
       return new ItemPedido(producto, item.cantidad, item.precioUnitario);
@@ -56,13 +56,13 @@ export class PedidosService {
       data.id_comprador,
       data.moneda,
       direccionEntrega,
-      items,
+      items
     );
 
     // 4. Validar stock
     if (!nuevoPedido.validarStock()) {
       throw new ConflictError(
-        "No hay stock disponible para uno o más productos.",
+        "No hay stock disponible para uno o más productos."
       );
     }
 
@@ -84,14 +84,19 @@ export class PedidosService {
       total: nuevoPedido.total,
     };
 
-    return await this.pedidosRepository.create(pedidoData);
+    const pedidoCreado = await this.pedidosRepository.create(pedidoData);
+
+    // 7. Notificar al vendedor sobre el nuevo pedido
+    await this.#publish(pedidoCreado, ESTADO_PEDIDO.PENDIENTE, null);
+
+    return pedidoCreado;
   }
 
   async findById(id) {
     const pedido = await this.pedidosRepository.findById(id);
     if (!pedido) {
       throw new NotFoundError(
-        "No se encontró el pedido con el ID especificado",
+        "No se encontró el pedido con el ID especificado"
       );
     }
     return pedido;
@@ -102,7 +107,7 @@ export class PedidosService {
       await this.pedidosRepository.getHistorialDeUsuario(userId);
     if (!pedidosUsuario) {
       throw new NotFoundError(
-        "El usuario con ese ID no existe o no tiene pedidos",
+        "El usuario con ese ID no existe o no tiene pedidos"
       );
     }
     return pedidosUsuario;
@@ -115,7 +120,7 @@ export class PedidosService {
     const pedidos = await this.pedidosRepository.findByPage(
       numeroPagina,
       elementosPorPagina,
-      filtros,
+      filtros
     );
 
     if (!pedidos) {
@@ -134,33 +139,33 @@ export class PedidosService {
     };
   }
 
-  async cancelar(id, motivo = null) {
-    const pedido = await this.pedidosRepository.cancelar(id, motivo);
+  async cancelar(id, userId, motivo = null) {
+    const pedido = await this.pedidosRepository.cancelar(id, userId, motivo);
     if (!pedido) {
       throw new NotFoundError(
-        "No se encontró el pedido con el ID especificado",
+        "No se encontró el pedido con el ID especificado"
       );
     }
     await this.#publish(pedido, ESTADO_PEDIDO.CANCELADO, motivo);
     return pedido;
   }
 
-  async marcarEnviado(id) {
-    const pedido = await this.pedidosRepository.marcarEnviado(id);
+  async marcarEnviado(id, userId) {
+    const pedido = await this.pedidosRepository.marcarEnviado(id, userId);
     if (!pedido) {
       throw new NotFoundError(
-        "No se encontró el pedido con el ID especificado",
+        "No se encontró el pedido con el ID especificado"
       );
     }
     await this.#publish(pedido, ESTADO_PEDIDO.ENVIADO, null);
     return pedido;
   }
 
-  async confirmar(id) {
-    const pedido = await this.pedidosRepository.confirmar(id);
+  async confirmar(id, userId) {
+    const pedido = await this.pedidosRepository.confirmar(id, userId);
     if (!pedido) {
       throw new NotFoundError(
-        "No se pudo confirmar el pedido (no existe o ya no está pendiente).",
+        "No se pudo confirmar el pedido (no existe o ya no está pendiente)."
       );
     }
     await this.#publish(pedido, ESTADO_PEDIDO.CONFIRMADO, null);

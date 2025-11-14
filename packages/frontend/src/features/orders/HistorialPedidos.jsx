@@ -6,7 +6,10 @@ import "./HistorialPedidos.css";
 import { Paginacion } from "../../components/paginacion/Paginacion";
 import { DetallePedido } from "../../components/detallePedido/DetallePedido";
 import { getHistorialDeUsuario } from "../../service/pedidosService";
-import { convertirAVendedor, convertirAComprador } from "../../service/usuariosService";
+import {
+  convertirAVendedor,
+  convertirAComprador,
+} from "../../service/usuariosService";
 import { CircularProgress } from "@mui/joy";
 import { useAuth } from "../../context/AuthContexto.jsx";
 
@@ -59,7 +62,7 @@ export const HistorialPedidos = () => {
     setCambiandoTipo(true);
     try {
       const nuevoTipo = tipoUsuario === "VENDEDOR" ? "COMPRADOR" : "VENDEDOR";
-      
+
       if (nuevoTipo === "VENDEDOR") {
         await convertirAVendedor(user.id);
       } else {
@@ -72,7 +75,9 @@ export const HistorialPedidos = () => {
       }
 
       setTituloPopup("¡Éxito!");
-      setMensaje(`✅ Tu cuenta ha sido convertida a ${nuevoTipo.toLowerCase()}`);
+      setMensaje(
+        `✅ Tu cuenta ha sido convertida a ${nuevoTipo.toLowerCase()}`
+      );
       setMostrarPopup(true);
     } catch (error) {
       console.error("Error al cambiar tipo de cuenta:", error);
@@ -88,6 +93,11 @@ export const HistorialPedidos = () => {
 
   const handleClosePopup = () => {
     setMostrarPopup(false);
+  };
+
+  const handlePedidoActualizado = () => {
+    // Recargar los pedidos después de cancelar
+    fetchPedidos();
   };
 
   return (
@@ -151,7 +161,11 @@ export const HistorialPedidos = () => {
             {!loading &&
               !error &&
               pedidos.map((pedido) => (
-                <DetallePedido key={pedido._id} pedido={pedido} />
+                <DetallePedido
+                  key={pedido._id}
+                  pedido={pedido}
+                  onPedidoActualizado={handlePedidoActualizado}
+                />
               ))}
           </div>
 

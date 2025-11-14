@@ -1,10 +1,18 @@
 /* eslint-disable react/prop-types */
-import React from "react";
+import React, { useState } from "react";
 import "./DetallePedido.css";
 import { HistorialItem } from "../historialItem/HistorialItem";
 import { Button } from "../button/Button";
+import Popup from "../popups/PopUp";
+import { cancelarPedido } from "../../service/pedidosService";
 
-export const DetallePedido = ({ pedido }) => {
+export const DetallePedido = ({ pedido, onPedidoActualizado }) => {
+  const [mostrarHistorial, setMostrarHistorial] = useState(false);
+  const [cancelando, setCancelando] = useState(false);
+  const [mostrarPopup, setMostrarPopup] = useState(false);
+  const [mensaje, setMensaje] = useState("");
+  const [tituloPopup, setTituloPopup] = useState("");
+
   if (!pedido) return null;
 
   // Formatear fecha
@@ -18,6 +26,94 @@ export const DetallePedido = ({ pedido }) => {
   };
 
   const total = pedido.total;
+
+  const handleMostrarHistorial = () => {
+    setMostrarHistorial(true);
+  };
+
+  const handleCerrarHistorial = () => {
+    setMostrarHistorial(false);
+  };
+
+  const handleCancelarPedido = async () => {
+    if (!window.confirm("¿Estás seguro de que deseas cancelar este pedido?")) {
+      return;
+    }
+
+    setCancelando(true);
+    try {
+      await cancelarPedido(pedido._id);
+
+      setTituloPopup("¡Pedido Cancelado!");
+      setMensaje("✅ El pedido ha sido cancelado exitosamente.");
+      setMostrarPopup(true);
+
+      // Esperar un momento antes de recargar
+      setTimeout(() => {
+        if (onPedidoActualizado) {
+          onPedidoActualizado();
+        } else {
+          window.location.reload();
+        }
+      }, 1500);
+    } catch (error) {
+      console.error("Error al cancelar el pedido:", error);
+      setTituloPopup("Error");
+      setMensaje(
+        `⚠️ ${error.response?.data?.message || "Error al cancelar el pedido. Intenta nuevamente."}`
+      );
+      setMostrarPopup(true);
+    } finally {
+      setCancelando(false);
+    }
+  };
+
+  const handleCerrarPopup = () => {
+    setMostrarPopup(false);
+  };
+
+  // Formatear fecha y hora para el historial
+  const formatearFechaHora = (fecha) => {
+    const date = new Date(fecha);
+    return date.toLocaleString("es-ES", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
+  // Generar contenido del historial
+  const generarMensajeHistorial = () => {
+    if (!pedido.historialEstados || pedido.historialEstados.length === 0) {
+      return "No hay historial de cambios de estado disponible.";
+    }
+
+    return (
+      <div className="historial-estados-lista">
+        {pedido.historialEstados.map((cambio, index) => (
+          <div key={index} className="historial-estado-item">
+            <div className="estado-timeline">
+              <div className="estado-punto"></div>
+              {index < pedido.historialEstados.length - 1 && (
+                <div className="estado-linea"></div>
+              )}
+            </div>
+            <div className="estado-contenido">
+              <div className="estado-header">
+                <span className="estado-nombre">{cambio.estado}</span>
+                <span className="estado-fecha">
+                  {formatearFechaHora(cambio.createdAt)}
+                </span>
+              </div>
+              <div className="estado-motivo">{cambio.motivo}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <div className="pedido-container">
@@ -67,14 +163,36 @@ export const DetallePedido = ({ pedido }) => {
       </div>
 
       <div className="order-actions">
-        <Button variant="warning">Historial de estados</Button>
+        <Button variant="warning" onClick={handleMostrarHistorial}>
+          Historial de estados
+        </Button>
 
-        {pedido.estado === "ENTREGADO" ? (
+        {pedido.estado === "ENTREGADO" || pedido.estado === "CANCELADO" ? (
           <></>
         ) : (
-          <Button variant="danger">Cancelar pedido</Button>
+          <Button
+            variant="danger"
+            onClick={handleCancelarPedido}
+            loading={cancelando}
+          >
+            Cancelar pedido
+          </Button>
         )}
       </div>
+
+      <Popup
+        title="Historial de Estados"
+        isOpen={mostrarHistorial}
+        onClose={handleCerrarHistorial}
+        mensaje={generarMensajeHistorial()}
+      />
+
+      <Popup
+        title={tituloPopup}
+        isOpen={mostrarPopup}
+        onClose={handleCerrarPopup}
+        mensaje={mensaje}
+      />
     </div>
   );
 };

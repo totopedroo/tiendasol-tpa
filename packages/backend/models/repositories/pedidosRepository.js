@@ -8,11 +8,20 @@ export class PedidosRepository {
 
   async create(pedido) {
     const nuevoPedido = new this.model(pedido);
-    return await nuevoPedido.save();
+    await nuevoPedido.save();
+    // Populate para tener la información del vendedor para las notificaciones
+    return await this.model.findById(nuevoPedido._id).populate({
+      path: "items.producto",
+      select: "nombre vendedor",
+      populate: {
+        path: "vendedor",
+        select: "nombre email",
+      },
+    });
   }
 
   async findById(id) {
-    return await this.model.findById({ id });
+    return await this.model.findById(id);
   }
 
   async getHistorialDeUsuario(userId) {
@@ -30,33 +39,37 @@ export class PedidosRepository {
     return await this.model.find(filtros);
   }
 
-  async cancelar(pedidoId, motivo) {
+  async cancelar(pedidoId, userId, motivo) {
     const pedido = await this.findById(pedidoId);
     if (!pedido) {
       return null;
     }
-    pedido.actualizarEstado(ESTADO_PEDIDO.CANCELADO, null, motivo);
+    pedido.actualizarEstado(ESTADO_PEDIDO.CANCELADO, userId, motivo);
     return await pedido.save();
   }
 
-  async marcarEnviado(pedidoId) {
+  async marcarEnviado(pedidoId, userId) {
     const pedido = await this.findById(pedidoId);
     if (!pedido) {
       return null;
     }
-    pedido.actualizarEstado(ESTADO_PEDIDO.ENVIADO, null, "Pedido enviado");
+    pedido.actualizarEstado(ESTADO_PEDIDO.ENVIADO, userId, "Pedido enviado");
     return await pedido.save();
   }
 
-  async confirmar(pedidoId) {
+  async confirmar(pedidoId, userId) {
     const pedido = await this.model.findById(pedidoId);
     if (!pedido) return null;
 
     // Idempotencia y validación de transición
     if (pedido.estado === ESTADO_PEDIDO.CONFIRMADO) return pedido; // ya confirmado
-    if (pedido.estado !== ESTADO_PEDIDO.PENDIENTE) return null;    // transición inválida
+    if (pedido.estado !== ESTADO_PEDIDO.PENDIENTE) return null; // transición inválida
 
-    pedido.actualizarEstado(ESTADO_PEDIDO.CONFIRMADO, null, "Pedido confirmado");
+    pedido.actualizarEstado(
+      ESTADO_PEDIDO.CONFIRMADO,
+      userId,
+      "Pedido confirmado"
+    );
     return await pedido.save();
   }
 

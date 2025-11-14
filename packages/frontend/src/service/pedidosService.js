@@ -10,7 +10,7 @@ export const getHistorialDeUsuario = async (userId) => {
   try {
     const response = await axios.get(
       `${API_BASE_URL}/pedidos?userId=${userId}`,
-      { headers: getAuthHeaders() },
+      { headers: getAuthHeaders() }
     );
     return response.data;
   } catch (error) {
@@ -27,6 +27,23 @@ export const crearPedido = async (pedido) => {
     return response.data;
   } catch (error) {
     console.error("Error al crear el pedido:", error);
+    throw error;
+  }
+};
+
+export const cancelarPedido = async (
+  pedidoId,
+  motivo = "Cancelado por el usuario"
+) => {
+  try {
+    const response = await axios.patch(
+      `${API_BASE_URL}/pedidos/${pedidoId}?estado=CANCELADO`,
+      { motivo },
+      { headers: getAuthHeaders() }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error al cancelar el pedido:", error);
     throw error;
   }
 };

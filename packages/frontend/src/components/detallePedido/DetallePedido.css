@@ -270,3 +270,80 @@
     gap: var(--space-3);
   }
 }
+
+/* Estilos para el historial de estados */
+.historial-estados-lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.historial-estado-item {
+  display: flex;
+  gap: var(--space-4);
+  position: relative;
+}
+
+.estado-timeline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.estado-punto {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--main);
+  border: 2px solid white;
+  box-shadow: 0 0 0 2px var(--main);
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.estado-linea {
+  width: 2px;
+  flex-grow: 1;
+  background-color: var(--color-border);
+  margin-top: 4px;
+  min-height: 30px;
+}
+
+.estado-contenido {
+  flex: 1;
+  padding-bottom: var(--space-2);
+}
+
+.estado-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-1);
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.estado-nombre {
+  font-family: var(--font-semibold);
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-text);
+  text-transform: uppercase;
+}
+
+.estado-fecha {
+  font-family: var(--font-regular);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.estado-motivo {
+  font-family: var(--font-regular);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  line-height: 1.5;
+}
