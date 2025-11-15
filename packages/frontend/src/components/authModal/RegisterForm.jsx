@@ -77,26 +77,20 @@ export const RegisterForm = ({ onClose, onSwitchToLogin }) => {
       setTitulo("Éxito");
       setMensaje("✅ Cuenta creada e inicio de sesión exitoso!");
       setMostrarPopup(true);
-    } catch (error) {
-      console.error("Error en registro:", error);
-      setTitulo("Error");
-
-      // Manejo de errores específicos
-      if (error.response?.status === 400) {
-        setMensaje(
-          "⚠️ Por favor verifica que todos los campos sean correctos.",
-        );
-      } else if (error.response?.data?.message) {
-        setMensaje(`⚠️ ${error.response.data.message}`);
-      } else if (error.message) {
-        setMensaje(`⚠️ ${error.message}`);
-      } else {
-        setMensaje(
-          "⚠️ Ocurrió un error al crear la cuenta. Por favor intenta nuevamente.",
-        );
-      }
-      setMostrarPopup(true);
-    } finally {
+    }  catch (error) {
+  console.error("Error en registro:", error);
+  setTitulo("Error");
+  if (error.response?.data?.message) {
+    setMensaje(`⚠️ ${error.response.data.message}`);
+    } else if (error.response?.status === 400) {
+    setMensaje("⚠️ Por favor verifica que todos los campos sean correctos.");
+  } else if (error.message) {
+    setMensaje(`⚠️ ${error.message}`);
+  } else {
+    setMensaje("⚠️ Ocurrió un error al crear la cuenta. Por favor intenta nuevamente.");
+  }
+  setMostrarPopup(true);
+}finally {
       setLoading(false);
     }
   };

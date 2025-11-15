@@ -13,6 +13,7 @@ import { useState } from "react";
 import { useAuth } from "../../context/AuthContexto";
 import PopUpOpciones from "../../components/popups/PopUpOpciones";
 import { ca } from "zod/locales";
+import { updateUsuario } from "../../service/usuariosService";
 
 export const Checkout = () => {
   const navigate = useNavigate();
@@ -24,8 +25,13 @@ export const Checkout = () => {
   };
 
   const [mostrarPopup, setMostrarPopup] = useState(false);
-  const [mensaje, setMensaje] = useState("");
   const [titulo, setTitulo] = useState("");
+  const [mensaje, setMensaje] = useState("");
+
+  const [mostrarPopUpOpciones, setMostrarPopUpOpciones] = useState(false);
+  const [tituloOpciones, setTituloOpciones] = useState("");
+  const [mensajeOpciones, setMensajeOpciones] = useState("");
+  
   const { user } = useAuth();
 
   const handleClosePopup = () => {
@@ -35,9 +41,42 @@ export const Checkout = () => {
     }
   };
 
-  const handleRealizarPedido = async () => {
+  const cambiarRol = async () => {
     try {
-      // Preparar los items del pedido
+     await updateUsuario(user.id, {
+        nombre: user.nombre,
+        email: user.email,
+        telefono: user.telefono,
+        tipo: "COMPRADOR"
+      });
+      if (user) {
+        user.tipo = "COMPRADOR";
+      }
+      // mostrar popup normal confirmando el cambio
+      setTitulo("Rol cambiado");
+      setMensaje("Su rol ha sido cambiado a COMPRADOR exitosamente.");
+      setMostrarPopup(true);
+    } catch (error) {
+      console.error("Error al cambiar el rol:", error);
+      setTitulo("Error al cambiar el rol");
+      setMensaje("Hubo un error al cambiar el rol. Intente nuevamente.");
+      setMostrarPopup(true);
+    }
+  };
+
+   const handleRealizarPedido = async () => {
+    try {
+      // si el usuario es vendedor → mostrar popup para cambiar rol
+      if (user.tipo === "VENDEDOR") {
+        setTituloOpciones("Error al realizar el pedido");
+        setMensajeOpciones(
+          "Los usuarios con rol VENDEDOR no pueden realizar pedidos. ¿Desea cambiar su rol a COMPRADOR?"
+        );
+        setMostrarPopUpOpciones(true);
+        return;
+      }
+
+      // crear pedido
       const items = carritoItems.map((item) => ({
         producto: item._id,
         cantidad: item.cantidad,
@@ -45,9 +84,8 @@ export const Checkout = () => {
         moneda: item.moneda || "PESO_ARG",
       }));
 
-      // Crear el objeto del pedido según el schema del backend
       const pedidoData = {
-        moneda: "PESO_ARG", // O la moneda que uses en tu app
+        moneda: "PESO_ARG",
         id_comprador: user.id,
         direccionEntrega: {
           calle: "Calle Verdadera",
@@ -62,36 +100,27 @@ export const Checkout = () => {
         items: items,
       };
 
-      const pedido = await crearPedido(pedidoData);
-      console.log("Pedido creado:", pedido);
+      await crearPedido(pedidoData);
+
       setTitulo("Pedido realizado");
       setMensaje("Tu pedido ha sido realizado con éxito ✅");
       setMostrarPopup(true);
       vaciarCarrito();
+
     } catch (error) {
       console.error("Error al realizar el pedido:", error);
+
       setTitulo("Error al realizar el pedido");
-      setMensaje(
-        "Hubo un error al procesar tu pedido. Por favor, intenta nuevamente.",
-      );
+      setMensaje("Hubo un error. Intente nuevamente.");
       setMostrarPopup(true);
     }
   };
 
-  const [mostrarPopUpOpciones, setMostrarPopUpOpciones] = useState(false);
-  const [mensajeCarrito, setMensajeCarrito] = useState("");
-  const [tituloCarrito, setTituloCarrito] = useState("");
-
-  const handlerCerrarCarito = async (e) => {
-    e.preventDefault();
-    try {
-      setTituloCarrito("Vaciar carrito")
-      setMensajeCarrito("¿Estas seguro que quieres vaciar al carrito?");
-      setMostrarPopUpOpciones(true)
-    } catch (error) {
-      console.error("Error al vaciar el carrito:", error);
-    }
-  }
+  const handlerCerrarCarrito = () => {
+    setTituloOpciones("Vaciar carrito");
+    setMensajeOpciones("¿Estás seguro de que quieres vaciar el carrito?");
+    setMostrarPopUpOpciones(true);
+  };
 
   const limpiarCarrito = () => {
     vaciarCarrito();
@@ -139,7 +168,7 @@ export const Checkout = () => {
                   >
                     <Button
                       variant="danger"
-                      onClick={handlerCerrarCarito}
+                      onClick={handlerCerrarCarrito}
                       disabled={carritoItems.length === 0}
                     >
                       Limpiar carrito
@@ -187,20 +216,26 @@ export const Checkout = () => {
             </div>
           </div>
         </div>
-        <Popup
+      <Popup
           title={titulo}
           isOpen={mostrarPopup}
           onClose={handleClosePopup}
           mensaje={mensaje}
         />
 
+        {/* 🟡 POPUP DE OPCIONES */}
         <PopUpOpciones
-          title={tituloCarrito}
-          mensaje={mensajeCarrito}
+          title={tituloOpciones}
+          mensaje={mensajeOpciones}
           isOpen={mostrarPopUpOpciones}
           onClose={() => setMostrarPopUpOpciones(false)}
           onConfirm={() => {
-            limpiarCarrito();
+            if (tituloOpciones.includes("rol") || tituloOpciones.includes("pedido")) {
+              setMostrarPopUpOpciones(false);
+              cambiarRol();
+              return;
+            }
+            vaciarCarrito();
             setMostrarPopUpOpciones(false);
           }}
         />

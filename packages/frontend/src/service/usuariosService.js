@@ -42,7 +42,14 @@ export const createUsuario = async (data) => {
 
 export const updateUsuario = async (id, data) => {
   try {
-    const response = await axios.put(`${API_BASE_URL}/usuarios/${id}`, data);
+    const token = localStorage.getItem("token");
+    const response = await axios.put(`${API_BASE_URL}/usuarios/${id}`, 
+      data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     console.error(`Error al actualizar el usuario con id: ${id}:`, error);
