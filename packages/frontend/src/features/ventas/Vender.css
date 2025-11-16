@@ -1,7 +1,5 @@
+/* Usar clases utilitarias: flex flex-col gap-6 */
 .vender-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
   padding: 2rem;
   max-width: 1100px;
   margin: 2rem auto; /* igual que contacto */
@@ -22,13 +20,7 @@
   margin-bottom: 1rem;
 }
 
-.banner-content {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  align-items: center;
-}
+/* Usar clases utilitarias: flex flex-col gap-4 items-center text-center */
 
 .banner-content h3 {
   margin: 0;
@@ -43,24 +35,14 @@
   max-width: 500px;
 }
 
-.vender-form {
-  display: flex;
-  gap: 2rem;
-  flex-wrap: wrap;
-}
+/* Usar clases utilitarias: flex gap-8 flex-wrap */
 
+/* Usar clases utilitarias: flex flex-col gap-4 flex-1 */
 .vender-col {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
   min-width: 300px;
 }
 
-.vender-row {
-  display: flex;
-  gap: 1rem;
-}
+/* Usar clases utilitarias: flex gap-4 */
 
 .vender-precio,
 .vender-moneda {
@@ -72,27 +54,15 @@
   font-size: 0.95rem;
 }
 
-.vender-col input,
-.vender-col select,
-.vender-col textarea {
+/* Los inputs, selects y textareas ahora usan las clases .input, .select, .textarea de components.css */
+/* En formularios, los selects e inputs ocupan todo el ancho disponible */
+.vender-col .select,
+.vender-col .input {
   width: 100%;
-  padding: 0.7rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
-  outline: none;
-  background-color: #fff;
 }
 
-.vender-col textarea {
+.vender-col .textarea {
   min-height: 180px;
-  resize: vertical;
-}
-
-.vender-col input:focus,
-.vender-col select:focus,
-.vender-col textarea:focus {
-  border-color: #000;
 }
 
 .vender-col input:disabled,
@@ -202,7 +172,7 @@
   margin-top: 1rem;
   font-size: 1rem;
   font-weight: 500;
-  align-self: flex-start;
+  /* Usar clase utilitaria: self-start */
 }
 
 .btn-publicar:hover {

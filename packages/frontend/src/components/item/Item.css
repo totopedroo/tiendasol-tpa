@@ -1,6 +1,4 @@
 .item {
-  display: flex;
-  flex-direction: column;
   background-color: var(--color-bg-white);
   border: 1px solid var(--color-border-light);
   border-radius: var(--radius-lg);
@@ -9,7 +7,6 @@
   position: relative;
   width: 100%;
   max-width: 220px;
-  gap: var(--space-3);
   cursor: pointer;
   transition: var(--transition);
   text-decoration: none;
@@ -31,7 +28,6 @@
   object-fit: cover;
 }
 
-/* Estilos específicos para el loader de imagen en Item */
 .item .image-loader-container {
   align-self: stretch;
   aspect-ratio: 1;
@@ -53,18 +49,7 @@
 }
 
 .item-content {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
   width: 100%;
-  flex: 1;
-}
-
-.item-info {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-  flex: 1;
 }
 
 .item-info .text-wrapper {
@@ -83,7 +68,6 @@
   font-family: var(--font-regular);
   font-size: var(--text-base);
   font-weight: 400;
-  /* Truncado de texto a 2 líneas */
   display: -webkit-box;
   -webkit-line-clamp: 2;
   line-clamp: 2;
@@ -101,7 +85,6 @@
   font-weight: 600;
 }
 
-/* Mostrar texto completo por defecto */
 .item .button-text-short {
   display: none;
 }
@@ -112,7 +95,6 @@
     width: 100%;
   }
 
-  /* Ocultar texto completo y mostrar texto corto en móvil */
   .item .button-text-full {
     display: none;
   }

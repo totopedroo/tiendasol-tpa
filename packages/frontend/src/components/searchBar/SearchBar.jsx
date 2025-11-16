@@ -51,15 +51,18 @@ const SearchBar = ({
 
   if (variant === "inline") {
     return (
-      <div className={`search-bar ${className}`}>
+      <div className={`search-bar flex items-center ${className}`}>
         <input
-          className="search-input"
+          className="input input-search"
           placeholder={placeholder}
           value={searchText}
           onChange={handleChange}
           onKeyDown={handleKeyPress}
         />
-        <button onClick={handleSearch}>
+        <button
+          className="flex items-center justify-center"
+          onClick={handleSearch}
+        >
           <SearchIcon className="search-icon" />
         </button>
       </div>
@@ -67,9 +70,9 @@ const SearchBar = ({
   }
 
   return (
-    <div className={`search-input-wrapper ${className}`}>
+    <div className={`search-input-wrapper flex items-center ${className}`}>
       <input
-        className="search-input"
+        className="input input-search"
         placeholder={placeholder}
         value={searchText}
         onChange={handleChange}

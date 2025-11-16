@@ -26,10 +26,7 @@ const paramsToQueryString = (params) => {
   return queryString ? `?${queryString}` : "";
 };
 
-export const ItemCollection = ({
-  titulo = "Productos Destacados",
-  params,
-}) => {
+export const ItemCollection = ({ titulo = "Productos Destacados", params }) => {
   const [index, setIndex] = useState(0);
   const [items, setItems] = useState([]);
   const ITEMS_VISIBLE = 5;
@@ -45,7 +42,7 @@ export const ItemCollection = ({
 
       // Si no hay limit, usar 20 por defecto
       if (!params.limit) {
-        params.limit = 20;
+        params.limit = 10;
       }
 
       const response = await buscarProductos(params);
@@ -78,9 +75,9 @@ export const ItemCollection = ({
   const queryString = paramsToQueryString(params);
 
   return (
-    <div className="item-collection">
+    <div className="item-collection flex flex-col items-center">
       <div className="collection-header flex items-center justify-between">
-        <div className="title-wrapper">
+        <div className="title-wrapper flex items-start flex-wrap">
           <div className="text-wrapper">{titulo}</div>
         </div>
 
@@ -93,7 +90,7 @@ export const ItemCollection = ({
         </Link>
       </div>
 
-      <div className="carousel-container">
+      <div className="carousel-container flex items-center gap-4">
         <Button
           variant="icon"
           icon={<ArrowLeft />}
@@ -114,7 +111,7 @@ export const ItemCollection = ({
               <div
                 className="items-carousel"
                 style={{
-                  transform: `translateX(-${index * (100 / ITEMS_VISIBLE)}%)`,
+                  transform: `translateX(-${index * 212.75}px)`,
                   transition: "transform 0.3s ease-in-out",
                 }}
               >

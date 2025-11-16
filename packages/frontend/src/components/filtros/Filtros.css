@@ -1,29 +1,21 @@
 .filtros {
-  align-items: flex-start;
+  /* Layout flex aplicado en JSX con clases utilitarias: flex flex-col items-start gap-3 */
   background-color: var(--main);
   border: 1px solid var(--color-border-light);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  padding: var(--spacing-lg, 24px);
   border-radius: var(--radius-md);
-  gap: 10px;
   overflow: visible;
   padding: var(--space-6);
   position: relative;
-  width: 320px;
+  width: 100%; /* El ancho será controlado por el contenedor padre */
   flex-shrink: 0;
   box-shadow:
     0 4px 8px 0 rgba(0, 0, 0, 0.08),
     0 6px 20px 0 rgba(0, 0, 0, 0.05);
-  width: 100%; /* El ancho será controlado por el contenedor padre */
-  display: flex;
-  flex-direction: column;
 }
 
 .filtros .container-titulo {
   align-self: stretch;
   flex: 0 0 auto;
-  gap: 10px;
   position: relative;
   width: 100%;
   margin-bottom: var(--space-2);
@@ -40,80 +32,60 @@
 }
 
 .filtros .container-inputs {
-  align-items: flex-start;
+  /* Layout flex aplicado en JSX: flex flex-col items-start gap-4 */
   align-self: stretch;
-  display: flex;
   flex: 0 0 auto;
-  flex-direction: column;
-  gap: var(--space-4);
   padding: var(--space-2) 0 var(--space-2) 0;
   position: relative;
   width: 100%;
 }
 
 .filtros .div-2 {
-  align-items: flex-start;
+  /* Layout flex aplicado en JSX con clases utilitarias */
   align-self: stretch;
-  display: flex;
   flex: 0 0 auto;
-  flex-direction: column;
-  gap: 10px;
   position: relative;
   width: 100%;
 }
 
 .filtros .text-wrapper-2 {
-  align-items: center;
+  /* Layout flex aplicado en JSX: flex items-center justify-center */
   color: var(--color-text);
-  display: flex;
   font-family: var(--font-regular);
   font-size: var(--text-base);
   font-weight: 400;
-  justify-content: center;
   margin-top: -1px;
   position: relative;
   white-space: nowrap;
   width: fit-content;
 }
 
-.filtros .input-instance {
-  align-self: stretch !important;
-  flex: 0 0 auto !important;
-  left: unset !important;
-  top: unset !important;
-  width: 100% !important;
-}
+/* Los inputs y selects usan las clases estándar .input y .select de components.css */
 
 .filtros .text-wrapper-3 {
-  align-items: center;
+  /* Layout flex aplicado en JSX: flex items-center justify-start */
   color: var(--color-text);
-  display: flex;
   font-family: var(--font-regular);
   font-size: var(--text-base);
   font-weight: 400;
-  justify-content: flex-start;
   margin-top: -1px;
   position: relative;
   width: fit-content;
 }
 
 .filtros .frame-2 {
-  align-items: flex-start;
+  /* Layout flex aplicado en JSX con clases utilitarias */
   align-self: stretch;
-  display: flex;
   flex: 0 0 auto;
-  gap: 10px;
   position: relative;
   width: 100%;
 }
 
-.filtros .design-component-instance-node {
-  align-self: stretch !important;
-  flex: 1 !important;
-  flex-grow: 1 !important;
-  left: unset !important;
-  top: unset !important;
-  width: unset !important;
+/* Los inputs, selects y textareas ahora usan las clases estándar .input, .select, .textarea */
+/* En filtros, los selects ocupan todo el ancho disponible */
+.filtros .select,
+.filtros .input {
+  width: 100%;
 }
 
 .filtros .filter-field .btn {
@@ -122,22 +94,8 @@
 }
 
 .filter-field {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
+  /* Layout flex aplicado en JSX: flex flex-col gap-2 */
   width: 100%;
-}
-
-/* Estilos duplicados removidos - ver estilos unificados más abajo */
-
-.rango-de-precios-inputs {
-  display: flex;
-  gap: var(--spacing-sm, 10px);
-}
-
-.price-range-inputs .precio-minimo,
-.price-range-inputs .precio-maximo {
-  width: 50%;
 }
 
 /* === RESPONSIVE - TABLET Y MÓVIL === */
@@ -152,47 +110,4 @@
   .filtros {
     padding: var(--space-4);
   }
-
-  .filtros .container-inputs {
-    gap: var(--space-4);
-  }
-}
-
-.filtros .filter-field {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 100%;
-}
-
-/* Estilos unificados para select e input */
-.filtros select,
-.filtros input {
-  padding: var(--space-1) var(--space-3);
-  border: 1px solid var(--color-border-default, #ccc);
-  border-radius: var(--radius-sm, 0.3rem);
-  font-family: var(--font-regular);
-  font-size: var(--text-base);
-  width: 100%;
-  height: 2.5rem;
-  box-sizing: border-box;
-  background-color: var(--color-bg-white);
-  color: var(--color-text);
-  transition: border-color 0.2s ease;
-}
-
-.filtros select:focus,
-.filtros input:focus {
-  outline: none;
-  border-color: var(--color-primary);
-}
-
-.filtros select:hover,
-.filtros input:hover {
-  border-color: var(--color-border-hover, #999);
-}
-
-.filtros .price-range-inputs {
-  display: flex;
-  gap: 8px;
 }

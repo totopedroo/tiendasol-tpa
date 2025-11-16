@@ -13,9 +13,7 @@
 }
 
 .notificaciones-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  /* Layout flex aplicado en JSX: flex justify-between items-center */
   padding: var(--space-4, 16px);
   border-bottom: 1px solid var(--color-border-light, #e0e0e0);
 }
@@ -28,11 +26,7 @@
   color: var(--color-text, #000);
 }
 
-.notificaciones-header-acciones {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3, 12px);
-}
+/* Layout de .notificaciones-header-acciones aplicado en JSX: flex items-center gap-3 */
 
 .notificaciones-lista {
   max-height: 500px;
@@ -42,9 +36,7 @@
 .notificaciones-loading,
 .notificaciones-error,
 .notificaciones-vacio {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  /* Layout flex aplicado en JSX: flex items-center justify-center */
   padding: var(--space-16, 64px) var(--space-4, 16px);
   text-align: center;
   font-family: var(--font-regular, "Inter", sans-serif);

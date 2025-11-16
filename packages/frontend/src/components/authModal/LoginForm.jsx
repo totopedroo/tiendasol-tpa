@@ -5,6 +5,8 @@ import "./AuthForms.css";
 import Popup from "../popups/PopUp.jsx";
 import { useAuth } from "../../context/AuthContexto.jsx";
 import { Button } from "../button/Button.jsx";
+import { Eye } from "../icons/Eye.jsx";
+import { EyeOff } from "../icons/EyeOff.jsx";
 
 export const LoginForm = ({ onClose, onSwitchToRegister, onSwitchToReset }) => {
   const navigate = useNavigate();
@@ -20,6 +22,7 @@ export const LoginForm = ({ onClose, onSwitchToRegister, onSwitchToReset }) => {
   const [mensaje, setMensaje] = useState("");
   const [titulo, setTitulo] = useState("");
   const [loading, setLoading] = useState(false);
+  const [mostrarPassword, setMostrarPassword] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -99,17 +102,29 @@ export const LoginForm = ({ onClose, onSwitchToRegister, onSwitchToReset }) => {
         <label className="auth-label" htmlFor="password">
           Contraseña
         </label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          className="input"
-          placeholder="Tu contraseña"
-          value={form.password}
-          onChange={handleChange}
-          required
-          disabled={loading}
-        />
+        <div className="password-input-wrapper w-full">
+          <input
+            id="password"
+            name="password"
+            type={mostrarPassword ? "text" : "password"}
+            className="input"
+            placeholder="Tu contraseña"
+            value={form.password}
+            onChange={handleChange}
+            required
+            disabled={loading}
+          />
+          <button
+            type="button"
+            className="password-toggle-btn flex items-center justify-center cursor-pointer"
+            onClick={() => setMostrarPassword(!mostrarPassword)}
+            aria-label={
+              mostrarPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+            }
+          >
+            {mostrarPassword ? <EyeOff /> : <Eye />}
+          </button>
+        </div>
 
         <button
           type="button"

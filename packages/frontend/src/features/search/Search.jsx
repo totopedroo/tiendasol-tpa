@@ -99,16 +99,20 @@ export const Search = () => {
   return (
     <div className="contenido">
       <div className="container">
-        <div className="search-results-container">
-          <div className="container-titulo">
-            <div className="titulo">
+        <div className="search-results-container flex flex-col items-start justify-start w-full">
+          <div className="container-titulo flex items-center justify-between w-full">
+            <div className="titulo flex items-center justify-start">
               {searchTerm
                 ? `Resultados para "${searchTerm}"`
                 : "Todos los productos"}
             </div>
 
-            <div className="container-paginacion">
-              <select value={limit} onChange={handleLimitChange}>
+            <div className="container-paginacion flex items-center gap-6 justify-end">
+              <select
+                className="select"
+                value={limit}
+                onChange={handleLimitChange}
+              >
                 <option value="10">10 por página</option>
                 <option value="20">20 por página</option>
                 <option value="50">50 por página</option>
@@ -122,12 +126,12 @@ export const Search = () => {
             value={searchValue}
             onChange={setSearchValue}
           />
-          <div className="container-resultados">
-            <Filtros />
+          <div className="container-resultados flex items-start justify-start gap-8 w-full">
+            <Filtros className="self-start" />
             <Resultados productos={productos} loading={loading} error={error} />
           </div>
-          <div className="bottom-pagination-wrapper">
-            <div className="paginacion-wrapper">
+          <div className="bottom-pagination-wrapper flex gap-8 justify-center">
+            <div className="paginacion-wrapper items-center self-stretch flex gap-6 justify-end">
               <Paginacion
                 paginaActual={paginacion.pagina}
                 totalPaginas={paginacion.totalPaginas}

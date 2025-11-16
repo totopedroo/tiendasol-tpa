@@ -1,12 +1,10 @@
 .historial-item-container {
-  align-items: center;
+  /* Layout flex aplicado en JSX: flex items-center gap-4 */
   align-self: stretch;
   border: 1px solid;
   border-color: var(--color-border);
   border-radius: var(--radius-md);
-  display: flex;
   flex: 0 0 auto;
-  gap: var(--space-4);
   overflow: hidden;
   padding: var(--space-4);
   position: relative;
@@ -28,30 +26,24 @@
 }
 
 .item-details {
-  align-items: center;
-  display: flex;
+  /* Layout flex aplicado en JSX: flex items-center justify-between */
   flex: 1;
   flex-grow: 1;
-  justify-content: space-between;
   position: relative;
 }
 
 .item-title-price {
-  align-items: flex-start;
-  display: inline-flex;
+  /* Layout flex aplicado en JSX: inline-flex flex-col items-start */
   flex: 0 0 auto;
-  flex-direction: column;
   position: relative;
 }
 
 .item-title-price .text-wrapper-3 {
-  align-items: center;
+  /* Layout flex aplicado en JSX: flex items-center justify-center */
   color: var(--color-text);
-  display: flex;
   font-family: var(--font-bold);
   font-size: var(--text-lg);
   font-weight: 700;
-  justify-content: center;
   margin-top: -1px;
   position: relative;
   white-space: nowrap;
@@ -59,35 +51,28 @@
 }
 
 .item-title-price .text-wrapper-4 {
-  align-items: center;
+  /* Layout flex aplicado en JSX: flex items-center justify-center */
   color: var(--color-text);
-  display: flex;
   font-family: var(--font-medium);
   font-size: var(--text-base);
   font-weight: 500;
-  justify-content: center;
   position: relative;
   white-space: nowrap;
   width: fit-content;
 }
 
 .item-summary {
-  align-items: flex-end;
-  display: inline-flex;
+  /* Layout flex aplicado en JSX: inline-flex flex-col items-end justify-center */
   flex: 0 0 auto;
-  flex-direction: column;
-  justify-content: center;
   position: relative;
 }
 
 .item-summary .text-wrapper-5 {
-  align-items: flex-end;
+  /* Layout flex aplicado en JSX: flex items-end justify-end */
   color: var(--color-text);
-  display: flex;
   font-family: var(--font-medium);
   font-size: var(--text-base);
   font-weight: 500;
-  justify-content: flex-end;
   margin-top: -1px;
   position: relative;
   text-align: right;
@@ -96,13 +81,11 @@
 }
 
 .item-summary .text-wrapper-6 {
-  align-items: flex-end;
+  /* Layout flex aplicado en JSX: flex items-end justify-end */
   color: var(--color-text);
-  display: flex;
   font-family: var(--font-semibold);
   font-size: var(--text-base);
   font-weight: 600;
-  justify-content: flex-end;
   position: relative;
   text-align: right;
   white-space: nowrap;

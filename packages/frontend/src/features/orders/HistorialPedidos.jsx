@@ -103,18 +103,22 @@ export const HistorialPedidos = () => {
   return (
     <div className="contenido">
       <div className="container">
-        <div className="user-profile-section flex">
-          <div className="user-wrapper">
+        <div className="user-profile-section flex justify-between items-start gap-8">
+          <div className="user-wrapper flex items-center justify-center">
             <User className="user-instance" />
           </div>
 
-          <div className="user-info">
-            <div className="text-wrapper">{nombreUsuario}</div>
+          <div className="user-info flex flex-col items-start justify-center self-stretch">
+            <div className="text-wrapper flex items-center justify-center">
+              {nombreUsuario}
+            </div>
 
-            <div className="text-wrapper-2">{tipoUsuario}</div>
+            <div className="text-wrapper-2 flex items-center justify-center">
+              {tipoUsuario}
+            </div>
           </div>
 
-          <div className="cambiar-tipo-button">
+          <div className="cambiar-tipo-button flex items-center">
             <Button
               variant="secondary"
               size="medium"
@@ -126,12 +130,14 @@ export const HistorialPedidos = () => {
           </div>
         </div>
 
-        <div className="historial-screen">
-          <div className="container-titulo">
-            <div className="titulo">Historial de pedidos</div>
+        <div className="historial-screen flex flex-col items-stretch gap-4 w-full">
+          <div className="container-titulo flex items-center justify-between w-full">
+            <div className="titulo flex items-center justify-center">
+              Historial de pedidos
+            </div>
 
-            <div className="container-paginacion">
-              <select>
+            <div className="container-paginacion flex items-center justify-end gap-6 flex-1">
+              <select className="select">
                 <option value="reciente">Más reciente</option>
                 <option value="antiguo">Más antiguo</option>
               </select>
@@ -140,7 +146,7 @@ export const HistorialPedidos = () => {
           </div>
 
           {loading && (
-            <div className="loading-message">
+            <div className="loading-message flex items-center justify-center text-center">
               <CircularProgress
                 size="lg"
                 sx={{
@@ -151,13 +157,19 @@ export const HistorialPedidos = () => {
             </div>
           )}
 
-          {error && <div className="error-message">{error}</div>}
-
-          {!loading && !error && pedidos.length === 0 && (
-            <div className="empty-message">No hay pedidos en el historial.</div>
+          {error && (
+            <div className="error-message flex items-center justify-center text-center">
+              {error}
+            </div>
           )}
 
-          <div className="pedidos-list-container">
+          {!loading && !error && pedidos.length === 0 && (
+            <div className="empty-message flex items-center justify-center text-center">
+              No hay pedidos en el historial.
+            </div>
+          )}
+
+          <div className="pedidos-list-container flex flex-col items-start gap-4 w-full">
             {!loading &&
               !error &&
               pedidos.map((pedido) => (
@@ -170,9 +182,9 @@ export const HistorialPedidos = () => {
           </div>
 
           {!loading && !error && pedidos.length > 0 && (
-            <div className="container-titulo">
-              <div className="container-paginacion">
-                <select>
+            <div className="container-titulo flex items-center justify-between w-full">
+              <div className="container-paginacion flex items-center justify-end gap-6 flex-1 self-stretch">
+                <select className="select">
                   <option value="reciente">Más reciente</option>
                   <option value="antiguo">Más antiguo</option>
                 </select>

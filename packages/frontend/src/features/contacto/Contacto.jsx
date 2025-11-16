@@ -16,40 +16,45 @@ export const Contacto = () => {
     descripcion: "",
   });
 
-    // Estado para el popup
-    const [mostrarPopup, setMostrarPopup] = useState(false);  
-    const [mensaje, setMensaje] = useState("");
-    const [titulo, setTitulo] = useState("");
-  
+  // Estado para el popup
+  const [mostrarPopup, setMostrarPopup] = useState(false);
+  const [mensaje, setMensaje] = useState("");
+  const [titulo, setTitulo] = useState("");
+
   const handleClosePopup = () => {
-      setMostrarPopup(false);
-      if (titulo === "Éxito") { // si el login fue exitoso, que te mande a la pagina principal
-        navigate("/");
-      }
+    setMostrarPopup(false);
+    if (titulo === "Éxito") {
+      // si el login fue exitoso, que te mande a la pagina principal
+      navigate("/");
     }
-  
+  };
+
   const handleSubmit = (e) => {
-      e.preventDefault();
-      setTitulo("Éxito");
-      setMensaje("Consulta enviada con éxito ✅");
-      setMostrarPopup(true);
-    };
+    e.preventDefault();
+    setTitulo("Éxito");
+    setMensaje("Consulta enviada con éxito ✅");
+    setMostrarPopup(true);
+  };
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-
   return (
-    <div className="contacto-container">
+    <div className="contacto-container flex flex-col gap-4">
       <h2 className="contacto-title">
-        Hola, <span className="cliente">{nombreCliente}</span>! Envíanos tu consulta
+        Hola, <span className="cliente">{nombreCliente}</span>! Envíanos tu
+        consulta
       </h2>
 
-      <form className="contacto-form" onSubmit={handleSubmit}>
-        <div className="contacto-field">
+      <form
+        className="contacto-form flex flex-col gap-4"
+        onSubmit={handleSubmit}
+      >
+        <div className="contacto-field flex flex-col gap-2 flex-1">
           <label>Nombre *</label>
           <input
+            className="input"
             name="nombre"
             type="text"
             value={form.nombre}
@@ -58,9 +63,10 @@ export const Contacto = () => {
           />
         </div>
 
-        <div className="contacto-field">
+        <div className="contacto-field flex flex-col gap-2 flex-1">
           <label>Apellido *</label>
           <input
+            className="input"
             name="apellido"
             type="text"
             value={form.apellido}
@@ -69,9 +75,10 @@ export const Contacto = () => {
           />
         </div>
 
-        <div className="contacto-field">
+        <div className="contacto-field flex flex-col gap-2 flex-1">
           <label>Correo electrónico</label>
           <input
+            className="input"
             name="correo"
             type="email"
             value={form.correo}
@@ -80,9 +87,10 @@ export const Contacto = () => {
           />
         </div>
 
-        <div className="contacto-field">
+        <div className="contacto-field flex flex-col gap-2 flex-1">
           <label>Motivo de consulta</label>
           <input
+            className="input"
             name="motivo"
             type="text"
             value={form.motivo}
@@ -90,9 +98,10 @@ export const Contacto = () => {
           />
         </div>
 
-        <div className="contacto-field">
+        <div className="contacto-field flex flex-col gap-2 flex-1">
           <label>Descripción</label>
           <textarea
+            className="textarea"
             name="descripcion"
             rows="5"
             value={form.descripcion}
@@ -108,9 +117,7 @@ export const Contacto = () => {
           isOpen={mostrarPopup}
           onClose={handleClosePopup}
           mensaje={mensaje}
-          >
-          </Popup>
-
+        ></Popup>
       </form>
     </div>
   );

@@ -53,8 +53,8 @@ export const ItemDetail = ({ item }) => {
     }
   })();
   return (
-    <div className="item-detail flex items-start">
-      <div className="image-section">
+    <div className="item-detail flex items-start gap-8">
+      <div className="image-section flex flex-col gap-4">
         <div className="img-placeholder">
           <ImageWithLoader
             className="img"
@@ -87,7 +87,9 @@ export const ItemDetail = ({ item }) => {
       <div className="product-info flex flex-col items-start">
         <div className="product-details flex flex-col items-start">
           <div className="text-wrapper flex items-center">
-            {item.categorias.map((cat, index) => <>{cat.nombre}, </>)}
+            {item.categorias.map((cat, index) => (
+              <>{cat.nombre}, </>
+            ))}
           </div>
 
           <div className="text-wrapper-2">{item.titulo}</div>
@@ -105,7 +107,7 @@ export const ItemDetail = ({ item }) => {
             <div className="quantity-wrapper flex items-center gap-2">
               <span className="quantity-label">Cantidad:</span>
               <select
-                className="quantity-select"
+                className="select quantity-select"
                 value={cantidadSeleccionada}
                 onChange={(e) =>
                   setCantidadSeleccionada(Number(e.target.value))

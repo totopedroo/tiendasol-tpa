@@ -11,9 +11,9 @@ export const NotFound = () => {
   };
 
   return (
-    <div className="not-found-screen flex flex-col items-center">
+    <div className="not-found-screen flex items-center justify-center">
       <div className="container">
-        <div className="not-found-container flex flex-col items-center">
+        <div className="not-found-container flex flex-col items-center text-center gap-6">
           <div className="not-found-number">404</div>
           <div className="not-found-message">Página no encontrada</div>
           <div className="not-found-description">

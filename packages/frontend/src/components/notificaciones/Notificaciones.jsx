@@ -53,9 +53,9 @@ export const Notificaciones = ({ userId, onClose }) => {
 
   return (
     <div className="notificaciones-panel">
-      <div className="notificaciones-header">
+      <div className="notificaciones-header flex justify-between items-center">
         <h2 className="notificaciones-titulo">Notificaciones</h2>
-        <div className="notificaciones-header-acciones">
+        <div className="notificaciones-header-acciones flex items-center gap-3">
           <Button
             variant="close"
             onClick={onClose}
@@ -68,7 +68,7 @@ export const Notificaciones = ({ userId, onClose }) => {
 
       <div className="notificaciones-lista">
         {loading && (
-          <div className="notificaciones-loading">
+          <div className="notificaciones-loading flex items-center justify-center">
             <CircularProgress
               size="lg"
               sx={{
@@ -79,10 +79,14 @@ export const Notificaciones = ({ userId, onClose }) => {
           </div>
         )}
 
-        {error && <div className="notificaciones-error">{error}</div>}
+        {error && (
+          <div className="notificaciones-error flex items-center justify-center">
+            {error}
+          </div>
+        )}
 
         {!loading && !error && notificaciones.length === 0 && (
-          <div className="notificaciones-vacio">
+          <div className="notificaciones-vacio flex items-center justify-center">
             No tienes notificaciones nuevas
           </div>
         )}

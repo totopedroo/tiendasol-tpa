@@ -16,7 +16,7 @@ export const NotificacionItem = ({ notificacion, userId, onVerDetalle }) => {
   return (
     <Link
       to={`/users/${userId}`}
-      className={`notificacion-item ${notificacion.leida ? "leida" : ""}`}
+      className={`notificacion-item flex items-start gap-3 ${notificacion.leida ? "leida" : ""}`}
       onClick={handleClick}
     >
       <div className="notificacion-contenido">
@@ -24,7 +24,7 @@ export const NotificacionItem = ({ notificacion, userId, onVerDetalle }) => {
           Pedido {formatearPedidoId(notificacion.pedido)}
         </div>
         <div className="notificacion-mensaje">{notificacion.mensaje}</div>
-        <div className="notificacion-acciones">
+        <div className="notificacion-acciones flex items-center gap-4">
           <span className="ver-detalle">Ver detalle →</span>
         </div>
       </div>

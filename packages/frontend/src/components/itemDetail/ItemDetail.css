@@ -1,15 +1,12 @@
 .item-detail {
-  align-items: flex-start;
-  gap: var(--space-8);
+  /* Layout flex aplicado en JSX: flex items-start gap-8 */
   position: relative;
   max-width: 1200px;
   width: 100%;
 }
 
 .item-detail .image-section {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
+  /* Layout flex aplicado en JSX: flex flex-col gap-4 */
   position: relative;
   flex-shrink: 0;
   width: 480px;
@@ -55,10 +52,7 @@
   color: var(--color-text-muted);
 }
 
-.item-detail .image-thumbnails {
-  display: flex;
-  gap: var(--space-2);
-}
+/* Layout de image-thumbnails aplicado en JSX: flex items-center gap-2 */
 
 .item-detail .thumbnail-placeholder {
   width: 80px;
@@ -211,29 +205,18 @@
   white-space: nowrap;
 }
 
+/* El selector de cantidad usa la clase estándar .select de components.css */
 .item-detail .quantity-select {
-  padding: var(--space-3) var(--space-4);
-  font-family: var(--font-medium);
-  font-size: var(--text-sm);
-  font-weight: 500;
-  color: var(--color-text);
-  background-color: transparent;
-  border: 2px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  outline: none;
-  cursor: pointer;
   min-width: 60px;
-  height: 44px;
 }
 
 .item-detail .text-wrapper-4 {
+  /* Layout flex aplicado en JSX con clases utilitarias */
   align-items: center;
   color: var(--color-text);
-  display: flex;
   font-family: var(--font-medium);
   font-size: var(--text-base);
   font-weight: 500;
-  justify-content: center;
   position: relative;
   white-space: nowrap;
   width: fit-content;

@@ -28,15 +28,15 @@ export const Item = ({ item }) => {
   };
 
   return (
-    <Link key={item._id} to={`/products/${item._id}`} className="item">
+    <Link key={item._id} to={`/products/${item._id}`} className="item flex flex-col gap-3">
       <ImageWithLoader
         src={item.fotos?.[0] || "/images/logo.png"}
         alt={item.titulo || "Producto"}
         className="item-image"
       />
 
-      <div className="item-content">
-        <div className="item-info">
+      <div className="item-content flex flex-col flex-1 gap-4">
+        <div className="item-info flex flex-col flex-1 gap-1">
           <div>{item.vendedor?.nombre || "Vendedor"}</div>
           <div className="text-wrapper-2">{item.titulo}</div>
           <div className="text-wrapper-3">

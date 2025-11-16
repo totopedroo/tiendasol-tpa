@@ -141,3 +141,33 @@
 .auth-back-link:hover {
   text-decoration: underline;
 }
+
+/* === PASSWORD INPUT WITH TOGGLE === */
+.password-input-wrapper {
+  position: relative;
+}
+
+.password-input-wrapper .input {
+  padding-right: var(--space-12); /* Espacio para el botón */
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: var(--space-2);
+  color: var(--color-text-muted);
+  transition: color 0.2s ease;
+}
+
+.password-toggle-btn:hover {
+  color: var(--color-text);
+}
+
+.password-toggle-btn svg {
+  width: 20px;
+  height: 20px;
+}

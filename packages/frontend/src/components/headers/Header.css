@@ -11,18 +11,12 @@
 }
 
 .header .navbar-content-wrapper {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: var(--space-6);
+  /* Layout flex aplicado en JSX: flex items-center gap-6 */
   width: 100%;
 }
 
 .header .nav-left-section {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: var(--space-4);
+  /* Layout flex aplicado en JSX: flex items-center gap-4 */
   flex: 1;
 }
 
@@ -50,11 +44,8 @@
 }
 
 .header .navigation-menu {
+  /* Layout flex aplicado en JSX: flex items-center gap-16 */
   align-self: stretch;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: var(--space-16);
   padding: 0 var(--space-8);
   position: relative;
 }
@@ -70,15 +61,23 @@
 }
 
 .header .search-bar {
+  /* Layout flex aplicado en JSX: flex items-center */
   position: relative;
   background-color: var(--color-bg-white);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   width: 300px;
-  display: flex;
-  align-items: center;
-  padding: 0 16px;
+  padding: 0 var(--space-2);
   flex: 0 0 auto;
+  gap: var(--space-2);
+}
+
+.header .search-bar button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-2);
+  flex-shrink: 0;
 }
 
 .search-input {
@@ -88,6 +87,14 @@
   background: transparent;
   padding: 12px 0;
   font-size: 14px;
+  flex: 1;
+}
+
+.header .search-bar .search-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
 }
 
 .search-icon {
@@ -134,13 +141,11 @@
 }
 
 .bell-button {
+  /* Layout flex aplicado en JSX: flex items-center justify-center */
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   transition: opacity 0.2s;
 }
 
@@ -181,7 +186,7 @@
 }
 
 .header .primary-button {
-  display: inline-flex;
+  /* Layout flex aplicado en JSX: flex items-center (ya aplicado desde antes) */
   flex: 0 0 auto;
   gap: var(--space-2);
   position: relative;
@@ -210,9 +215,6 @@
 button {
   all: unset;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 /* User Menu Styles */
@@ -221,9 +223,7 @@ button {
 }
 
 .user-menu-button {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
+  /* Layout flex aplicado en JSX: flex items-center gap-2 */
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-sm);
   transition: background-color 0.2s;
@@ -236,12 +236,7 @@ button {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
-.user-info {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
-}
+/* Layout flex aplicado en JSX para .user-info: flex flex-col items-start gap-1 */
 
 .user-name {
   color: var(--color-text);

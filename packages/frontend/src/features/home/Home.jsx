@@ -24,11 +24,11 @@ export const Home = () => {
   };
 
   return (
-    <div className="contenido">
+    <div className="contenido flex flex-col items-center gap-4">
       <div className="container">
-        <div className="search-section">
-          <div className="search-bar-container">
-            <div className="welcome-text">
+        <div className="search-section flex items-center justify-center self-stretch">
+          <div className="search-bar-container flex flex-col items-center justify-center gap-8">
+            <div className="welcome-text flex flex-col gap-2 items-center text-center self-center">
               <h1 className="welcome-title">Bienvenido a TiendaSol</h1>
               <p className="welcome-subtitle">
                 Tenemos todo lo que estás buscando
@@ -38,6 +38,7 @@ export const Home = () => {
               onSearch={handleSearch}
               placeholder="Buscar productos..."
               variant="default"
+              className="self-center"
             />
           </div>
         </div>

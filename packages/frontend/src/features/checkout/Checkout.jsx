@@ -31,7 +31,7 @@ export const Checkout = () => {
   const [mostrarPopUpOpciones, setMostrarPopUpOpciones] = useState(false);
   const [tituloOpciones, setTituloOpciones] = useState("");
   const [mensajeOpciones, setMensajeOpciones] = useState("");
-  
+
   const { user } = useAuth();
 
   const handleClosePopup = () => {
@@ -43,11 +43,11 @@ export const Checkout = () => {
 
   const cambiarRol = async () => {
     try {
-     await updateUsuario(user.id, {
+      await updateUsuario(user.id, {
         nombre: user.nombre,
         email: user.email,
         telefono: user.telefono,
-        tipo: "COMPRADOR"
+        tipo: "COMPRADOR",
       });
       if (user) {
         user.tipo = "COMPRADOR";
@@ -64,7 +64,7 @@ export const Checkout = () => {
     }
   };
 
-   const handleRealizarPedido = async () => {
+  const handleRealizarPedido = async () => {
     try {
       // si el usuario es vendedor → mostrar popup para cambiar rol
       if (user.tipo === "VENDEDOR") {
@@ -106,7 +106,6 @@ export const Checkout = () => {
       setMensaje("Tu pedido ha sido realizado con éxito ✅");
       setMostrarPopup(true);
       vaciarCarrito();
-
     } catch (error) {
       console.error("Error al realizar el pedido:", error);
 
@@ -129,8 +128,8 @@ export const Checkout = () => {
   return (
     <div className="checkout-screen flex flex-col items-center">
       <div className="container">
-        <div className="checkout-container flex flex-col items-stretch flex-1">
-          <div className="titulo flex items-center justify-between">
+        <div className="checkout-container flex flex-col items-center self-stretch flex-1">
+          <div className="titulo flex justify-between items-center w-full">
             <div className="text-wrapper flex items-center justify-center">
               Carrito
             </div>
@@ -145,10 +144,10 @@ export const Checkout = () => {
             </div>
           </div>
 
-          <div className="checkout-contenido flex items-center">
-            <div className="pedido">
+          <div className="checkout-contenido flex items-start gap-8 w-full">
+            <div className="pedido flex flex-col gap-4 flex-1">
               {carritoItems.length === 0 ? (
-                <div className="empty-cart">
+                <div className="empty-cart flex flex-col items-center justify-center gap-6 text-center">
                   <p>Tu carrito está vacío</p>
                   <Button variant="primary" onClick={() => navigate("/search")}>
                     Ver productos
@@ -177,28 +176,38 @@ export const Checkout = () => {
                 </>
               )}
             </div>
-            <div className="info-pedido flex flex-col items-center">
-              <div className="detalle-pedido flex flex-col items-center">
-                <div className="direccion-entrega-row flex items-center justify-between">
-                  <div className="text-wrapper">Dirección de entrega</div>
+            <div className="info-pedido flex flex-col items-start gap-4">
+              <div className="detalle-pedido flex flex-col items-start self-stretch gap-4">
+                <div className="direccion-entrega-row flex items-center self-stretch justify-between">
+                  <div className="text-wrapper flex items-center justify-center">
+                    Dirección de entrega
+                  </div>
 
                   <div className="direccion-entrega-info flex items-center justify-center">
-                    <div className="text-wrapper-2">Calle Verdadera 1234</div>
+                    <div className="text-wrapper-2 flex items-center justify-center">
+                      Calle Verdadera 1234
+                    </div>
 
                     <Edit style={{ cursor: "pointer" }} />
                   </div>
                 </div>
 
-                <div className="articulos-count-row flex items-center justify-between">
-                  <div className="text-wrapper">Articulos</div>
+                <div className="articulos-count-row flex items-center self-stretch justify-between">
+                  <div className="text-wrapper flex items-center justify-center">
+                    Articulos
+                  </div>
 
-                  <div className="text-wrapper-2">{obtenerTotalItems()}</div>
+                  <div className="text-wrapper-2 flex items-center justify-center">
+                    {obtenerTotalItems()}
+                  </div>
                 </div>
 
-                <div className="total-row flex items-center justify-between">
-                  <div className="text-wrapper-3">Total</div>
+                <div className="total-row flex items-center self-stretch justify-between">
+                  <div className="text-wrapper-3 flex items-center justify-center">
+                    Total
+                  </div>
 
-                  <div className="text-wrapper-3">
+                  <div className="text-wrapper-3 flex items-center justify-center">
                     ${obtenerPrecioTotal().toLocaleString()}
                   </div>
                 </div>
@@ -216,7 +225,7 @@ export const Checkout = () => {
             </div>
           </div>
         </div>
-      <Popup
+        <Popup
           title={titulo}
           isOpen={mostrarPopup}
           onClose={handleClosePopup}
@@ -230,7 +239,10 @@ export const Checkout = () => {
           isOpen={mostrarPopUpOpciones}
           onClose={() => setMostrarPopUpOpciones(false)}
           onConfirm={() => {
-            if (tituloOpciones.includes("rol") || tituloOpciones.includes("pedido")) {
+            if (
+              tituloOpciones.includes("rol") ||
+              tituloOpciones.includes("pedido")
+            ) {
               setMostrarPopUpOpciones(false);
               cambiarRol();
               return;

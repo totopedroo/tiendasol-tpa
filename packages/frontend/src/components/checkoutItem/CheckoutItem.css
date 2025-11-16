@@ -1,4 +1,5 @@
 .checkout-item {
+  /* Layout flex aplicado en JSX: flex items-start (ya aplicado desde antes) */
   align-items: flex-start;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
@@ -21,16 +22,15 @@
 }
 
 .checkout-item .item-content {
-  align-items: flex-start;
+  /* Layout flex aplicado en JSX: flex flex-col items-start justify-between */
   align-self: stretch;
   flex: 1;
   flex-grow: 1;
-  justify-content: space-between;
   position: relative;
 }
 
 .checkout-item .item-header {
-  align-items: flex-start;
+  /* Layout flex aplicado en JSX: flex items-start justify-between */
   align-self: stretch;
   flex: 0 0 auto;
   position: relative;
@@ -38,20 +38,17 @@
 }
 
 .checkout-item .item-title-price {
-  align-items: flex-start;
-  display: inline-flex;
+  /* Layout flex aplicado en JSX: inline-flex flex-col items-start */
   flex: 0 0 auto;
   position: relative;
 }
 
 .checkout-item .text-wrapper {
-  align-items: center;
+  /* Layout flex aplicado en JSX: flex items-center justify-center */
   color: var(--color-text);
-  display: flex;
   font-family: var(--font-bold);
   font-size: var(--text-lg);
   font-weight: 700;
-  justify-content: center;
   margin-top: -1px;
   position: relative;
   white-space: nowrap;
@@ -59,13 +56,11 @@
 }
 
 .checkout-item .text-wrapper-2 {
-  align-items: center;
+  /* Layout flex aplicado en JSX: flex items-center justify-center */
   color: var(--color-text);
-  display: flex;
   font-family: var(--font-medium);
   font-size: var(--text-base);
   font-weight: 500;
-  justify-content: center;
   position: relative;
   white-space: nowrap;
   width: fit-content;
@@ -78,44 +73,29 @@
 }
 
 .checkout-item .item-actions {
-  align-items: flex-end;
+  /* Layout flex aplicado en JSX: flex items-end justify-between */
   align-self: stretch;
-  display: flex;
   flex: 0 0 auto;
-  justify-content: space-between;
   position: relative;
   width: 100%;
 }
 
 .checkout-item .quantity-section {
-  align-items: flex-start;
-  display: inline-flex;
+  /* Layout flex aplicado en JSX: inline-flex flex-col items-start justify-end gap-2 */
   flex: 0 0 auto;
-  flex-direction: column;
-  justify-content: flex-end;
   position: relative;
-  gap: var(--space-2);
 }
 
-.checkout-item .quantity-controls {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-}
+/* Layout flex aplicado en JSX para .quantity-controls: flex items-center gap-2 */
 
 .checkout-item .quantity-display {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  /* Layout flex aplicado en JSX: flex items-center justify-center */
   padding: 0 var(--space-3);
 }
 
 .checkout-item .subtotal-section {
-  align-items: flex-end;
-  display: inline-flex;
+  /* Layout flex aplicado en JSX: inline-flex flex-col items-end justify-end */
   flex: 0 0 auto;
-  flex-direction: column;
-  justify-content: flex-end;
   position: relative;
 }
 
@@ -139,13 +119,11 @@
 }
 
 .checkout-item .text-wrapper-3 {
-  align-items: center;
+  /* Layout flex aplicado en JSX: flex items-center justify-center */
   color: var(--color-text);
-  display: flex;
   font-family: var(--font-medium);
   font-size: var(--text-base);
   font-weight: 500;
-  justify-content: center;
   margin-top: -1px;
   position: relative;
   text-align: right;
@@ -181,13 +159,11 @@
 }
 
 .checkout-item .text-wrapper-4 {
-  align-items: center;
+  /* Layout flex aplicado en JSX: flex items-center justify-center */
   color: var(--color-text);
-  display: flex;
   font-family: var(--font-semibold);
   font-size: var(--text-lg);
   font-weight: 600;
-  justify-content: center;
   margin-top: -1px;
   position: relative;
   text-align: center;
@@ -211,13 +187,11 @@
 }
 
 .checkout-item .text-wrapper-5 {
-  align-items: center;
+  /* Layout flex aplicado en JSX: flex items-center justify-center */
   color: var(--color-text);
-  display: flex;
   font-family: var(--font-semibold);
   font-size: var(--text-lg);
   font-weight: 600;
-  justify-content: center;
   position: relative;
   text-align: right;
   white-space: nowrap;

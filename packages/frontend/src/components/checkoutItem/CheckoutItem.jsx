@@ -50,11 +50,13 @@ export const CheckoutItem = ({ item }) => {
         className="rectangle"
       />
 
-      <div className="item-content flex flex-col items-center">
-        <div className="item-header flex items-center justify-between">
-          <div className="item-title-price flex flex-col items-center">
-            <div className="text-wrapper">{item.titulo}</div>
-            <div className="text-wrapper-2">
+      <div className="item-content flex flex-col items-start justify-between">
+        <div className="item-header flex items-start justify-between">
+          <div className="item-title-price inline-flex flex-col items-start">
+            <div className="text-wrapper flex items-center justify-center">
+              {item.titulo}
+            </div>
+            <div className="text-wrapper-2 flex items-center justify-center">
               {moneda}
               {item.precio.toLocaleString()}
             </div>
@@ -68,10 +70,12 @@ export const CheckoutItem = ({ item }) => {
           />
         </div>
 
-        <div className="item-actions">
-          <div className="quantity-section">
-            <div className="text-wrapper-3">Cantidad</div>
-            <div className="quantity-controls">
+        <div className="item-actions flex items-end justify-between">
+          <div className="quantity-section inline-flex flex-col items-start justify-end gap-2">
+            <div className="text-wrapper-3 flex items-center justify-center">
+              Cantidad
+            </div>
+            <div className="quantity-controls flex items-center gap-2">
               <Button
                 variant="icon"
                 icon={<Minus />}
@@ -79,8 +83,10 @@ export const CheckoutItem = ({ item }) => {
                 aria-label="Disminuir cantidad"
                 onClick={disminuir}
               />
-              <div className="quantity-display">
-                <div className="text-wrapper-4">{item.cantidad}</div>
+              <div className="quantity-display flex items-center justify-center">
+                <div className="text-wrapper-4 flex items-center justify-center">
+                  {item.cantidad}
+                </div>
               </div>
               <Button
                 variant="icon"
@@ -92,9 +98,11 @@ export const CheckoutItem = ({ item }) => {
             </div>
           </div>
 
-          <div className="subtotal-section">
-            <div className="text-wrapper-3">Subtotal</div>
-            <div className="text-wrapper-5">
+          <div className="subtotal-section inline-flex flex-col items-end justify-end">
+            <div className="text-wrapper-3 flex items-center justify-center">
+              Subtotal
+            </div>
+            <div className="text-wrapper-5 flex items-center justify-center">
               {moneda}
               {subtotal.toLocaleString()}
             </div>

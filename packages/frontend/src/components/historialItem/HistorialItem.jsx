@@ -45,7 +45,7 @@ export const HistorialItem = ({ item }) => {
     }
   })();
   return (
-    <div className="historial-item-container">
+    <div className="historial-item-container flex items-center gap-4">
       <div className="rectangle">
         {producto?.fotos?.[0] && (
           <ImageWithLoader
@@ -56,22 +56,24 @@ export const HistorialItem = ({ item }) => {
         )}
       </div>
 
-      <div className="item-details">
-        <div className="item-title-price">
-          <div className="text-wrapper-3">
+      <div className="item-details flex items-center justify-between">
+        <div className="item-title-price inline-flex flex-col items-start">
+          <div className="text-wrapper-3 flex items-center justify-center">
             {producto?.titulo || "Sin título"}
           </div>
 
-          <div className="text-wrapper-4">
+          <div className="text-wrapper-4 flex items-center justify-center">
             {moneda}
             {(producto.precio || 0).toLocaleString("es-AR")}
           </div>
         </div>
 
-        <div className="item-summary">
-          <div className="text-wrapper-5">Cantidad: {item.cantidad || 0}</div>
+        <div className="item-summary inline-flex flex-col items-end justify-center">
+          <div className="text-wrapper-5 flex items-end justify-end">
+            Cantidad: {item.cantidad || 0}
+          </div>
 
-          <div className="text-wrapper-6">
+          <div className="text-wrapper-6 flex items-end justify-end">
             Subtotal: {moneda}
             {subtotal.toLocaleString("es-AR")}
           </div>

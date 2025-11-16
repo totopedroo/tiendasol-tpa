@@ -144,12 +144,12 @@ export function Vender() {
   const esComprador = user?.tipo === "COMPRADOR";
 
   return (
-    <div className="vender-container">
+    <div className="vender-container flex flex-col gap-6">
       <h2>Vender producto</h2>
 
       {isAuthenticated && esComprador && (
         <div className="banner-comprador">
-          <div className="banner-content">
+          <div className="banner-content flex flex-col gap-4 items-center text-center">
             <h3>Necesitas ser vendedor</h3>
             <p>
               Para poder vender productos necesitas convertir tu cuenta a tipo
@@ -167,11 +167,15 @@ export function Vender() {
         </div>
       )}
 
-      <form className="vender-form" onSubmit={handleSubmit}>
+      <form
+        className="vender-form flex gap-8 flex-wrap"
+        onSubmit={handleSubmit}
+      >
         {/* --- Columna izquierda --- */}
-        <div className="vender-col">
+        <div className="vender-col flex flex-col gap-4 flex-1">
           <label>Título</label>
           <input
+            className="input"
             type="text"
             placeholder="Texto"
             value={titulo}
@@ -182,6 +186,7 @@ export function Vender() {
 
           <label>Descripción</label>
           <textarea
+            className="textarea"
             placeholder="Mínimo 500 caracteres"
             rows="8"
             value={descripcion}
@@ -191,10 +196,11 @@ export function Vender() {
             disabled={esComprador}
           ></textarea>
 
-          <div className="vender-row">
+          <div className="vender-row flex gap-4">
             <div className="vender-precio">
               <label>Precio</label>
               <input
+                className="input"
                 type="number"
                 placeholder="Ingrese precio"
                 value={precio}
@@ -207,6 +213,7 @@ export function Vender() {
             <div className="vender-moneda">
               <label>Moneda</label>
               <select
+                className="select"
                 value={moneda}
                 onChange={(e) => setMoneda(e.target.value)}
                 disabled={esComprador}
@@ -220,6 +227,7 @@ export function Vender() {
 
           <label>Stock</label>
           <input
+            className="input"
             type="number"
             placeholder="Cantidad disponible"
             value={stock}
@@ -231,6 +239,7 @@ export function Vender() {
 
           <label>Categoría</label>
           <select
+            className="select"
             value={categoria}
             onChange={(e) => setCategoria(e.target.value)}
             required
@@ -246,7 +255,7 @@ export function Vender() {
         </div>
 
         {/* --- Columna derecha --- */}
-        <div className="vender-col">
+        <div className="vender-col flex flex-col gap-4 flex-1">
           <label>Multimedia</label>
 
           <div
@@ -293,7 +302,7 @@ export function Vender() {
 
           <button
             type="submit"
-            className="btn-publicar"
+            className="btn-publicar self-start"
             disabled={loading || esComprador}
           >
             {loading ? "Creando..." : "Crear publicación"}

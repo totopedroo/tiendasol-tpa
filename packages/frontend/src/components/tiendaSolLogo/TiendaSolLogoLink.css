@@ -1,16 +1,13 @@
 .company-logo-link {
+  /* Layout flex aplicado en JSX: flex */
   text-decoration: none;
   color: inherit;
-  display: flex;
 }
 
-.company-logo-group {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
+/* Layout de .company-logo-group aplicado en JSX: flex items-center gap-1 */
 
 .company-name-text {
+  /* Layout flex aplicado en JSX: flex items-center */
   color: var(--color-text-primary);
   font-family: var(--font-family-semibold);
   font-size: var(--text-base);
@@ -19,17 +16,15 @@
   line-height: var(--line-height-md);
   position: relative;
   flex: 1;
-  display: flex;
-  align-items: center;
 }
 
 .logo {
+  /* Layout flex removido, no es necesario */
   aspect-ratio: 1;
   height: 40px;
   object-fit: cover;
   position: relative;
   width: 40px;
-  display: flex;
 }
 
 .company-logo-group img {
@@ -41,10 +36,6 @@
 @media (max-width: 768px) {
   .company-name-text {
     display: none;
-  }
-
-  .company-logo-group {
-    gap: 0;
   }
 
   .company-logo-group img {

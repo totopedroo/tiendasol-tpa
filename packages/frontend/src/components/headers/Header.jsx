@@ -106,20 +106,20 @@ export const Header = () => {
 
   return (
     <div className="header">
-      <div className="navbar-content-wrapper">
-        <div className="nav-left-section">
+      <div className="navbar-content-wrapper flex items-center gap-6">
+        <div className="nav-left-section flex items-center gap-4">
           <TiendaSolLogoLink />
-          <div className="navigation-menu flex-row-center">
-            <Link to={"/search"} className="nav-item flex-row-center">
+          <div className="navigation-menu flex items-center gap-16">
+            <Link to={"/search"} className="nav-item">
               Productos
             </Link>
-            <Link to={"/categorias"} className="nav-item flex-row-center">
+            <Link to={"/categorias"} className="nav-item">
               Categorías
             </Link>
-            <Link to={"/ventas"} className="nav-item flex-row-center">
+            <Link to={"/ventas"} className="nav-item">
               Vender
             </Link>
-            <Link to={"/contacto"} className="nav-item flex-row-center">
+            <Link to={"/contacto"} className="nav-item">
               Contacto
             </Link>
           </div>
@@ -136,7 +136,7 @@ export const Header = () => {
         <div className="buttons flex items-center">
           <div className="notificaciones-wrapper" ref={notifPanelRef}>
             <button
-              className="bell-button"
+              className="bell-button flex items-center justify-center"
               onClick={toggleNotificaciones}
               aria-label="Notificaciones"
             >
@@ -159,9 +159,12 @@ export const Header = () => {
 
           {isAuthenticated ? (
             <div className="user-menu-wrapper">
-              <button className="user-menu-button" aria-label="Menú de usuario">
+              <button
+                className="user-menu-button flex items-center gap-2"
+                aria-label="Menú de usuario"
+              >
                 <User className="user-icon-header" />
-                <div className="user-info">
+                <div className="user-info flex flex-col items-start gap-1">
                   <span className="user-name">{nombreUsuario}</span>
                   <span className="user-type">{user?.tipo || "Usuario"}</span>
                 </div>

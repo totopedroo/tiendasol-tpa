@@ -6,6 +6,8 @@ import Popup from "../popups/PopUp.jsx";
 import { Button } from "../button/Button.jsx";
 import { createUsuario } from "../../service/usuariosService.js";
 import { useAuth } from "../../context/AuthContexto.jsx";
+import { Eye } from "../icons/Eye.jsx";
+import { EyeOff } from "../icons/EyeOff.jsx";
 
 export const RegisterForm = ({ onClose, onSwitchToLogin }) => {
   const navigate = useNavigate();
@@ -24,6 +26,9 @@ export const RegisterForm = ({ onClose, onSwitchToLogin }) => {
   const [mensaje, setMensaje] = useState("");
   const [titulo, setTitulo] = useState("");
   const [loading, setLoading] = useState(false);
+  const [mostrarPassword, setMostrarPassword] = useState(false);
+  const [mostrarConfirmarPassword, setMostrarConfirmarPassword] =
+    useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -77,20 +82,24 @@ export const RegisterForm = ({ onClose, onSwitchToLogin }) => {
       setTitulo("Éxito");
       setMensaje("✅ Cuenta creada e inicio de sesión exitoso!");
       setMostrarPopup(true);
-    }  catch (error) {
-  console.error("Error en registro:", error);
-  setTitulo("Error");
-  if (error.response?.data?.message) {
-    setMensaje(`⚠️ ${error.response.data.message}`);
-    } else if (error.response?.status === 400) {
-    setMensaje("⚠️ Por favor verifica que todos los campos sean correctos.");
-  } else if (error.message) {
-    setMensaje(`⚠️ ${error.message}`);
-  } else {
-    setMensaje("⚠️ Ocurrió un error al crear la cuenta. Por favor intenta nuevamente.");
-  }
-  setMostrarPopup(true);
-}finally {
+    } catch (error) {
+      console.error("Error en registro:", error);
+      setTitulo("Error");
+      if (error.response?.data?.message) {
+        setMensaje(`⚠️ ${error.response.data.message}`);
+      } else if (error.response?.status === 400) {
+        setMensaje(
+          "⚠️ Por favor verifica que todos los campos sean correctos."
+        );
+      } else if (error.message) {
+        setMensaje(`⚠️ ${error.message}`);
+      } else {
+        setMensaje(
+          "⚠️ Ocurrió un error al crear la cuenta. Por favor intenta nuevamente."
+        );
+      }
+      setMostrarPopup(true);
+    } finally {
       setLoading(false);
     }
   };
@@ -173,34 +182,62 @@ export const RegisterForm = ({ onClose, onSwitchToLogin }) => {
         <label htmlFor="password" className="auth-label">
           Contraseña
         </label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          className="input"
-          placeholder="Mínimo 8 caracteres"
-          value={form.password}
-          onChange={handleChange}
-          required
-          minLength={8}
-          disabled={loading}
-        />
+        <div className="password-input-wrapper w-full">
+          <input
+            id="password"
+            name="password"
+            type={mostrarPassword ? "text" : "password"}
+            className="input"
+            placeholder="Mínimo 8 caracteres"
+            value={form.password}
+            onChange={handleChange}
+            required
+            minLength={8}
+            disabled={loading}
+          />
+          <button
+            type="button"
+            className="password-toggle-btn flex items-center justify-center cursor-pointer"
+            onClick={() => setMostrarPassword(!mostrarPassword)}
+            aria-label={
+              mostrarPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+            }
+          >
+            {mostrarPassword ? <EyeOff /> : <Eye />}
+          </button>
+        </div>
 
         <label htmlFor="confirmarPassword" className="auth-label">
           Repetir contraseña
         </label>
-        <input
-          id="confirmarPassword"
-          name="confirmarPassword"
-          type="password"
-          className="input"
-          placeholder="Mínimo 8 caracteres"
-          value={form.confirmarPassword}
-          onChange={handleChange}
-          required
-          minLength={8}
-          disabled={loading}
-        />
+        <div className="password-input-wrapper w-full">
+          <input
+            id="confirmarPassword"
+            name="confirmarPassword"
+            type={mostrarConfirmarPassword ? "text" : "password"}
+            className="input"
+            placeholder="Mínimo 8 caracteres"
+            value={form.confirmarPassword}
+            onChange={handleChange}
+            required
+            minLength={8}
+            disabled={loading}
+          />
+          <button
+            type="button"
+            className="password-toggle-btn flex items-center justify-center cursor-pointer"
+            onClick={() =>
+              setMostrarConfirmarPassword(!mostrarConfirmarPassword)
+            }
+            aria-label={
+              mostrarConfirmarPassword
+                ? "Ocultar contraseña"
+                : "Mostrar contraseña"
+            }
+          >
+            {mostrarConfirmarPassword ? <EyeOff /> : <Eye />}
+          </button>
+        </div>
 
         <Button
           type="submit"
