@@ -12,7 +12,7 @@ export class PedidosRepository {
     // Populate para tener la información del vendedor para las notificaciones
     return await this.model.findById(nuevoPedido._id).populate({
       path: "items.producto",
-      select: "nombre vendedor",
+      select: null,
       populate: {
         path: "vendedor",
         select: "nombre email",
@@ -45,7 +45,9 @@ export class PedidosRepository {
       return null;
     }
     pedido.actualizarEstado(ESTADO_PEDIDO.CANCELADO, userId, motivo);
-    return await pedido.save();
+    pedido.save();
+
+    return await this._populatePedido(pedidoId);
   }
 
   async marcarEnviado(pedidoId, userId) {
@@ -54,7 +56,9 @@ export class PedidosRepository {
       return null;
     }
     pedido.actualizarEstado(ESTADO_PEDIDO.ENVIADO, userId, "Pedido enviado");
-    return await pedido.save();
+    await pedido.save();
+
+    return await this._populatePedido(pedidoId);
   }
 
   async confirmar(pedidoId, userId) {
@@ -70,10 +74,26 @@ export class PedidosRepository {
       userId,
       "Pedido confirmado"
     );
-    return await pedido.save();
+    await pedido.save();
+
+    return await this._populatePedido(pedidoId);
   }
 
   async contarTodos() {
     return await this.model.countDocuments();
+  }
+
+  async _populatePedido(id) {
+  return this.model
+    .findById(id)
+    .populate({
+      path: "items.producto",
+      select: "nombre vendedor",
+      populate: {
+        path: "vendedor",
+        select: "nombre email",
+      },
+    })
+    .populate("comprador", "nombre email");
   }
 }

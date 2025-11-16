@@ -18,24 +18,45 @@ export class FactoryNotificacion {
    * @returns {Notificacion}
    */
   crearSegunPedido(pedido) {
-    var receptor = pedido.items.at(0).producto.vendedor;
-    var emisor = pedido.comprador;
-    if (pedido.estado === ESTADO_PEDIDO.ENVIADO) {
-      // Intercambio de variables
-      [receptor, emisor] = [emisor, receptor];
+    const comprador = pedido.comprador;
+    const nombreEmisor = comprador?.nombre ?? "Cliente";
+
+    // Agrupar items por vendedor
+    const itemsPorVendedor = new Map();
+
+    for (const item of pedido.items ?? []) {
+      const vendedorId = item.producto?.vendedor?._id?.toString();
+      if (!vendedorId) continue;
+
+      if (!itemsPorVendedor.has(vendedorId)) {
+        itemsPorVendedor.set(vendedorId, []);
+      }
+
+      itemsPorVendedor.get(vendedorId).push(item);
     }
 
-    const productos = (pedido.items ?? [])
-      .map(i => `${i.producto?.nombre ?? i.producto} - ${i.cantidad}`)
-      .join(" | ");
+    // Crear una notificación por vendedor
+    const notificaciones = [];
+
+    for (const [vendedorId, items] of itemsPorVendedor.entries()) {
+      
+      const productos = items
+        .map(i => `${i.producto.titulo} (${i.cantidad})`)
+        .join(" \n • ");
 
     const mensaje =
-      `${this.crearSegunEstadoPedido(pedido.estado)} por ${emisor?.nombre}\n` +
+      `${this.crearSegunEstadoPedido(pedido.estado)} por ${nombreEmisor}\n` +
       `Productos: ${productos}\n` +
-      `Total: ${pedido.total}\n` +
+      `Total: ${items.reduce((acc, i) => acc + (i.cantidad * i.precioUnitario), 0)}\n` +
       `Dirección de entrega: ${formatDireccion(pedido.direccionEntrega)}`;
 
-    return new Notificacion(receptor, mensaje);
+   notificaciones.push({
+        usuarioDestino: vendedorId,
+        mensaje
+      });
+    }
+
+    return notificaciones;
   }
 }
 
