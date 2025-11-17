@@ -87,7 +87,7 @@ export class PedidosService {
     const pedidoCreado = await this.pedidosRepository.create(pedidoData);
 
     // 7. Notificar al vendedor sobre el nuevo pedido
-    await this.#publish(pedidoCreado, ESTADO_PEDIDO.PENDIENTE, null);
+    await this.#publish(pedidoCreado, ESTADO_PEDIDO.PENDIENTE, data.id_comprador);
 
     return pedidoCreado;
   }
@@ -208,7 +208,7 @@ export class PedidosService {
         "No se encontró el pedido con el ID especificado"
       );
     }
-    await this.#publish(pedido, ESTADO_PEDIDO.CANCELADO, motivo);
+    await this.#publish(pedido, ESTADO_PEDIDO.CANCELADO, motivo, userId);
     return pedido;
   }
 
@@ -219,7 +219,7 @@ export class PedidosService {
         "No se encontró el pedido con el ID especificado"
       );
     }
-    await this.#publish(pedido, ESTADO_PEDIDO.ENVIADO, null);
+    await this.#publish(pedido, ESTADO_PEDIDO.ENVIADO, null, userId);
     return pedido;
   }
 
@@ -230,7 +230,7 @@ export class PedidosService {
         "No se pudo confirmar el pedido (no existe o ya no está pendiente)."
       );
     }
-    await this.#publish(pedido, ESTADO_PEDIDO.CONFIRMADO, null);
+    await this.#publish(pedido, ESTADO_PEDIDO.CONFIRMADO, null, userId);
     return pedido;
   }
 
@@ -241,7 +241,7 @@ export class PedidosService {
         "No se encontró el pedido con el ID especificado"
       );
     }
-    await this.#publish(pedido, ESTADO_PEDIDO.EN_PREPARACION, null);
+    await this.#publish(pedido, ESTADO_PEDIDO.EN_PREPARACION, null, userId);
     return pedido;
   }
 
@@ -252,18 +252,18 @@ export class PedidosService {
         "No se encontró el pedido con el ID especificado"
       );
     }
-    await this.#publish(pedido, ESTADO_PEDIDO.ENTREGADO, null);
+    await this.#publish(pedido, ESTADO_PEDIDO.ENTREGADO, null, userId);
     return pedido;
   }
 
   // ---------- privado ----------
-  async #publish(pedido, estado, motivo /*, actor no usado */) {
-    if (!this.notiPublisher) return; // permite testear sin publisher
+  async #publish(pedido, estado, motivo, actorId) {
+    if (!this.notiPublisher) return;
+
     try {
-      const cambio = new CambioEstadoPedido(estado, pedido, null, motivo);
+      const cambio = new CambioEstadoPedido(estado, pedido, actorId, motivo);
       await this.notiPublisher.publicar(cambio);
     } catch (e) {
-      // No bloquear el flujo de pedido por un fallo en notificaciones
       console.error("No se pudo publicar la notificación:", e?.message ?? e);
     }
   }
