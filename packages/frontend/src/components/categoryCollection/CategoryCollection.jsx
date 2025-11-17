@@ -42,11 +42,11 @@ export const CategoryCollection = () => {
 
       <div className="categories-grid">
         {categorias.map((categoria) => (
-          <div className="category-item" key={categoria._id}>
-            <Link
-              to={`/search?categoria=${categoria.nombre}`}
-              className="category-link flex flex-col items-center"
-            >
+          <div className="category-item" key={categoria._id} data-testid="category-card">
+          <Link
+            to={`/search?categoria=${categoria.nombre}`}
+            className="category-link flex flex-col items-center"
+          >
               <div className="ellipse">
                 <ImageWithLoader
                   src={categoria.imagen}
@@ -55,8 +55,8 @@ export const CategoryCollection = () => {
                 />
               </div>
               <div className="text-wrapper-3">{categoria.nombre}</div>
-            </Link>
-          </div>
+          </Link>
+        </div>
         ))}
       </div>
     </div>

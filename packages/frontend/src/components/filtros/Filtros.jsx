@@ -8,79 +8,44 @@ export const Filtros = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   // Estado local para los filtros
-  const [categoria, setCategoria] = useState(
-    searchParams.get("categoria") || ""
-  );
+  const [categoria, setCategoria] = useState(searchParams.get("categoria") || "");
   const [vendedor, setVendedor] = useState(searchParams.get("vendedor") || "");
-  const [precioMin, setPrecioMin] = useState(
-    searchParams.get("precioMin") || ""
-  );
-  const [precioMax, setPrecioMax] = useState(
-    searchParams.get("precioMax") || ""
-  );
+  const [precioMin, setPrecioMin] = useState(searchParams.get("precioMin") || "");
+  const [precioMax, setPrecioMax] = useState(searchParams.get("precioMax") || "");
   const [orden, setOrden] = useState(searchParams.get("ordenPor") || "");
 
-  // Estado para las categorías obtenidas del backend
+  // Estado backend
   const [categorias, setCategorias] = useState([]);
   const [vendedores, setVendedores] = useState([]);
 
-  // Actualizar los parámetros de URL cuando cambien los filtros
   const actualizarFiltros = useCallback(() => {
     const params = new URLSearchParams(searchParams);
 
-    // Mantener el término de búsqueda si existe
     const titulo = searchParams.get("titulo");
     if (titulo) params.set("titulo", titulo);
 
-    // Agregar o eliminar filtros según su valor
-    if (categoria) {
-      params.set("categoria", categoria);
-    } else {
-      params.delete("categoria");
-    }
+    categoria ? params.set("categoria", categoria) : params.delete("categoria");
+    vendedor ? params.set("vendedor", vendedor) : params.delete("vendedor");
+    precioMin ? params.set("precioMin", precioMin) : params.delete("precioMin");
+    precioMax ? params.set("precioMax", precioMax) : params.delete("precioMax");
+    orden ? params.set("ordenPor", orden) : params.delete("ordenPor");
 
-    if (vendedor) {
-      params.set("vendedor", vendedor);
-    } else {
-      params.delete("vendedor");
-    }
-
-    if (precioMin) {
-      params.set("precioMin", precioMin);
-    } else {
-      params.delete("precioMin");
-    }
-
-    if (precioMax) {
-      params.set("precioMax", precioMax);
-    } else {
-      params.delete("precioMax");
-    }
-
-    if (orden) {
-      params.set("ordenPor", orden);
-    } else {
-      params.delete("ordenPor");
-    }
-
-    // Resetear a página 1 cuando cambien los filtros
     params.set("page", "1");
 
     setSearchParams(params);
   });
 
-  // Cargar categorías del backend
+  // Cargar categorías
   useEffect(() => {
-    const cargarCategorias = async () => {
+    const cargar = async () => {
       try {
-        const response = await getCategorias();
-        setCategorias(response.categorias || []);
-      } catch (error) {
-        console.error("Error al cargar categorías:", error);
+        const resp = await getCategorias();
+        setCategorias(resp.categorias || []);
+      } catch {
         setCategorias([]);
       }
     };
-    cargarCategorias();
+    cargar();
   }, []);
 
   useEffect(() => {
@@ -91,25 +56,22 @@ export const Filtros = () => {
     setOrden(searchParams.get("ordenPor") || "");
   }, [searchParams]);
 
-  // Cargar vendedores del backend
+  // Cargar vendedores
   useEffect(() => {
-    const cargarVendedores = async () => {
+    const cargar = async () => {
       try {
-        const response = await getVendedores();
-        setVendedores(response || []);
-      } catch (error) {
-        console.error("Error al cargar vendedores:", error);
+        const resp = await getVendedores();
+        setVendedores(resp || []);
+      } catch {
         setVendedores([]);
       }
     };
-    cargarVendedores();
+    cargar();
   }, []);
 
-  // Aplicar filtros con un pequeño delay para evitar demasiadas llamadas
+  // Auto-aplicar filtros después de 500 ms
   useEffect(() => {
-    const timer = setTimeout(() => {
-      actualizarFiltros();
-    }, 500);
+    const timer = setTimeout(() => actualizarFiltros(), 500);
     return () => clearTimeout(timer);
   }, [categoria, vendedor, precioMin, precioMax, orden]);
 
@@ -128,12 +90,15 @@ export const Filtros = () => {
       </div>
 
       <div className="container-inputs flex flex-col items-start gap-4">
+
+        {/* CATEGORIA */}
         <div className="filter-field flex flex-col gap-2">
           <div className="text-wrapper-2 flex items-center justify-center">
             Categoría
           </div>
           <select
             className="select"
+            name="categoria"
             value={categoria}
             onChange={(e) => setCategoria(e.target.value)}
           >
@@ -146,12 +111,14 @@ export const Filtros = () => {
           </select>
         </div>
 
+        {/* VENDEDOR */}
         <div className="filter-field flex flex-col gap-2">
           <div className="text-wrapper-2 flex items-center justify-center">
             Vendedor
           </div>
           <select
             className="select"
+            name="vendedor"
             value={vendedor}
             onChange={(e) => setVendedor(e.target.value)}
           >
@@ -164,6 +131,7 @@ export const Filtros = () => {
           </select>
         </div>
 
+        {/* PRECIO */}
         <div className="filter-field flex flex-col gap-2">
           <div className="text-wrapper-3 flex items-center justify-start">
             Precio
@@ -171,6 +139,7 @@ export const Filtros = () => {
           <div className="price-range-inputs flex gap-2">
             <input
               className="input"
+              name="precioMin"
               type="number"
               placeholder="Mín"
               value={precioMin}
@@ -178,6 +147,7 @@ export const Filtros = () => {
             />
             <input
               className="input"
+              name="precioMax"
               type="number"
               placeholder="Máx"
               value={precioMax}
@@ -186,36 +156,34 @@ export const Filtros = () => {
           </div>
         </div>
 
+        {/* ORDEN */}
         <div className="filter-field flex flex-col gap-2">
           <div className="text-wrapper-2 flex items-center justify-center">
             Ordenar por
           </div>
           <select
             className="select"
+            name="ordenPor"
             value={orden}
             onChange={(e) => setOrden(e.target.value)}
           >
             <option value="">Sin ordenar</option>
             <option value="MayorPrecio">Mayor precio</option>
             <option value="MenorPrecio">Menor precio</option>
-            <option value="MasVendidos">Mas vendidos</option>
+            <option value="MasVendidos">Más vendidos</option>
           </select>
         </div>
 
+        {/* BOTÓN APLICAR */}
         <div className="filter-field flex flex-col gap-2">
-          <button
-            className="btn btn-primary btn-medium"
-            onClick={actualizarFiltros}
-          >
+          <button className="btn btn-primary btn-medium" onClick={actualizarFiltros}>
             Aplicar filtros
           </button>
         </div>
 
+        {/* BOTÓN LIMPIAR */}
         <div className="filter-field flex flex-col gap-2">
-          <button
-            className="btn btn-primary btn-medium"
-            onClick={limpiarFiltros}
-          >
+          <button className="btn btn-primary btn-medium" onClick={limpiarFiltros}>
             Limpiar filtros
           </button>
         </div>
