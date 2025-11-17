@@ -20,11 +20,11 @@ export const Notificaciones = ({ userId, onClose }) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await getNotificacionesUsuario(userId, {
+      const data = await getNotificacionesUsuario(userId, {
         limit: 20,
-        leidas: false, // Solo notificaciones sin leer
+        estado: "sin-leer" // Solo notificaciones sin leer
       });
-      setNotificaciones(response.data || []);
+      setNotificaciones(data || []);
     } catch (err) {
       console.error("Error al cargar notificaciones:", err);
       setError("Error al cargar las notificaciones");
