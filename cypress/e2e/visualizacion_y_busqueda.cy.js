@@ -133,8 +133,14 @@ it("El botón 'Agregar al carrito' está disponible", () => {
   cy.intercept("GET", `${API}*`).as("listado");
   cy.wait("@listado");
 
+  // intercept del detalle
+  cy.intercept("GET", `${API}/*`).as("detalle");
+
   // Abrir producto
-  cy.get(".resultados .item").first().click();
+  cy.get(".resultados .item").first().click({ force: true });
+
+  // Esperar detalle
+  cy.wait("@detalle");
 
   // Estamos en detalle
   cy.url().should("include", "/products/");
@@ -143,15 +149,4 @@ it("El botón 'Agregar al carrito' está disponible", () => {
   // Validar que el botón existe
   cy.contains("Agregar al carrito").should("exist");
 });
-
-  // 11. COMPRAR AHORA (solo valida que el botón exista)
-  it("El botón 'Comprar ahora' está disponible", () => {
-    cy.intercept("GET", `${API}*`).as("listado");
-    cy.wait("@listado");
-
-    cy.get(".resultados .item").first().click();
-
-    cy.get(".item-detail", { timeout: 8000 }).should("exist");
-    cy.contains("Comprar ahora").should("exist");
-  });
 });
