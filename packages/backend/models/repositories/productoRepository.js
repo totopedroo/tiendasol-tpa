@@ -8,47 +8,8 @@ export class ProductoRepository {
   }
 
   async findByPage(pagina, elementosPorPagina, filtros = {}) {
-    const filtrosMongo = {};
+    const filtrosMongo = await this.#crearFiltros(filtros);
     const sort = {};
-
-    if (filtros.vendedor) {
-      filtrosMongo.vendedor = filtros.vendedor;
-    }
-
-    if (filtros.titulo) {
-      filtrosMongo.titulo = { $regex: filtros.titulo, $options: "i" };
-    }
-
-    if (filtros.descripcion) {
-      filtrosMongo.descripcion = { $regex: filtros.descripcion, $options: "i" };
-    }
-
-    if (filtros.categoria) {
-      // Soportamos formato ?categorias=elec,ropa o categoria=elec&categoria=ropa
-      const categorias = Array.isArray(filtros.categoria)
-        ? filtros.categoria
-        : filtros.categoria.split(",");
-      console.log(categorias);
-
-      // Buscamos IDs de categorías que hagan match con regex
-      const categoriasDocs = await CategoriaModel.find({
-        nombre: {
-          $in: categorias.map((categoria) => new RegExp(categoria, "i")),
-        },
-      });
-
-      const idsCategorias = categoriasDocs.map((cat) => cat._id);
-
-      filtrosMongo.categorias = { $in: idsCategorias };
-    }
-
-    if (filtros.precioMin != null || filtros.precioMax != null) {
-      filtrosMongo.precio = {};
-      if (filtros.precioMin != null)
-        filtrosMongo.precio.$gte = filtros.precioMin;
-      if (filtros.precioMax != null)
-        filtrosMongo.precio.$lte = filtros.precioMax;
-    }
 
     if (filtros.ordenPor === "MayorPrecio") {
       sort.precio = -1;
@@ -107,7 +68,53 @@ export class ProductoRepository {
     * Agregar logica para que otra entidad aumente la cantidad de ventas del "Producto"
   */
 
-  async contarTodos() {
-    return await this.model.countDocuments();
+  async contarTodos(filtros) {
+    const filtrosMongo = await this.#crearFiltros(filtros);
+    return await this.model.countDocuments(filtrosMongo);
+  }
+
+  async #crearFiltros(filtros) {
+    const filtrosMongo = {};
+
+    if (filtros.vendedor) {
+      filtrosMongo.vendedor = filtros.vendedor;
+    }
+
+    if (filtros.titulo) {
+      filtrosMongo.titulo = { $regex: filtros.titulo, $options: "i" };
+    }
+
+    if (filtros.descripcion) {
+      filtrosMongo.descripcion = { $regex: filtros.descripcion, $options: "i" };
+    }
+
+    if (filtros.categoria) {
+      // Soportamos formato ?categorias=elec,ropa o categoria=elec&categoria=ropa
+      const categorias = Array.isArray(filtros.categoria)
+        ? filtros.categoria
+        : filtros.categoria.split(",");
+      console.log(categorias);
+
+      // Buscamos IDs de categorías que hagan match con regex
+      const categoriasDocs = await CategoriaModel.find({
+        nombre: {
+          $in: categorias.map((categoria) => new RegExp(categoria, "i")),
+        },
+      });
+
+      const idsCategorias = categoriasDocs.map((cat) => cat._id);
+
+      filtrosMongo.categorias = { $in: idsCategorias };
+    }
+
+    if (filtros.precioMin != null || filtros.precioMax != null) {
+      filtrosMongo.precio = {};
+      if (filtros.precioMin != null)
+        filtrosMongo.precio.$gte = filtros.precioMin;
+      if (filtros.precioMax != null)
+        filtrosMongo.precio.$lte = filtros.precioMax;
+    }
+
+    return filtrosMongo;
   }
 }

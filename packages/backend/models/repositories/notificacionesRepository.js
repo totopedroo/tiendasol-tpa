@@ -6,19 +6,25 @@ export class NotificacionesRepository {
   }
 
   async agregar({ usuarioDestino, mensaje, tipo, pedido = null, fechaAlta }) {
-    return this.model.create({
+  try {
+    const doc = await this.model.create({
       usuarioDestino,
       mensaje,
       tipo,
       pedido,
       ...(fechaAlta ? { fechaAlta } : {}),
     });
-  }
 
-  async obtenerPorUsuario(userId, { leidas, limit = 50, afterId = null } = {}) {
+  } catch (err) {
+    console.error("❌ ERROR AL GUARDAR NOTIFICACION:", err);
+    throw err;
+  }
+}
+
+  async obtenerPorUsuario(userId, { leidas = false, limit = 50, afterId = null } = {}) {
     const filtro = {
       usuarioDestino: userId,
-      leida: !!leidas,
+      leida: leidas,
       ...(afterId ? { _id: { $lt: afterId } } : {}),
     };
     return this.model

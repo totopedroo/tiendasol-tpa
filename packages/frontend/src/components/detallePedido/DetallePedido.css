@@ -1,9 +1,9 @@
 .pedido-container {
+  /* Layout flex aplicado en JSX: flex flex-col gap-6 */
   align-items: flex-start;
   border: 1px solid;
   border-color: var(--color-border);
   border-radius: var(--radius-md);
-  gap: var(--space-4);
   overflow: hidden;
   padding: var(--space-8);
   position: relative;
@@ -12,31 +12,25 @@
 }
 
 .pedido-header {
-  display: flex;
-  align-items: flex-start;
+  /* Layout flex aplicado en JSX: flex items-start justify-between */
   align-self: stretch;
   flex: 0 0 auto;
   position: relative;
   width: 100%;
-  justify-content: space-between;
 }
 
 .pedido-info {
+  /* Layout flex aplicado en JSX: flex flex-col gap-1 */
   align-items: flex-start;
-  display: inline-flex;
   flex: 0 0 auto;
-  flex-direction: column;
   position: relative;
 }
 
 .pedido-info .text-wrapper {
-  align-items: center;
   color: var(--color-text);
-  display: flex;
   font-family: var(--font-semibold);
   font-size: var(--text-lg);
   font-weight: 600;
-  justify-content: center;
   margin-top: -1px;
   position: relative;
   white-space: nowrap;
@@ -44,39 +38,31 @@
 }
 
 .pedido-info .p {
-  align-items: center;
+  /* Layout flex aplicado en JSX: flex items-center gap-2 */
   color: var(--color-text);
-  display: flex;
   font-family: var(--font-regular);
   font-size: var(--text-base);
   font-weight: 400;
-  justify-content: center;
   position: relative;
   white-space: nowrap;
   width: fit-content;
 }
 
 .status-badge {
-  align-items: center;
+  /* Layout flex aplicado en JSX: flex items-center justify-center gap-2 */
   background-color: var(--main);
   border-radius: 24px;
-  display: inline-flex;
   flex: 0 0 auto;
-  flex-direction: column;
-  gap: 10px;
-  justify-content: center;
   padding: 8px 16px;
   position: relative;
 }
 
 .status-badge .text-wrapper-2 {
-  align-items: center;
+  /* Layout flex aplicado en JSX: flex items-center justify-center */
   color: var(--color-text);
-  display: flex;
   font-family: var(--font-semibold);
   font-size: var(--text-base);
   font-weight: 600;
-  justify-content: center;
   margin-top: -1px;
   position: relative;
   white-space: nowrap;
@@ -84,12 +70,10 @@
 }
 
 .items-section {
+  /* Layout flex aplicado en JSX: flex flex-col gap-4 */
   align-items: flex-start;
   align-self: stretch;
-  display: flex;
   flex: 0 0 auto;
-  flex-direction: column;
-  gap: var(--space-8);
   justify-content: center;
   padding: var(--space-4) 0px;
   position: relative;
@@ -100,14 +84,12 @@
 
 .order-summary .total-row,
 .order-summary .address-row {
-  align-items: center;
+  /* Layout flex aplicado en JSX: flex items-center justify-between */
   align-self: stretch;
-  display: flex;
   flex: 0 0 auto;
   overflow: hidden;
   position: relative;
   width: 100%;
-  justify-content: space-between;
 }
 
 .order-summary .rectangle {
@@ -120,22 +102,16 @@
 }
 
 .order-summary .flex-between {
-  align-items: center;
-  display: flex;
   flex: 1;
   flex-grow: 1;
-  justify-content: space-between;
   position: relative;
 }
 
 .order-summary .text-wrapper-3 {
-  align-items: center;
   color: var(--color-text);
-  display: flex;
   font-family: var(--font-bold);
   font-size: var(--text-lg);
   font-weight: 700;
-  justify-content: center;
   margin-top: -1px;
   position: relative;
   white-space: nowrap;
@@ -143,35 +119,25 @@
 }
 
 .order-summary .text-wrapper-4 {
-  align-items: center;
   color: var(--color-text);
-  display: flex;
   font-family: var(--font-medium);
   font-size: var(--text-base);
   font-weight: 500;
-  justify-content: center;
   position: relative;
   white-space: nowrap;
   width: fit-content;
 }
 
 .order-summary .summary-details {
-  align-items: flex-end;
-  display: inline-flex;
   flex: 0 0 auto;
-  flex-direction: column;
-  justify-content: center;
   position: relative;
 }
 
 .order-summary .text-wrapper-5 {
-  align-items: center;
   color: var(--color-text);
-  display: flex;
   font-family: var(--font-medium);
   font-size: var(--text-base);
   font-weight: 500;
-  justify-content: center;
   margin-top: -1px;
   position: relative;
   text-align: right;
@@ -179,13 +145,10 @@
 }
 
 .order-summary .text-wrapper-6 {
-  align-items: center;
   color: var(--color-text);
-  display: flex;
   font-family: var(--font-semibold);
   font-size: var(--text-base);
   font-weight: 600;
-  justify-content: center;
   position: relative;
   text-align: right;
   white-space: nowrap;
@@ -193,24 +156,19 @@
 }
 
 .order-summary {
-  align-items: flex-end;
+  /* Layout flex aplicado en JSX: flex flex-col items-end gap-3 */
   align-self: stretch;
-  display: flex;
   flex: 0 0 auto;
-  flex-direction: column;
-  gap: 10px;
   position: relative;
   width: 100%;
 }
 
 .order-summary .text-wrapper-7 {
-  align-items: center;
+  /* Layout flex aplicado en JSX: flex items-center justify-center */
   color: var(--color-text);
-  display: flex;
   font-family: var(--font-medium);
   font-size: var(--text-base);
   font-weight: 500;
-  justify-content: center;
   margin-top: -1px;
   position: relative;
   white-space: nowrap;
@@ -218,13 +176,11 @@
 }
 
 .order-summary .text-wrapper-8 {
-  align-items: center;
+  /* Layout flex aplicado en JSX: flex items-center justify-center */
   color: var(--color-text);
-  display: flex;
   font-family: var(--font-semibold);
   font-size: var(--text-base);
   font-weight: 600;
-  justify-content: center;
   margin-top: -1px;
   position: relative;
   white-space: nowrap;
@@ -232,15 +188,12 @@
 }
 
 .order-actions {
-  align-items: center;
+  /* Layout flex aplicado en JSX: flex items-center justify-between gap-4 */
   align-self: stretch;
-  display: flex;
   flex: 0 0 auto;
-  justify-content: space-between;
   position: relative;
   width: 100%;
   margin-top: 1em;
-  gap: var(--space-4);
 }
 
 /* === RESPONSIVE - MOBILE === */
@@ -269,4 +222,73 @@
     flex-direction: column;
     gap: var(--space-3);
   }
+}
+
+/* Estilos para el historial de estados */
+.historial-estados-lista {
+  /* Layout flex aplicado en JSX: flex flex-col gap-4 */
+  padding: var(--space-4) 0;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.historial-estado-item {
+  /* Layout flex aplicado en JSX: flex gap-4 */
+  position: relative;
+}
+
+.estado-timeline {
+  /* Layout flex aplicado en JSX: flex flex-col items-center */
+  position: relative;
+}
+
+.estado-punto {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--main);
+  border: 2px solid white;
+  box-shadow: 0 0 0 2px var(--main);
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.estado-linea {
+  width: 2px;
+  flex-grow: 1;
+  background-color: var(--color-border);
+  margin-top: 4px;
+  min-height: 30px;
+}
+
+.estado-contenido {
+  flex: 1;
+  padding-bottom: var(--space-2);
+}
+
+.estado-header {
+  /* Layout flex aplicado en JSX: flex items-center justify-between gap-2 */
+  margin-bottom: var(--space-1);
+  flex-wrap: wrap;
+}
+
+.estado-nombre {
+  font-family: var(--font-semibold);
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-text);
+  text-transform: uppercase;
+}
+
+.estado-fecha {
+  font-family: var(--font-regular);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.estado-motivo {
+  font-family: var(--font-regular);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  line-height: 1.5;
 }

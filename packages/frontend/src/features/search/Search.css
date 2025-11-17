@@ -1,39 +1,28 @@
 /* Estilos específicos solo para la página Search */
+/* Usar clases utilitarias: flex flex-col items-start justify-start w-full */
 .search-results-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
   position: relative;
   height: auto;
 }
 
 .contenido .search-results-container {
-  align-items: flex-start;
   flex: 1;
   flex-grow: 1;
-  justify-content: flex-start;
   position: relative;
 }
 
+/* Usar clases utilitarias: flex gap-8 justify-center */
 .contenido .bottom-pagination-wrapper {
-  display: flex;
-  gap: var(--space-8);
   height: 46px;
-  justify-content: center;
   position: relative;
   width: 100%;
   margin-top: var(--space-4);
 }
 
 .search-results-container .paginacion-wrapper {
-  align-items: center;
-  align-self: stretch;
+  /* Usar clases utilitarias: items-center self-stretch flex gap-6 justify-end */
   display: inline-flex;
   flex: 0 0 auto;
-  gap: var(--space-6);
-  justify-content: flex-end;
   position: relative;
 }
 
@@ -43,24 +32,19 @@
   top: unset !important;
 }
 
+/* Usar clases utilitarias: flex items-center justify-between w-full */
 .container-titulo {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
   position: relative;
-  width: 100%;
   padding: 0;
   margin-bottom: var(--space-4);
 }
 
+/* Usar clases utilitarias: flex items-center justify-start */
 .search-results-container .container-titulo .titulo {
-  align-items: center;
   color: var(--color-text);
-  display: flex;
   font-family: var(--font-semibold);
   font-size: var(--text-xl);
   font-weight: 600;
-  justify-content: flex-start;
   margin-top: -1px;
   position: relative;
   white-space: nowrap;
@@ -68,11 +52,8 @@
   flex-shrink: 0;
 }
 
+/* Usar clases utilitarias: flex items-center gap-6 justify-end */
 .search-results-container .container-titulo .container-paginacion {
-  display: flex;
-  align-items: center;
-  gap: var(--space-6);
-  justify-content: flex-end;
   flex-wrap: nowrap;
   margin-left: auto;
 }
@@ -88,20 +69,23 @@
   top: unset !important;
 }
 
+/* Usar clases utilitarias: flex items-start justify-start gap-8 w-full */
 .search-results-container .container-resultados {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: var(--space-8);
-  padding: var(--space-8) 0;
+  padding: var(--space-4) 0;
   position: relative;
+}
+
+/* Estilo para que el SearchBar ocupe el ancho completo en Search */
+.search-results-container .search-bar-full-width {
   width: 100%;
+  max-width: 100%;
+  margin-bottom: var(--space-4);
 }
 
 .container-resultados .filtros {
   position: sticky;
   top: 100px;
-  align-self: flex-start;
+  /* Usar clase utilitaria: self-start */
   flex-shrink: 0;
   width: 280px; /* Ancho fijo para los filtros */
   max-height: calc(100vh - 120px);

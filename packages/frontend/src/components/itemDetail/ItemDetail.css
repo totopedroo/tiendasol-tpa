@@ -1,14 +1,15 @@
 .item-detail {
-  align-items: flex-start;
-  gap: var(--space-8);
+  /* Layout flex aplicado en JSX: flex items-start gap-8 */
   position: relative;
+  max-width: 1200px;
+  width: 100%;
 }
 
 .item-detail .image-section {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
+  /* Layout flex aplicado en JSX: flex flex-col gap-4 */
   position: relative;
+  flex-shrink: 0;
+  width: 480px;
 }
 
 .item-detail .img {
@@ -27,11 +28,19 @@
   background-color: var(--color-bg-light);
   border: 1px solid var(--color-border-light);
   border-radius: var(--radius-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   flex-shrink: 0;
   overflow: hidden;
+}
+
+/* Estilos para el loader de imagen en ItemDetail */
+.item-detail .img-placeholder .image-loader-container {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-md);
+}
+
+.item-detail .img-placeholder .image-error {
+  border-radius: var(--radius-md);
 }
 
 .item-detail .no-image-placeholder {
@@ -40,10 +49,7 @@
   color: var(--color-text-muted);
 }
 
-.item-detail .image-thumbnails {
-  display: flex;
-  gap: var(--space-2);
-}
+/* Layout de image-thumbnails aplicado en JSX: flex items-center gap-2 */
 
 .item-detail .thumbnail-placeholder {
   width: 80px;
@@ -79,6 +85,8 @@
   gap: var(--space-6);
   padding: 0 0 0 var(--space-8);
   position: relative;
+  max-width: calc(100% - 480px - var(--space-8));
+  min-width: 0;
 }
 
 .item-detail .product-details {
@@ -87,6 +95,7 @@
   gap: var(--space-2);
   position: relative;
   width: 100%;
+  min-width: 0;
 }
 
 .item-detail .div {
@@ -121,9 +130,19 @@
   font-family: "Inter-ExtraBold", Helvetica;
   font-size: 40px;
   font-weight: 800;
-  line-height: 58px;
+  line-height: 1.2;
   position: relative;
-  white-space: nowrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  width: 100%;
+  /* Truncado de texto a 2 líneas */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: calc(1.2em * 2); /* 2 líneas con line-height 1.2 */
 }
 
 .item-detail .text-wrapper-3 {
@@ -131,10 +150,11 @@
   font-family: var(--font-regular);
   font-size: 40px;
   font-weight: 400;
-  line-height: 58px;
+  line-height: 1.2;
   position: relative;
-  white-space: nowrap;
-  width: fit-content;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  width: 100%;
 }
 
 .item-detail .descripcion {
@@ -182,29 +202,18 @@
   white-space: nowrap;
 }
 
+/* El selector de cantidad usa la clase estándar .select de components.css */
 .item-detail .quantity-select {
-  padding: var(--space-3) var(--space-4);
-  font-family: var(--font-medium);
-  font-size: var(--text-sm);
-  font-weight: 500;
-  color: var(--color-text);
-  background-color: transparent;
-  border: 2px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  outline: none;
-  cursor: pointer;
   min-width: 60px;
-  height: 44px;
 }
 
 .item-detail .text-wrapper-4 {
+  /* Layout flex aplicado en JSX con clases utilitarias */
   align-items: center;
   color: var(--color-text);
-  display: flex;
   font-family: var(--font-medium);
   font-size: var(--text-base);
   font-weight: 500;
-  justify-content: center;
   position: relative;
   white-space: nowrap;
   width: fit-content;
@@ -222,6 +231,7 @@
   .item-detail {
     flex-direction: column;
     gap: var(--space-6);
+    max-width: 100%;
   }
 
   .item-detail .image-section {
@@ -250,6 +260,7 @@
 
   .item-detail .product-info {
     width: 100%;
+    max-width: 100%;
     padding: 0;
   }
 
@@ -260,11 +271,15 @@
   .item-detail .text-wrapper-2 {
     font-size: 32px;
     line-height: 1.2;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .item-detail .text-wrapper-3 {
     font-size: 32px;
     line-height: 1.2;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .item-detail .product-actions {
@@ -280,5 +295,31 @@
 
   .item-detail .quantity-select {
     flex: 1;
+  }
+}
+
+/* Tablet y pantallas medianas */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .item-detail {
+    max-width: 100%;
+  }
+
+  .item-detail .image-section {
+    width: 400px;
+  }
+
+  .item-detail .img-placeholder,
+  .item-detail .img {
+    width: 400px;
+    height: 400px;
+  }
+
+  .item-detail .product-info {
+    max-width: calc(100% - 400px - var(--space-8));
+  }
+
+  .item-detail .text-wrapper-2,
+  .item-detail .text-wrapper-3 {
+    font-size: 32px;
   }
 }

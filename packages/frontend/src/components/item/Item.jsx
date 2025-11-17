@@ -1,29 +1,42 @@
 /* eslint-disable react/prop-types */
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ShoppingCart } from "../icons/ShoppingCart";
 import { Button } from "../button/Button";
 import { useCarrito } from "../../context/CarritoContext";
+import { useAuth } from "../../context/AuthContexto.jsx";
+import { ImageWithLoader } from "../imageWithLoader/ImageWithLoader";
 import "./Item.css";
 
 export const Item = ({ item }) => {
-  const { agregarAlCarrito, estaEnCarrito } = useCarrito();
+  const { agregarAlCarrito } = useCarrito();
+  const { isAuthenticated, openAuthModal } = useAuth();
+  const [loading, setLoading] = useState(false);
 
-  const handleAddToCart = (e) => {
+  const handleAddToCart = async (e) => {
     e.preventDefault(); // Evita que el Link navegue
+
+    if (!isAuthenticated) {
+      openAuthModal("login");
+      return;
+    }
+
+    setLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 300)); // Simular delay
     agregarAlCarrito(item);
+    setLoading(false);
   };
 
   return (
-    <Link key={item._id} to={`/products/${item._id}`} className="item">
-      <img
+    <Link key={item._id} to={`/products/${item._id}`} className="item flex flex-col gap-3">
+      <ImageWithLoader
         src={item.fotos?.[0] || "/images/logo.png"}
         alt={item.titulo || "Producto"}
         className="item-image"
       />
 
-      <div className="item-content">
-        <div className="item-info">
+      <div className="item-content flex flex-col flex-1 gap-4">
+        <div className="item-info flex flex-col flex-1 gap-1">
           <div>{item.vendedor?.nombre || "Vendedor"}</div>
           <div className="text-wrapper-2">{item.titulo}</div>
           <div className="text-wrapper-3">
@@ -32,24 +45,25 @@ export const Item = ({ item }) => {
                 case "PESO_ARG":
                   return "$";
                 case "DOLAR_USA":
-                  return "U$D";
+                  return "U$D ";
                 case "REAL":
-                  return "R$";
+                  return "R$ ";
                 default:
                   return "$";
               }
             })()}
-            {item.precio}
+            {item.precio.toLocaleString()}
           </div>
         </div>
 
         <Button
-          variant={estaEnCarrito(item._id) ? "primary" : "secondary"}
+          variant="secondary"
           icon={<ShoppingCart />}
           onClick={handleAddToCart}
           fullWidth
+          loading={loading}
         >
-          {estaEnCarrito(item._id) ? "Agregar más" : "Agregar al carrito"}
+          Agregar al carrito
         </Button>
       </div>
     </Link>

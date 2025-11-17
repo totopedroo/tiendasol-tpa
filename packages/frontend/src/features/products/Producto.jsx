@@ -36,7 +36,7 @@ export const Producto = () => {
   }, [producto?.categorias]);
 
   return (
-    <div className="contenido">
+    <div className="contenido flex flex-col items-center gap-4">
       <div className="container">
         {loading ? <ItemDetailSkeleton /> : <ItemDetail item={producto} />}
 

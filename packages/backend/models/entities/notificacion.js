@@ -14,7 +14,7 @@ export class Notificacion {
     this.fechaAlta = new Date();
     this.leida = false;
     this.fechaLeida = null;
-  } //TODO borrar ya que se persiste en mongo, sin constructor, dejar marcarComoLeida() como método y cargarla con schema.loadClass? Preguntar.
+  } 
 
   marcarComoLeida() {
     if (!this.leida) {

@@ -1,7 +1,6 @@
 .paginacion {
-  align-items: center;
-  display: inline-flex;
-  gap: var(--space-4);
+  /* Layout flex aplicado en JSX: inline-flex items-center gap-4 */
+  flex-direction: row;
   position: relative;
 }
 
@@ -18,39 +17,32 @@
 }
 
 .paginacion .current-page {
-  align-items: center;
+  /* Layout flex aplicado en JSX: flex items-center justify-center */
   background-color: var(--color-primary);
   border-radius: 24px;
-  display: flex;
-  gap: 10px;
   height: 35px;
-  justify-content: center;
   position: relative;
   width: 35px;
 }
 
 .paginacion .text-wrapper {
-  align-items: center;
+  /* Layout flex aplicado en JSX: flex items-center justify-center */
   align-self: stretch;
   color: var(--color-bg-white);
-  display: flex;
   font-family: var(--font-regular);
   font-size: var(--text-base);
   font-weight: 400;
-  justify-content: center;
   position: relative;
   text-align: center;
 }
 
 .paginacion .page-number,
 .paginacion .page-ellipsis {
-  align-items: center;
+  /* Layout flex aplicado en JSX: flex items-center justify-center */
   color: var(--color-text);
-  display: flex;
   font-family: var(--font-regular);
   font-size: var(--text-base);
   font-weight: 400;
-  justify-content: center;
   position: relative;
   white-space: nowrap;
   width: fit-content;
@@ -68,10 +60,8 @@
 }
 
 .paginacion .arrow {
+  /* Layout flex aplicado en JSX: flex items-center justify-center */
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   transition: opacity 0.2s;
 }
 

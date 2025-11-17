@@ -6,6 +6,7 @@ import { Delete } from "../icons/Delete";
 import { Button } from "../button/Button";
 import { useCarrito } from "../../context/CarritoContext";
 import "./CheckoutItem.css";
+import { ImageWithLoader } from "../imageWithLoader/ImageWithLoader";
 
 export const CheckoutItem = ({ item }) => {
   const { actualizarCantidad, eliminarDelCarrito } = useCarrito();
@@ -22,37 +23,66 @@ export const CheckoutItem = ({ item }) => {
     }
   };
 
-  const quitar = () => {
+  const quitar = async () => {
+    await new Promise((resolve) => setTimeout(resolve, 300));
     eliminarDelCarrito(item._id);
   };
 
   const subtotal = item.precio * item.cantidad;
+  const moneda = (() => {
+    switch (item.moneda) {
+      case "PESO_ARG":
+        return "$";
+      case "DOLAR_USA":
+        return "U$D";
+      case "REAL":
+        return "R$";
+      default:
+        return "$";
+    }
+  })();
+
+  // Función para truncar texto
+  const truncarTexto = (texto, maxCaracteres = 50) => {
+    if (!texto) return "";
+    if (texto.length <= maxCaracteres) return texto;
+    return texto.substring(0, maxCaracteres) + "...";
+  };
 
   return (
     <div className="checkout-item flex items-start">
-      <img
+      <ImageWithLoader
         src={item.fotos?.[0] || "/images/logo.png"}
         alt={item.titulo}
         className="rectangle"
       />
 
-      <div className="item-content flex flex-col items-center">
-        <div className="item-header flex items-center justify-between">
-          <div className="item-title-price flex flex-col items-center">
-            <div className="text-wrapper">{item.titulo}</div>
-            <div className="text-wrapper-2">
-              ${item.precio.toLocaleString()} {item.moneda || "ARS"}
+      <div className="item-content flex flex-col items-start justify-between">
+        <div className="item-header flex items-start justify-between">
+          <div className="item-title-price inline-flex flex-col items-start">
+            <div className="text-wrapper" title={item.titulo}>
+              {truncarTexto(item.titulo, 45)}
+            </div>
+            <div className="text-wrapper-2 flex items-center justify-center">
+              {moneda}
+              {item.precio.toLocaleString()}
             </div>
           </div>
-          <div  onClick={quitar} style={{ cursor: "pointer" }}>
-           <Delete className="delete" />
-          </div>
+          <Button
+            variant="clear"
+            icon={<Delete />}
+            size="small"
+            aria-label="Eliminar producto"
+            onClick={quitar}
+          />
         </div>
 
-        <div className="item-actions">
-          <div className="quantity-section">
-            <div className="text-wrapper-3">Cantidad</div>
-            <div className="quantity-controls">
+        <div className="item-actions flex items-end justify-between">
+          <div className="quantity-section inline-flex flex-col items-start justify-end gap-2">
+            <div className="text-wrapper-3 flex items-center justify-center">
+              Cantidad
+            </div>
+            <div className="quantity-controls flex items-center gap-2">
               <Button
                 variant="icon"
                 icon={<Minus />}
@@ -60,8 +90,10 @@ export const CheckoutItem = ({ item }) => {
                 aria-label="Disminuir cantidad"
                 onClick={disminuir}
               />
-              <div className="quantity-display">
-                <div className="text-wrapper-4">{item.cantidad}</div>
+              <div className="quantity-display flex items-center justify-center">
+                <div className="text-wrapper-4 flex items-center justify-center">
+                  {item.cantidad}
+                </div>
               </div>
               <Button
                 variant="icon"
@@ -73,10 +105,13 @@ export const CheckoutItem = ({ item }) => {
             </div>
           </div>
 
-          <div className="subtotal-section">
-            <div className="text-wrapper-3">Subtotal</div>
-            <div className="text-wrapper-5">
-              ${subtotal.toLocaleString()} {item.moneda || "ARS"}
+          <div className="subtotal-section inline-flex flex-col items-end justify-end">
+            <div className="text-wrapper-3 flex items-center justify-center">
+              Subtotal
+            </div>
+            <div className="text-wrapper-5 flex items-center justify-center">
+              {moneda}
+              {subtotal.toLocaleString()}
             </div>
           </div>
         </div>

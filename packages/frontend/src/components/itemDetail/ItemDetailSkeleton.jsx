@@ -4,9 +4,9 @@ import "./ItemDetailSkeleton.css";
 
 export const ItemDetailSkeleton = () => {
   return (
-    <div className="item-detail-skeleton flex items-start">
+    <div className="item-detail-skeleton flex items-start gap-8">
       {/* Sección de imagen */}
-      <div className="image-section-skeleton">
+      <div className="image-section-skeleton flex flex-col gap-4">
         <Skeleton
           animation="wave"
           variant="rectangular"
@@ -31,8 +31,8 @@ export const ItemDetailSkeleton = () => {
       </div>
 
       {/* Sección de información del producto */}
-      <div className="product-info-skeleton flex flex-col items-start">
-        <div className="product-details-skeleton flex flex-col items-start">
+      <div className="product-info-skeleton flex flex-col items-start justify-between self-stretch flex-1 gap-6">
+        <div className="product-details-skeleton flex flex-col items-start self-stretch gap-2 w-full">
           {/* Categoría */}
           <Skeleton
             animation="wave"
@@ -61,7 +61,7 @@ export const ItemDetailSkeleton = () => {
           />
 
           {/* Descripción */}
-          <div className="description-skeleton">
+          <div className="description-skeleton flex flex-col gap-1 w-full">
             <Skeleton
               animation="wave"
               variant="text"
@@ -80,7 +80,7 @@ export const ItemDetailSkeleton = () => {
         </div>
 
         {/* Botones de acción */}
-        <div className="product-actions-skeleton flex items-center justify-end gap-4">
+        <div className="product-actions-skeleton flex items-center justify-end gap-4 self-stretch w-full">
           <Skeleton
             animation="wave"
             variant="rectangular"

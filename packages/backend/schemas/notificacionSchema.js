@@ -10,7 +10,7 @@ const notificacionSchema = new mongoose.Schema(
       required: true,
       index: true,
     },
-    // referenciar el pedido que originó la notificación (OPCIONAL)
+    // referenciar el pedido que originó la notificación
     pedido: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Pedido",

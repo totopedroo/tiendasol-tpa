@@ -3,22 +3,21 @@ import { Link } from "react-router-dom";
 import "./Footer.css";
 import TiendaSolLogoLink from "../tiendaSolLogo/TiendaSolLogoLink";
 
-
 export const Footer = () => {
   return (
     <div className="footer">
       <div className="container-xl">
-        <div className="text">
-            <TiendaSolLogoLink/>
-          <div className="nav">
+        <div className="text inline-flex items-center gap-6">
+          <TiendaSolLogoLink />
+          <div className="nav inline-flex items-center gap-8">
             <div className="nav-link">
-             <Link to={'/vender'}>Vender</Link>
+              <Link to={"/vender"}>Vender</Link>
             </div>
             <div className="nav-link">
-              <Link to={'/categorias'}>Categorías</Link>
+              <Link to={"/categorias"}>Categorías</Link>
             </div>
             <div className="nav-link">
-              <Link to={'/contacto'}>Contacto</Link>
+              <Link to={"/contacto"}>Contacto</Link>
             </div>
           </div>
 

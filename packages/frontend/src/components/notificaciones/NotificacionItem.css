@@ -1,0 +1,65 @@
+.notificacion-item {
+  /* Layout flex aplicado en JSX: flex items-start gap-3 */
+  padding: var(--space-4, 16px);
+  margin: var(--space-3, 12px);
+  border: 1px solid var(--color-border-light, #e0e0e0);
+  border-radius: var(--radius-md, 8px);
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s;
+  position: relative;
+  background-color: white;
+}
+
+.notificacion-item:hover {
+  background-color: var(--color-bg-secondary, #f5f5f5);
+  border-color: var(--color-border, #ccc);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.notificacion-contenido {
+  flex: 1;
+  min-width: 0;
+}
+
+.notificacion-titulo {
+  font-family: var(--font-semibold, "Inter", sans-serif);
+  font-size: var(--text-base, 16px);
+  font-weight: 600;
+  margin-bottom: var(--space-1, 4px);
+  color: var(--color-text, #000);
+}
+
+.notificacion-mensaje {
+  font-family: var(--font-regular, "Inter", sans-serif);
+  font-size: var(--text-sm, 14px);
+  color: var(--color-text, #000);
+  margin-bottom: var(--space-2, 8px);
+  line-height: 1.4;
+}
+
+/* Layout de .notificacion-acciones aplicado en JSX: flex items-center gap-4 */
+
+.ver-detalle {
+  font-family: var(--font-medium, "Inter", sans-serif);
+  font-size: var(--text-sm, 14px);
+  color: var(--color-text, #000);
+}
+
+.notificacion-item.leida {
+  opacity: 0.6;
+  background-color: var(--color-bg-secondary, #f9f9f9);
+}
+
+.notificacion-item.leida:hover {
+  opacity: 0.75;
+  background-color: var(--color-bg-secondary, #f5f5f5);
+}
+
+.notificacion-item.leida .notificacion-titulo {
+  font-weight: 500;
+}
+
+.notificacion-item.leida .notificacion-mensaje {
+  color: var(--color-text-secondary, #666);
+}

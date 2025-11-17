@@ -1,0 +1,173 @@
+/* Auth Forms Shared Styles */
+
+/* === CONTAINERS === */
+.auth-container {
+  height: calc(100vh - 80px);
+  background-color: var(--color-bg-white);
+}
+
+.auth-container.with-back-button {
+  position: relative;
+}
+
+.auth-container .back-button {
+  position: absolute;
+  top: var(--space-6);
+  left: var(--space-6);
+}
+
+/* === CARDS === */
+.auth-card {
+  background-color: #faecc5;
+  padding: var(--space-8);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  width: 380px;
+  box-sizing: border-box;
+}
+
+/* === FORMS === */
+.auth-form {
+  width: 100%;
+  max-width: 100%;
+}
+
+.auth-form > * {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* === LOGO === */
+.auth-logo-wrapper {
+  margin-bottom: var(--space-2);
+}
+
+.auth-logo {
+  width: 36px;
+  height: 36px;
+}
+
+.auth-logo-text {
+  font-family: var(--font-bold);
+  font-size: 1.5rem;
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+/* === TITLES === */
+.auth-title {
+  font-family: var(--font-semibold);
+  font-size: var(--text-lg);
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+}
+
+/* === TEXT === */
+.auth-text {
+  font-family: var(--font-regular);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.4;
+  text-align: center;
+  margin-bottom: var(--space-4);
+}
+
+/* === LABELS === */
+.auth-label {
+  text-align: left;
+  font-family: var(--font-medium);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+}
+
+/* === LINKS & BUTTONS === */
+.auth-reset-link {
+  align-self: flex-end;
+  font-family: var(--font-regular);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  text-decoration: none;
+  margin-top: -0.3rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-align: right;
+}
+
+.auth-reset-link:hover {
+  text-decoration: underline;
+}
+
+/* === BOTTOM TEXT === */
+.auth-bottom-text {
+  margin-top: var(--space-4);
+  font-family: var(--font-regular);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  text-align: center;
+  width: 100%;
+}
+
+.auth-switch-link {
+  font-family: var(--font-medium);
+  color: var(--color-text);
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: inline;
+}
+
+.auth-switch-link:hover {
+  text-decoration: underline;
+}
+
+.auth-back-link {
+  font-family: var(--font-regular);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  margin-top: var(--space-4);
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-align: center;
+  width: 100%;
+}
+
+.auth-back-link:hover {
+  text-decoration: underline;
+}
+
+/* === PASSWORD INPUT WITH TOGGLE === */
+.password-input-wrapper {
+  position: relative;
+}
+
+.password-input-wrapper .input {
+  padding-right: var(--space-12); /* Espacio para el botón */
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: var(--space-2);
+  color: var(--color-text-muted);
+  transition: color 0.2s ease;
+}
+
+.password-toggle-btn:hover {
+  color: var(--color-text);
+}
+
+.password-toggle-btn svg {
+  width: 20px;
+  height: 20px;
+}

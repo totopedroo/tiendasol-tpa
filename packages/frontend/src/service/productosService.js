@@ -2,6 +2,11 @@ import { productos } from "../mockdata/Productos";
 import axios from "axios";
 const API_BASE_URL = process.env.REACT_APP_API_URL;
 
+const getAuthHeaders = () => {
+  const token = localStorage.getItem("token");
+  return token ? { Authorization: `Bearer ${token}` } : {};
+};
+
 export const getProductsSlowly = () =>
   new Promise((resolve) => {
     setTimeout(() => {
@@ -18,7 +23,9 @@ export async function obtenerProductos() {
 
 export const getProductos = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/productos`);
+    const response = await axios.get(`${API_BASE_URL}/productos`, {
+      headers: getAuthHeaders(),
+    });
     return response.data;
   } catch (error) {
     console.error("Error obteniendo los Productos", error);
@@ -28,7 +35,9 @@ export const getProductos = async () => {
 
 export const getProductoById = async (id) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/productos/${id}`);
+    const response = await axios.get(`${API_BASE_URL}/productos/${id}`, {
+      headers: getAuthHeaders(),
+    });
     return response.data;
   } catch (error) {
     console.error(`Error al obtener el Producto con id: ${id}:`, error);
@@ -36,18 +45,29 @@ export const getProductoById = async (id) => {
   }
 };
 
-
-
 // params es un objeto con los parámetros de la búsqueda
 // ver documentacion de la API en /docs/api-docs.yaml
 export const buscarProductos = async (params = {}) => {
   try {
     const response = await axios.get(`${API_BASE_URL}/productos`, {
       params: params,
+      headers: getAuthHeaders(),
     });
     return response.data;
   } catch (error) {
     console.error("Error al buscar productos:", error);
+    throw error;
+  }
+};
+
+export const createProducto = async (data) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/productos`, data, {
+      headers: getAuthHeaders(),
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error al crear el producto:", error);
     throw error;
   }
 };

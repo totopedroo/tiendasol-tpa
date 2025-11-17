@@ -15,13 +15,6 @@
   box-sizing: border-box;
 }
 
-/* === ROOT COLORS === */
-:root {
-  --danger: #ff7f7f;
-  --main: #ffecc8;
-  --secondary: #e5f0e8;
-}
-
 /* === BASE STYLES === */
 body {
   font-family: var(--font-regular);
