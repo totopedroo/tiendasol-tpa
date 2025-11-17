@@ -5,20 +5,29 @@ import { ArrowLeft } from "../icons/ArrowLeft";
 import { ArrowRight } from "../icons/ArrowRight";
 import "./Paginacion.css";
 
-export const Paginacion = ({ paginaActual = 1, totalPaginas = 1 }) => {
+export const Paginacion = ({
+  paginaActual = 1,
+  totalPaginas = 1,
+  onCambioPagina = null,
+}) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const cambiarPagina = (nuevaPagina) => {
     if (nuevaPagina < 1 || nuevaPagina > totalPaginas) return;
-    
-    const params = new URLSearchParams(searchParams);
-    params.set("page", nuevaPagina.toString());
-    setSearchParams(params);
+
+    // Si se proporciona un callback, usarlo en lugar de searchParams
+    if (onCambioPagina) {
+      onCambioPagina(nuevaPagina);
+    } else {
+      const params = new URLSearchParams(searchParams);
+      params.set("page", nuevaPagina.toString());
+      setSearchParams(params);
+    }
   };
 
   const generarNumerosPagina = () => {
     const paginas = [];
-    const maxPaginas = 5; 
+    const maxPaginas = 5;
 
     if (totalPaginas <= maxPaginas) {
       for (let i = 1; i <= totalPaginas; i++) {
@@ -55,9 +64,9 @@ export const Paginacion = ({ paginaActual = 1, totalPaginas = 1 }) => {
   const paginas = generarNumerosPagina();
 
   return (
-    <div className="paginacion">
+    <div className="paginacion inline-flex items-center gap-4">
       <div
-        className={`arrow ${paginaActual === 1 ? "disabled" : ""}`}
+        className={`arrow flex items-center justify-center ${paginaActual === 1 ? "disabled" : ""}`}
         onClick={() => cambiarPagina(paginaActual - 1)}
       >
         <ArrowLeft />
@@ -66,7 +75,10 @@ export const Paginacion = ({ paginaActual = 1, totalPaginas = 1 }) => {
       {paginas.map((pagina, index) => {
         if (pagina === "...") {
           return (
-            <div key={`ellipsis-${index}`} className="page-ellipsis">
+            <div
+              key={`ellipsis-${index}`}
+              className="page-ellipsis flex items-center justify-center"
+            >
               ...
             </div>
           );
@@ -75,16 +87,18 @@ export const Paginacion = ({ paginaActual = 1, totalPaginas = 1 }) => {
         return (
           <div
             key={pagina}
-            className={pagina === paginaActual ? "current-page" : "page-number"}
+            className={`${pagina === paginaActual ? "current-page" : "page-number"} flex items-center justify-center`}
             onClick={() => cambiarPagina(pagina)}
           >
-            <div className="text-wrapper">{pagina}</div>
+            <div className="text-wrapper flex items-center justify-center">
+              {pagina}
+            </div>
           </div>
         );
       })}
 
       <div
-        className={`arrow ${paginaActual === totalPaginas ? "disabled" : ""}`}
+        className={`arrow flex items-center justify-center ${paginaActual === totalPaginas ? "disabled" : ""}`}
         onClick={() => cambiarPagina(paginaActual + 1)}
       >
         <ArrowRight />

@@ -1,6 +1,12 @@
 import axios from "axios";
 
 const API_BASE_URL = process.env.REACT_APP_API_URL;
+
+const getAuthHeaders = () => {
+  const token = localStorage.getItem("token");
+  return token ? { Authorization: `Bearer ${token}` } : {};
+};
+
 export const getVendedores = async (params = {}) => {
   try {
     // Siempre agregamos tipo: "VENDEDOR" al params
@@ -36,7 +42,14 @@ export const createUsuario = async (data) => {
 
 export const updateUsuario = async (id, data) => {
   try {
-    const response = await axios.put(`${API_BASE_URL}/usuarios/${id}`, data);
+    const token = localStorage.getItem("token");
+    const response = await axios.put(`${API_BASE_URL}/usuarios/${id}`, 
+      data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     console.error(`Error al actualizar el usuario con id: ${id}:`, error);
@@ -54,3 +67,30 @@ export const deleteUsuario = async (id) => {
   }
 };
 
+export const convertirAVendedor = async (id) => {
+  try {
+    const response = await axios.put(
+      `${API_BASE_URL}/usuarios/${id}`,
+      { tipo: "VENDEDOR" },
+      { headers: getAuthHeaders() }
+    );
+    return response.data;
+  } catch (error) {
+    console.error(`Error al convertir usuario a vendedor:`, error);
+    throw error;
+  }
+};
+
+export const convertirAComprador = async (id) => {
+  try {
+    const response = await axios.put(
+      `${API_BASE_URL}/usuarios/${id}`,
+      { tipo: "COMPRADOR" },
+      { headers: getAuthHeaders() }
+    );
+    return response.data;
+  } catch (error) {
+    console.error(`Error al convertir usuario a comprador:`, error);
+    throw error;
+  }
+};

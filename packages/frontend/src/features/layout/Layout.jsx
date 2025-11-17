@@ -6,9 +6,9 @@ import "./Layout.css";
 
 const Layout = () => {
   return (
-    <div className="layout-wrapper">
+    <div className="layout-wrapper flex flex-col">
       <Header />
-      <main className="main-content">
+      <main className="main-content flex-1">
         <Outlet />
       </main>
       <Footer />

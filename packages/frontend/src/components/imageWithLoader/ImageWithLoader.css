@@ -1,0 +1,33 @@
+.image-loader-container {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-bg-light);
+}
+
+.image-loading {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.image-loaded {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.image-error {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-bg-light);
+  color: var(--color-text-muted);
+}
+
+.image-error span {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.image-error p {
+  font-size: var(--text-sm);
+  margin: 0;
+}

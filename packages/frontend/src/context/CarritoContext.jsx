@@ -18,16 +18,49 @@ export const CarritoProvider = ({ children }) => {
     return savedCarrito ? JSON.parse(savedCarrito) : [];
   });
 
+  // Estado para mostrar notificación de producto agregado
+  const [ultimoProductoAgregado, setUltimoProductoAgregado] = useState(null);
+
+  // Estado para la dirección de envío
+  const [direccionEnvio, setDireccionEnvio] = useState(() => {
+    const savedDireccion = localStorage.getItem("direccionEnvio");
+    return savedDireccion ? JSON.parse(savedDireccion) : null;
+  });
+
   // Guardar en localStorage cada vez que cambie el carrito
   useEffect(() => {
     localStorage.setItem("carrito", JSON.stringify(carritoItems));
   }, [carritoItems]);
 
+  // Guardar dirección en localStorage cada vez que cambie
+  useEffect(() => {
+    if (direccionEnvio) {
+      localStorage.setItem("direccionEnvio", JSON.stringify(direccionEnvio));
+    } else {
+      localStorage.removeItem("direccionEnvio");
+    }
+  }, [direccionEnvio]);
+
+  // Escuchar evento de logout para limpiar el carrito
+  useEffect(() => {
+    const handleLogout = () => {
+      setCarritoItems([]);
+      setUltimoProductoAgregado(null);
+      setDireccionEnvio(null);
+    };
+
+    window.addEventListener("logout", handleLogout);
+
+    return () => {
+      window.removeEventListener("logout", handleLogout);
+    };
+  }, []);
+
   // Agregar producto al carrito
   const agregarAlCarrito = (producto) => {
     setCarritoItems((prevItems) => {
       const existingItem = prevItems.find((item) => item._id === producto._id);
-      
+
       if (existingItem) {
         // Si ya existe, incrementar cantidad
         return prevItems.map((item) =>
@@ -40,6 +73,9 @@ export const CarritoProvider = ({ children }) => {
         return [...prevItems, { ...producto, cantidad: 1 }];
       }
     });
+
+    // Mostrar notificación
+    setUltimoProductoAgregado(producto);
   };
 
   // Eliminar producto del carrito
@@ -92,6 +128,16 @@ export const CarritoProvider = ({ children }) => {
     return item ? item.cantidad : 0;
   };
 
+  // Guardar dirección de envío
+  const guardarDireccionEnvio = (direccion) => {
+    setDireccionEnvio(direccion);
+  };
+
+  // Limpiar dirección de envío
+  const limpiarDireccionEnvio = () => {
+    setDireccionEnvio(null);
+  };
+
   const value = {
     carritoItems,
     agregarAlCarrito,
@@ -102,7 +148,14 @@ export const CarritoProvider = ({ children }) => {
     obtenerPrecioTotal,
     estaEnCarrito,
     obtenerCantidadItem,
+    ultimoProductoAgregado,
+    setUltimoProductoAgregado,
+    direccionEnvio,
+    guardarDireccionEnvio,
+    limpiarDireccionEnvio,
   };
 
-  return <CarritoContext.Provider value={value}>{children}</CarritoContext.Provider>;
+  return (
+    <CarritoContext.Provider value={value}>{children}</CarritoContext.Provider>
+  );
 };

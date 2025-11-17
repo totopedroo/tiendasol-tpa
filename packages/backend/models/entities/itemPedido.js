@@ -7,13 +7,13 @@ export class ItemPedido {
    * @param {Number} cantidad Integer
    * @param {Number} precioUnitario Double
    */
-  constructor(producto, cantidad) {
+  constructor(producto, cantidad, precioUnitario) {
     this.producto = producto;
     this.cantidad = cantidad;
-
-    this.precioUnitario = producto.precio;
-    // this.precioUnitario = precioUnitario; 
+    this.precioUnitario = precioUnitario; 
   }
+
+  
 
   /**
    * @returns {Number}

@@ -8,10 +8,16 @@ export const Filtros = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   // Estado local para los filtros
-  const [categoria, setCategoria] = useState(searchParams.get("categoria") || "");
+  const [categoria, setCategoria] = useState(
+    searchParams.get("categoria") || ""
+  );
   const [vendedor, setVendedor] = useState(searchParams.get("vendedor") || "");
-  const [precioMin, setPrecioMin] = useState(searchParams.get("precioMin") || "");
-  const [precioMax, setPrecioMax] = useState(searchParams.get("precioMax") || "");
+  const [precioMin, setPrecioMin] = useState(
+    searchParams.get("precioMin") || ""
+  );
+  const [precioMax, setPrecioMax] = useState(
+    searchParams.get("precioMax") || ""
+  );
   const [orden, setOrden] = useState(searchParams.get("ordenPor") || "");
 
   // Estado para las categorías obtenidas del backend
@@ -77,6 +83,14 @@ export const Filtros = () => {
     cargarCategorias();
   }, []);
 
+  useEffect(() => {
+    setCategoria(searchParams.get("categoria") || "");
+    setVendedor(searchParams.get("vendedor") || "");
+    setPrecioMin(searchParams.get("precioMin") || "");
+    setPrecioMax(searchParams.get("precioMax") || "");
+    setOrden(searchParams.get("ordenPor") || "");
+  }, [searchParams]);
+
   // Cargar vendedores del backend
   useEffect(() => {
     const cargarVendedores = async () => {
@@ -91,14 +105,13 @@ export const Filtros = () => {
     cargarVendedores();
   }, []);
 
-
-  // Aplicar filtros con un pequeño delay para evitar demasiadas llamadas
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      actualizarFiltros();
-    }, 500);
-    return () => clearTimeout(timer);
-  }, []);
+  // // Aplicar filtros con un pequeño delay para evitar demasiadas llamadas
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     actualizarFiltros();
+  //   }, 500);
+  //   return () => clearTimeout(timer);
+  // }, [categoria, vendedor, precioMin, precioMax, orden]);
 
   const limpiarFiltros = () => {
     setCategoria("");
@@ -109,15 +122,18 @@ export const Filtros = () => {
   };
 
   return (
-    <div className="filtros">
+    <div className="filtros flex flex-col items-start gap-3">
       <div className="container-titulo">
         <div className="titulo">Filtros</div>
       </div>
 
-      <div className="container-inputs">
-        <div className="filter-field">
-          <div className="text-wrapper-2">Categoría</div>
+      <div className="container-inputs flex flex-col items-start gap-4">
+        <div className="filter-field flex flex-col gap-2">
+          <div className="text-wrapper-2 flex items-center justify-center">
+            Categoría
+          </div>
           <select
+            className="select"
             value={categoria}
             onChange={(e) => setCategoria(e.target.value)}
           >
@@ -130,9 +146,12 @@ export const Filtros = () => {
           </select>
         </div>
 
-        <div className="filter-field">
-          <div className="text-wrapper-2">Vendedor</div>
+        <div className="filter-field flex flex-col gap-2">
+          <div className="text-wrapper-2 flex items-center justify-center">
+            Vendedor
+          </div>
           <select
+            className="select"
             value={vendedor}
             onChange={(e) => setVendedor(e.target.value)}
           >
@@ -145,16 +164,20 @@ export const Filtros = () => {
           </select>
         </div>
 
-        <div className="filter-field">
-          <div className="text-wrapper-3">Precio</div>
-          <div className="price-range-inputs">
+        <div className="filter-field flex flex-col gap-2">
+          <div className="text-wrapper-3 flex items-center justify-start">
+            Precio
+          </div>
+          <div className="price-range-inputs flex gap-2">
             <input
+              className="input"
               type="number"
               placeholder="Mín"
               value={precioMin}
               onChange={(e) => setPrecioMin(e.target.value)}
             />
             <input
+              className="input"
               type="number"
               placeholder="Máx"
               value={precioMax}
@@ -163,9 +186,12 @@ export const Filtros = () => {
           </div>
         </div>
 
-        <div className="filter-field">
-          <div className="text-wrapper-2">Ordenar por</div>
+        <div className="filter-field flex flex-col gap-2">
+          <div className="text-wrapper-2 flex items-center justify-center">
+            Ordenar por
+          </div>
           <select
+            className="select"
             value={orden}
             onChange={(e) => setOrden(e.target.value)}
           >
@@ -176,16 +202,18 @@ export const Filtros = () => {
           </select>
         </div>
 
-        <div className="filter-field">
-          <button className="btn btn-primary btn-medium"
+        <div className="filter-field flex flex-col gap-2">
+          <button
+            className="btn btn-primary btn-medium"
             onClick={actualizarFiltros}
           >
             Aplicar filtros
           </button>
         </div>
 
-        <div className="filter-field">
-          <button className="btn btn-primary btn-medium"
+        <div className="filter-field flex flex-col gap-2">
+          <button
+            className="btn btn-primary btn-medium"
             onClick={limpiarFiltros}
           >
             Limpiar filtros

@@ -4,7 +4,7 @@ import "./ItemSkeleton.css";
 
 export const ItemSkeleton = () => {
   return (
-    <div className="item-skeleton">
+    <div className="item-skeleton flex flex-col w-full gap-2">
       <Skeleton
         variant="rectangular"
         sx={{

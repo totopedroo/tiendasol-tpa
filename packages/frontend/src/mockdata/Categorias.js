@@ -1,5 +1,5 @@
 export const categorias = [
-    { nombre: "Autos", imagen: "https://www.autoplusdigital.com.ar/wp-content/uploads/2023/04/autos-2.jpg" },
+    { nombre: "Automotriz", imagen: "https://www.autoplusdigital.com.ar/wp-content/uploads/2023/04/autos-2.jpg" },
     { nombre: "Tecnología", imagen: "https://5115875.fs1.hubspotusercontent-na1.net/hubfs/5115875/Blog/Blog_Articulos/Blog_Art%C3%ADculos/Blog_2024/Blog_Articulos_2024_Junio/Blog_Articulos_2024_Junio_TI/PORTADA-N76-QUE-SON-LAS-TI-CARACTERISTICAS.jpg" },
     { nombre: "Ropa", imagen: "https://media.istockphoto.com/id/878320722/es/vector/ropa-de-abrigo-casual-hombres-en-parrilla-de-suspensi%C3%B3n.jpg?s=612x612&w=0&k=20&c=O4soNGrwNGPQGPIhqXN0vjwTZ1WQHsmBFP64zD_0kcw=" },
     { nombre: "Hogar", imagen: "https://media.istockphoto.com/id/1196974664/es/foto/set-de-electrodom%C3%A9sticos-de-cocina-en-la-habitaci%C3%B3n-en-el-fondo-de-la-pared.jpg?s=612x612&w=0&k=20&c=d7r44Bfcn89FYyVcsUizkSq8m2-4Lr0fqx2rT1aC8Wg=" },

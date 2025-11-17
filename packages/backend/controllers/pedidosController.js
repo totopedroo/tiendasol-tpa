@@ -16,16 +16,7 @@ export class PedidosController {
     } catch (error) {
       next(error);
     }
-
-    // if (resultBody.error) {
-    //   return res.status(400).json({
-    //     error: resultBody.error,
-    //     message: "Error en el formato del pedido",
-    //   });
-    // }
   }
-
-  // 564321
 
   async findAll(req, res, next) {
     try {
@@ -54,58 +45,78 @@ export class PedidosController {
     } catch (error) {
       next(error);
     }
-
-    // if (resultId.error) {
-    //   return res.status(400).json(resultId.error.issues);
-    // }
-
-    // if (!pedido) {
-    //   res.status(404).json({
-    //     error: "No se encontró un pedido con ese ID",
-    //   });
-    //   return;
-    // }
   }
 
   async cambiarEstado(req, res, next) {
     try {
       const resultId = idTransform.safeParse(req.params.id);
       const nuevoEstado = estadoSchema.safeParse(req.query);
-      var pedido;
-      switch (nuevoEstado.data) {
+      const userId = req.user?.id || req.user?._id; // Get user ID from JWT token
+      const motivo = req.body?.motivo ?? req.query?.motivo ?? null;
+
+      let pedido;
+      switch (nuevoEstado.data.estado) {
         case "CANCELADO":
-          const motivo = req.body?.motivo ?? req.query?.motivo ?? null;
-          pedido = await this.pedidosService.cancelar(resultId.data, motivo);
+          pedido = await this.pedidosService.cancelar(
+            resultId.data,
+            userId,
+            motivo
+          );
           break;
         case "ENVIADO":
-          pedido = await this.pedidosService.marcarEnviado(resultId.data);
+          pedido = await this.pedidosService.marcarEnviado(
+            resultId.data,
+            userId
+          );
           break;
         case "CONFIRMADO":
-          pedido = await this.pedidosService.confirmar(resultId.data);
+          pedido = await this.pedidosService.confirmar(resultId.data, userId);
+          break;
+        case "EN_PREPARACION":
+          pedido = await this.pedidosService.marcarEnPreparacion(
+            resultId.data,
+            userId
+          );
+          break;
+        case "ENTREGADO":
+          pedido = await this.pedidosService.marcarEntregado(
+            resultId.data,
+            userId
+          );
           break;
         default:
           throw new ValidationError("Nuevo estado inválido");
       }
+
       res.status(200).json(pedido);
     } catch (error) {
       next(error);
     }
-
-    // if (resultId.error) {
-    //   return res.status(400).json(resultId.error.issues);
-    // }
-
-    // if (nuevoEstadoData.error) {
-    //   return res.status(400).json(nuevoEstadoData.error.issues);
-    // }
   }
 
   async historialDelUsuario(req, res, next) {
     try {
       const userId = historialUsuarioSchema.safeParse(req.query);
-      const pedidosUsuario = await this.pedidosService.historialDelUsuario(
-        userId.data.userId
-      );
+      const tipoVista = req.query.tipoVista; // 'comprador' o 'vendedor'
+      const { page = 1, limit = 10, orden = "reciente" } = req.query;
+
+      let pedidosUsuario;
+      if (tipoVista === "vendedor") {
+        pedidosUsuario = await this.pedidosService.historialComoVendedor(
+          userId.data.userId,
+          page,
+          limit,
+          orden
+        );
+      } else {
+        pedidosUsuario = await this.pedidosService.historialDelUsuario(
+          userId.data.userId,
+          page,
+          limit,
+          orden
+        );
+      }
+
       res.json(pedidosUsuario);
     } catch (error) {
       next(error);
@@ -148,7 +159,7 @@ const direccionEntregaSchema = z.object({
 
 const pedidoSchema = z.object({
   moneda: z.enum(MONEDA),
-  id_comprador: z.number().nonnegative(),
+  id_comprador: idTransform,
   direccionEntrega: direccionEntregaSchema,
   items: z.array(z.any()).nonempty(),
 });

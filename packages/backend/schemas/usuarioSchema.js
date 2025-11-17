@@ -13,6 +13,10 @@ const usuarioSchema = new mongoose.Schema(
       trim: true,
       required: true,
     },
+    password: {
+      type: String,
+      required: false, // Optional para no romper datos existentes
+    },
     telefono: {
       type: String,
       trim: true,
@@ -26,11 +30,11 @@ const usuarioSchema = new mongoose.Schema(
     fechaAlta: {
       type: Date,
       required: true,
-    }
+    },
   },
   {
     timestamps: true,
-    collection: "usuarios"
+    collection: "usuarios",
   },
 );
 

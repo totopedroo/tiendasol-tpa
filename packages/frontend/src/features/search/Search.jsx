@@ -1,68 +1,82 @@
 import React, { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { Filtros } from "../../components/filtros/Filtros";
 import { Paginacion } from "../../components/paginacion/Paginacion";
 import { Resultados } from "../../components/resultados/Resultados";
-import { buscarProductos, getProductsSlowly } from "../../service/productosService";
+import {
+  buscarProductos,
+  getProductsSlowly,
+} from "../../service/productosService";
 import "./Search.css";
+import SearchBar from "../../components/searchBar/SearchBar";
 
 // tiendasol.com/search?q="titulo"&categoria="celulares"
 export const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchValue, setSearchValue] = useState("");
   const [paginacion, setPaginacion] = useState({
     pagina: 1,
-    perPage: 10,
+    perPage: 20,
     total: 0,
     totalPaginas: 0,
   });
 
-const fetchProductos = async () => {
-  setLoading(true);
-  setError(null);
-  
-  try {
-    // Construir objeto de parámetros desde la URL
-    const params = {};
-    
-    // Obtener todos los parámetros de la URL
-    for (const [key, value] of searchParams.entries()) {
-      params[key] = value;
-    }
-    
-    // Si no hay página, usar página 1 por defecto
-    if (!params.page) {
-      params.page = 1;
-    }
-    
-    // Si no hay limit, usar 10 por defecto
-    if (!params.limit) {
-      params.limit = 10;
-    }
+  // Sincronizar el valor de búsqueda con los parámetros de la URL
+  useEffect(() => {
+    const tituloParam = searchParams.get("titulo");
+    setSearchValue(tituloParam || "");
+  }, [searchParams]);
 
-    const response = await buscarProductos(params);
-    
-    setProductos(response.data || []);
-    setPaginacion({
-      pagina: response.pagina || 1,
-      perPage: response.perPage || 10,
-      total: response.total || 0,
-      totalPaginas: response.totalPaginas || 0,
-    });
-  } catch (err) {
-    console.error("Error al buscar productos:", err);
-    setError("Error al cargar los productos. Por favor, intenta de nuevo.");
-    setProductos([]);
-  } finally {
-    setLoading(false);
-  }
-};
-  useEffect(() => { fetchProductos() }, [searchParams]);
+  const fetchProductos = async () => {
+    setLoading(true);
+    setError(null);
 
-  const searchTerm = searchParams.get("titulo") || "";
-  const limit = searchParams.get("limit") || "10";
+    try {
+      // Construir objeto de parámetros desde la URL
+      const params = {};
+
+      // Obtener todos los parámetros de la URL
+      for (const [key, value] of searchParams.entries()) {
+        params[key] = value;
+      }
+
+      // Si no hay página, usar página 1 por defecto
+      if (!params.page) {
+        params.page = 1;
+      }
+
+      // Si no hay limit, usar 20 por defecto
+      if (!params.limit) {
+        params.limit = 20;
+      }
+
+      const response = await buscarProductos(params);
+
+      setProductos(response.data || []);
+      setPaginacion({
+        pagina: response.pagina || 1,
+        perPage: response.perPage || 20,
+        total: response.total || 0,
+        totalPaginas: response.totalPaginas || 0,
+      });
+    } catch (err) {
+      console.error("Error al buscar productos:", err);
+      setError("Error al cargar los productos. Por favor, intenta de nuevo.");
+      setProductos([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchProductos();
+  }, [searchParams]);
+
+  const searchTerm = searchParams.get("titulo") || null;
+  const limit = searchParams.get("limit") || "20";
 
   const handleLimitChange = (e) => {
     const params = new URLSearchParams(searchParams);
@@ -71,36 +85,54 @@ const fetchProductos = async () => {
     setSearchParams(params);
   };
 
+  const handleSearch = (searchTerm) => {
+    const params = new URLSearchParams(searchParams);
+    if (searchTerm.trim()) {
+      params.set("titulo", searchTerm);
+    } else {
+      params.delete("titulo");
+    }
+    params.set("page", "1"); // Resetear a página 1 cuando se haga una nueva búsqueda
+    setSearchParams(params);
+  };
+
   return (
     <div className="contenido">
       <div className="container">
-        <div className="search-results-container">
-          <div className="container-titulo">
-            <div className="titulo">
+        <div className="search-results-container flex flex-col items-start justify-start w-full">
+          <div className="container-titulo flex items-center justify-between w-full">
+            <div className="titulo flex items-center justify-start">
               {searchTerm
                 ? `Resultados para "${searchTerm}"`
                 : "Todos los productos"}
             </div>
 
-            <div className="container-paginacion">
-              <select value={limit} onChange={handleLimitChange}>
+            <div className="container-paginacion flex items-center gap-6 justify-end">
+              <select
+                className="select"
+                value={limit}
+                onChange={handleLimitChange}
+              >
                 <option value="10">10 por página</option>
                 <option value="20">20 por página</option>
                 <option value="50">50 por página</option>
               </select>
             </div>
           </div>
-          <div className="container-resultados">
-            <Filtros />
-            <Resultados 
-              productos={productos} 
-              loading={loading} 
-              error={error}
-            />
+          <SearchBar
+            onSearch={handleSearch}
+            placeholder="Buscar productos..."
+            className="search-bar-full-width"
+            value={searchValue}
+            onChange={setSearchValue}
+          />
+          <div className="container-resultados flex items-start justify-start gap-8 w-full">
+            <Filtros className="self-start" />
+            <Resultados productos={productos} loading={loading} error={error} />
           </div>
-          <div className="bottom-pagination-wrapper">
-            <div className="paginacion-wrapper">
-              <Paginacion 
+          <div className="bottom-pagination-wrapper flex gap-8 justify-center">
+            <div className="paginacion-wrapper items-center self-stretch flex gap-6 justify-end">
+              <Paginacion
                 paginaActual={paginacion.pagina}
                 totalPaginas={paginacion.totalPaginas}
               />

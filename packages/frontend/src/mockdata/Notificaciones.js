@@ -1,0 +1,47 @@
+export const notificacionesMock = {
+  data: [
+    {
+      _id: "673123456789abcdef012345",
+      pedido: "68fff891aa45f11100c074d9",
+      mensaje: "El vendedor marcó el pedido como enviado.",
+      leida: false,
+      createdAt: "2025-11-10T14:30:00.000Z",
+      usuario: "68fff891aa45f11100c074d9",
+    },
+    {
+      _id: "673123456789abcdef012346",
+      pedido: "68fff891aa45f11100c074da",
+      mensaje: "Tu pedido ha sido confirmado y está siendo preparado.",
+      leida: false,
+      createdAt: "2025-11-10T12:15:00.000Z",
+      usuario: "68fff891aa45f11100c074d9",
+    },
+    {
+      _id: "673123456789abcdef012347",
+      pedido: "68fff891aa45f11100c074db",
+      mensaje: "El vendedor canceló el pedido. Motivo: Producto agotado.",
+      leida: false,
+      createdAt: "2025-11-09T18:45:00.000Z",
+      usuario: "68fff891aa45f11100c074d9",
+    },
+    {
+      _id: "673123456789abcdef012348",
+      pedido: "68fff891aa45f11100c074dc",
+      mensaje: "Tu pedido ha sido entregado exitosamente.",
+      leida: false,
+      createdAt: "2025-11-09T10:20:00.000Z",
+      usuario: "68fff891aa45f11100c074d9",
+    },
+    {
+      _id: "673123456789abcdef012349",
+      pedido: "68fff891aa45f11100c074dd",
+      mensaje: "El vendedor marcó el pedido como enviado.",
+      leida: true,
+      createdAt: "2025-11-08T16:00:00.000Z",
+      usuario: "68fff891aa45f11100c074d9",
+    },
+  ],
+  total: 5,
+  limit: 20,
+  afterId: null,
+};

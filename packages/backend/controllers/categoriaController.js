@@ -8,6 +8,7 @@ export const categoriaIdSchema = z.object({
 
 export const categoriaSchema = z.object({
   nombre: z.string("Falta atributo.").min(3, "Cantidad minima 3."),
+  imagen: z.string().url("URL inválida"),
 });
 
 export class CategoriaController {

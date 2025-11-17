@@ -4,29 +4,155 @@ import "./Checkout.css";
 import { ArrowLeft } from "../../components/icons/ArrowLeft";
 import { CheckoutItem } from "../../components/checkoutItem/CheckoutItem";
 import { Edit } from "../../components/icons/Edit";
+import { Plus } from "../../components/icons/Plus";
 import { Button } from "../../components/button/Button";
 import { useCarrito } from "../../context/CarritoContext";
+import { crearPedido } from "../../service/pedidosService";
+import { set } from "mongoose";
+import Popup from "../../components/popups/PopUp";
+import { useState } from "react";
+import { useAuth } from "../../context/AuthContexto";
+import PopUpOpciones from "../../components/popups/PopUpOpciones";
+import { ca } from "zod/locales";
+import { updateUsuario } from "../../service/usuariosService";
+import { DireccionModal } from "../../components/direccionModal/DireccionModal";
 
 export const Checkout = () => {
   const navigate = useNavigate();
-  const { carritoItems, obtenerTotalItems, obtenerPrecioTotal, vaciarCarrito } = useCarrito();
+  const {
+    carritoItems,
+    obtenerTotalItems,
+    obtenerPrecioTotal,
+    vaciarCarrito,
+    direccionEnvio,
+    guardarDireccionEnvio,
+  } = useCarrito();
 
   const handleGoBack = () => {
-    navigate(-1); // Equivalente a history.back()
+    navigate(-1);
   };
 
-  const handleRealizarPedido = () => {
-    // Aquí podrías hacer una llamada al backend para crear el pedido
-    alert("Pedido realizado con éxito!");
+  const [mostrarPopup, setMostrarPopup] = useState(false);
+  const [titulo, setTitulo] = useState("");
+  const [mensaje, setMensaje] = useState("");
+
+  const [mostrarPopUpOpciones, setMostrarPopUpOpciones] = useState(false);
+  const [tituloOpciones, setTituloOpciones] = useState("");
+  const [mensajeOpciones, setMensajeOpciones] = useState("");
+
+  const [mostrarModalDireccion, setMostrarModalDireccion] = useState(false);
+
+  const { user } = useAuth();
+
+  const handleClosePopup = () => {
+    setMostrarPopup(false);
+    if (titulo === "Pedido realizado") {
+      navigate("/");
+    }
+  };
+
+  const cambiarRol = async () => {
+    try {
+      await updateUsuario(user.id, {
+        nombre: user.nombre,
+        email: user.email,
+        telefono: user.telefono,
+        tipo: "COMPRADOR",
+      });
+      if (user) {
+        user.tipo = "COMPRADOR";
+      }
+      // mostrar popup normal confirmando el cambio
+      setTitulo("Rol cambiado");
+      setMensaje("Su rol ha sido cambiado a COMPRADOR exitosamente.");
+      setMostrarPopup(true);
+    } catch (error) {
+      console.error("Error al cambiar el rol:", error);
+      setTitulo("Error al cambiar el rol");
+      setMensaje("Hubo un error al cambiar el rol. Intente nuevamente.");
+      setMostrarPopup(true);
+    }
+  };
+
+  const handleGuardarDireccion = (direccion) => {
+    guardarDireccionEnvio(direccion);
+  };
+
+  const formatearDireccion = (dir) => {
+    if (!dir) return "";
+    let direccion = `${dir.calle} ${dir.altura}`;
+    if (dir.piso) direccion += `, Piso ${dir.piso}`;
+    if (dir.departamento) direccion += ` Depto ${dir.departamento}`;
+    return direccion;
+  };
+
+  const handleRealizarPedido = async () => {
+    try {
+      // si el usuario es vendedor → mostrar popup para cambiar rol
+      if (user.tipo === "VENDEDOR") {
+        setTituloOpciones("Error al realizar el pedido");
+        setMensajeOpciones(
+          "Los usuarios con rol VENDEDOR no pueden realizar pedidos. ¿Desea cambiar su rol a COMPRADOR?"
+        );
+        setMostrarPopUpOpciones(true);
+        return;
+      }
+
+      // Validar que haya dirección de envío
+      if (!direccionEnvio) {
+        setTitulo("Dirección requerida");
+        setMensaje(
+          "Por favor, agrega una dirección de envío antes de realizar el pedido."
+        );
+        setMostrarPopup(true);
+        return;
+      }
+
+      // crear pedido
+      const items = carritoItems.map((item) => ({
+        producto: item._id,
+        cantidad: item.cantidad,
+        precioUnitario: item.precio,
+        moneda: item.moneda || "PESO_ARG",
+      }));
+
+      const pedidoData = {
+        moneda: "PESO_ARG",
+        id_comprador: user.id,
+        direccionEntrega: direccionEnvio,
+        items: items,
+      };
+
+      await crearPedido(pedidoData);
+
+      setTitulo("Pedido realizado");
+      setMensaje("Tu pedido ha sido realizado con éxito ✅");
+      setMostrarPopup(true);
+      vaciarCarrito();
+    } catch (error) {
+      console.error("Error al realizar el pedido:", error);
+
+      setTitulo("Error al realizar el pedido");
+      setMensaje("Hubo un error. Intente nuevamente.");
+      setMostrarPopup(true);
+    }
+  };
+
+  const handlerCerrarCarrito = () => {
+    setTituloOpciones("Vaciar carrito");
+    setMensajeOpciones("¿Estás seguro de que quieres vaciar el carrito?");
+    setMostrarPopUpOpciones(true);
+  };
+
+  const limpiarCarrito = () => {
     vaciarCarrito();
-    navigate("/");
   };
 
   return (
     <div className="checkout-screen flex flex-col items-center">
       <div className="container">
-        <div className="checkout-container flex flex-col items-stretch flex-1">
-          <div className="titulo flex items-center justify-between">
+        <div className="checkout-container flex flex-col items-center self-stretch flex-1">
+          <div className="titulo flex justify-between items-center w-full">
             <div className="text-wrapper flex items-center justify-center">
               Carrito
             </div>
@@ -37,47 +163,89 @@ export const Checkout = () => {
               style={{ cursor: "pointer" }}
             >
               <ArrowLeft />
-              <div className="back-button-text">Volver atrás</div>
+              <div className="back-button-text">Seguir comprando</div>
             </div>
           </div>
 
-          <div className="checkout-contenido flex items-center">
-            <div className="pedido">
+          <div className="checkout-contenido flex items-start gap-8 w-full">
+            <div className="pedido flex flex-col gap-4 flex-1">
               {carritoItems.length === 0 ? (
-                <div className="empty-cart">
+                <div className="empty-cart flex flex-col items-center justify-center gap-6 text-center">
                   <p>Tu carrito está vacío</p>
                   <Button variant="primary" onClick={() => navigate("/search")}>
                     Ver productos
                   </Button>
                 </div>
               ) : (
-                carritoItems.map((item) => (
-                  <CheckoutItem key={item._id} item={item} />
-                ))
+                <>
+                  {carritoItems.map((item) => (
+                    <CheckoutItem key={item._id} item={item} />
+                  ))}
+
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                    }}
+                  >
+                    <Button
+                      variant="danger"
+                      onClick={handlerCerrarCarrito}
+                      disabled={carritoItems.length === 0}
+                    >
+                      Limpiar carrito
+                    </Button>
+                  </div>
+                </>
               )}
             </div>
-            <div className="info-pedido flex flex-col items-center">
-              <div className="detalle-pedido flex flex-col items-center">
-                <div className="direccion-entrega-row flex items-center justify-between">
-                  <div className="text-wrapper">Dirección de entrega</div>
+            <div className="info-pedido flex flex-col items-start gap-4">
+              <div className="detalle-pedido flex flex-col items-start self-stretch gap-4">
+                <div className="direccion-entrega-row flex items-center self-stretch justify-between">
+                  <div className="text-wrapper flex items-center justify-center">
+                    Dirección de entrega
+                  </div>
 
-                  <div className="direccion-entrega-info flex items-center justify-center">
-                    <div className="text-wrapper-2">Calle Verdadera 1234</div>
+                  {direccionEnvio ? (
+                    <div className="direccion-entrega-info flex items-center justify-center">
+                      <div className="text-wrapper-2 flex items-center justify-center">
+                        {formatearDireccion(direccionEnvio)}
+                      </div>
 
-                    <Edit style={{ cursor: "pointer" }} />
+                      <Button
+                        variant="clear"
+                        icon={<Edit />}
+                        onClick={() => setMostrarModalDireccion(true)}
+                      />
+                    </div>
+                  ) : (
+                    <Button
+                      variant="primary"
+                      size="small"
+                      onClick={() => setMostrarModalDireccion(true)}
+                      icon={<Plus />}
+                    >
+                      Agregar dirección
+                    </Button>
+                  )}
+                </div>
+
+                <div className="articulos-count-row flex items-center self-stretch justify-between">
+                  <div className="text-wrapper flex items-center justify-center">
+                    Articulos
+                  </div>
+
+                  <div className="text-wrapper-2 flex items-center justify-center">
+                    {obtenerTotalItems()}
                   </div>
                 </div>
 
-                <div className="articulos-count-row flex items-center justify-between">
-                  <div className="text-wrapper">Articulos</div>
+                <div className="total-row flex items-center self-stretch justify-between">
+                  <div className="text-wrapper-3 flex items-center justify-center">
+                    Total
+                  </div>
 
-                  <div className="text-wrapper-2">{obtenerTotalItems()}</div>
-                </div>
-
-                <div className="total-row flex items-center justify-between">
-                  <div className="text-wrapper-3">Total</div>
-
-                  <div className="text-wrapper-3">
+                  <div className="text-wrapper-3 flex items-center justify-center">
                     ${obtenerPrecioTotal().toLocaleString()}
                   </div>
                 </div>
@@ -88,13 +256,47 @@ export const Checkout = () => {
                 fullWidth
                 size="large"
                 onClick={handleRealizarPedido}
-                disabled={carritoItems.length === 0}
+                disabled={carritoItems.length === 0 || !direccionEnvio}
               >
                 Realizar Pedido
               </Button>
             </div>
           </div>
         </div>
+        <Popup
+          title={titulo}
+          isOpen={mostrarPopup}
+          onClose={handleClosePopup}
+          mensaje={mensaje}
+        />
+
+        {/* 🟡 POPUP DE OPCIONES */}
+        <PopUpOpciones
+          title={tituloOpciones}
+          mensaje={mensajeOpciones}
+          isOpen={mostrarPopUpOpciones}
+          onClose={() => setMostrarPopUpOpciones(false)}
+          onConfirm={() => {
+            if (
+              tituloOpciones.includes("rol") ||
+              tituloOpciones.includes("pedido")
+            ) {
+              setMostrarPopUpOpciones(false);
+              cambiarRol();
+              return;
+            }
+            vaciarCarrito();
+            setMostrarPopUpOpciones(false);
+          }}
+        />
+
+        {/* MODAL DE DIRECCIÓN */}
+        <DireccionModal
+          isOpen={mostrarModalDireccion}
+          onClose={() => setMostrarModalDireccion(false)}
+          onSave={handleGuardarDireccion}
+          direccionInicial={direccionEnvio}
+        />
       </div>
     </div>
   );
