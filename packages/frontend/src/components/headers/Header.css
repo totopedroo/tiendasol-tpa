@@ -291,6 +291,43 @@ button {
   transform: translateY(0);
 }
 
+/* Mostrar menú cuando tiene la clase 'show' (para mobile/click) */
+.user-dropdown-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Información del usuario en el dropdown (para mobile) */
+.dropdown-user-info {
+  display: none;
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-bg-light);
+}
+
+.dropdown-user-name {
+  color: var(--color-text);
+  font-family: var(--font-medium);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  margin-bottom: var(--space-1);
+}
+
+.dropdown-user-type {
+  color: var(--color-text-muted);
+  font-family: var(--font-bold);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.dropdown-divider {
+  display: none;
+  height: 1px;
+  background-color: var(--color-border);
+  margin: var(--space-2) 0;
+}
+
 .dropdown-menu-item {
   width: 100%;
   padding: var(--space-2) var(--space-4);
@@ -366,6 +403,29 @@ button {
 
   .header .contador-de-items {
     font-size: 0.625rem;
+  }
+
+  /* En mobile: ocultar info del usuario en el botón */
+  .user-menu-button .user-info {
+    display: none;
+  }
+
+  .user-menu-button .chevron-icon {
+    display: none;
+  }
+
+  /* En mobile: mostrar info del usuario en el dropdown */
+  .dropdown-user-info {
+    display: block;
+  }
+
+  .dropdown-divider {
+    display: block;
+  }
+
+  /* Ajustar padding del botón en mobile */
+  .user-menu-button {
+    padding: var(--space-2);
   }
 }
 

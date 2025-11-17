@@ -10,8 +10,8 @@
   /* Layout flex aplicado en JSX: flex items-center */
   color: var(--color-text-primary);
   font-family: var(--font-family-semibold);
-  font-size: var(--text-base);
-  font-weight: 600;
+  font-size: var(--text-lg);
+  font-weight: 800;
   letter-spacing: var(--letter-spacing-md);
   line-height: var(--line-height-md);
   position: relative;

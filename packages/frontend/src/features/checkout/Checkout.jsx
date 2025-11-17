@@ -4,6 +4,7 @@ import "./Checkout.css";
 import { ArrowLeft } from "../../components/icons/ArrowLeft";
 import { CheckoutItem } from "../../components/checkoutItem/CheckoutItem";
 import { Edit } from "../../components/icons/Edit";
+import { Plus } from "../../components/icons/Plus";
 import { Button } from "../../components/button/Button";
 import { useCarrito } from "../../context/CarritoContext";
 import { crearPedido } from "../../service/pedidosService";
@@ -14,11 +15,18 @@ import { useAuth } from "../../context/AuthContexto";
 import PopUpOpciones from "../../components/popups/PopUpOpciones";
 import { ca } from "zod/locales";
 import { updateUsuario } from "../../service/usuariosService";
+import { DireccionModal } from "../../components/direccionModal/DireccionModal";
 
 export const Checkout = () => {
   const navigate = useNavigate();
-  const { carritoItems, obtenerTotalItems, obtenerPrecioTotal, vaciarCarrito } =
-    useCarrito();
+  const {
+    carritoItems,
+    obtenerTotalItems,
+    obtenerPrecioTotal,
+    vaciarCarrito,
+    direccionEnvio,
+    guardarDireccionEnvio,
+  } = useCarrito();
 
   const handleGoBack = () => {
     navigate(-1);
@@ -31,6 +39,8 @@ export const Checkout = () => {
   const [mostrarPopUpOpciones, setMostrarPopUpOpciones] = useState(false);
   const [tituloOpciones, setTituloOpciones] = useState("");
   const [mensajeOpciones, setMensajeOpciones] = useState("");
+
+  const [mostrarModalDireccion, setMostrarModalDireccion] = useState(false);
 
   const { user } = useAuth();
 
@@ -64,6 +74,18 @@ export const Checkout = () => {
     }
   };
 
+  const handleGuardarDireccion = (direccion) => {
+    guardarDireccionEnvio(direccion);
+  };
+
+  const formatearDireccion = (dir) => {
+    if (!dir) return "";
+    let direccion = `${dir.calle} ${dir.altura}`;
+    if (dir.piso) direccion += `, Piso ${dir.piso}`;
+    if (dir.departamento) direccion += ` Depto ${dir.departamento}`;
+    return direccion;
+  };
+
   const handleRealizarPedido = async () => {
     try {
       // si el usuario es vendedor → mostrar popup para cambiar rol
@@ -73,6 +95,16 @@ export const Checkout = () => {
           "Los usuarios con rol VENDEDOR no pueden realizar pedidos. ¿Desea cambiar su rol a COMPRADOR?"
         );
         setMostrarPopUpOpciones(true);
+        return;
+      }
+
+      // Validar que haya dirección de envío
+      if (!direccionEnvio) {
+        setTitulo("Dirección requerida");
+        setMensaje(
+          "Por favor, agrega una dirección de envío antes de realizar el pedido."
+        );
+        setMostrarPopup(true);
         return;
       }
 
@@ -87,16 +119,7 @@ export const Checkout = () => {
       const pedidoData = {
         moneda: "PESO_ARG",
         id_comprador: user.id,
-        direccionEntrega: {
-          calle: "Calle Verdadera",
-          altura: "1234",
-          piso: "",
-          departamento: "",
-          codigoPostal: "5000",
-          ciudad: "Córdoba",
-          provincia: "Córdoba",
-          pais: "Argentina",
-        },
+        direccionEntrega: direccionEnvio,
         items: items,
       };
 
@@ -183,13 +206,28 @@ export const Checkout = () => {
                     Dirección de entrega
                   </div>
 
-                  <div className="direccion-entrega-info flex items-center justify-center">
-                    <div className="text-wrapper-2 flex items-center justify-center">
-                      Calle Verdadera 1234
-                    </div>
+                  {direccionEnvio ? (
+                    <div className="direccion-entrega-info flex items-center justify-center">
+                      <div className="text-wrapper-2 flex items-center justify-center">
+                        {formatearDireccion(direccionEnvio)}
+                      </div>
 
-                    <Edit style={{ cursor: "pointer" }} />
-                  </div>
+                      <Button
+                        variant="clear"
+                        icon={<Edit />}
+                        onClick={() => setMostrarModalDireccion(true)}
+                      />
+                    </div>
+                  ) : (
+                    <Button
+                      variant="primary"
+                      size="small"
+                      onClick={() => setMostrarModalDireccion(true)}
+                      icon={<Plus />}
+                    >
+                      Agregar dirección
+                    </Button>
+                  )}
                 </div>
 
                 <div className="articulos-count-row flex items-center self-stretch justify-between">
@@ -218,7 +256,7 @@ export const Checkout = () => {
                 fullWidth
                 size="large"
                 onClick={handleRealizarPedido}
-                disabled={carritoItems.length === 0}
+                disabled={carritoItems.length === 0 || !direccionEnvio}
               >
                 Realizar Pedido
               </Button>
@@ -250,6 +288,14 @@ export const Checkout = () => {
             vaciarCarrito();
             setMostrarPopUpOpciones(false);
           }}
+        />
+
+        {/* MODAL DE DIRECCIÓN */}
+        <DireccionModal
+          isOpen={mostrarModalDireccion}
+          onClose={() => setMostrarModalDireccion(false)}
+          onSave={handleGuardarDireccion}
+          direccionInicial={direccionEnvio}
         />
       </div>
     </div>

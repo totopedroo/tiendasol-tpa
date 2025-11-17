@@ -1,7 +1,9 @@
 /* Variables CSS Globales - TiendaSol */
 
 :root {
-  /* === COLORES === */
+  --danger: #ff7f7f;
+  --main: #ffecc8;
+  --secondary: #e5f0e8;
   --color-primary: #000000;
   --color-secondary: #ffffff;
   --color-text: #000000;

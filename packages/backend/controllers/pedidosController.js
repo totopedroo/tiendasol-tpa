@@ -52,10 +52,11 @@ export class PedidosController {
       const resultId = idTransform.safeParse(req.params.id);
       const nuevoEstado = estadoSchema.safeParse(req.query);
       const userId = req.user?.id || req.user?._id; // Get user ID from JWT token
-      var pedido;
+      const motivo = req.body?.motivo ?? req.query?.motivo ?? null;
+
+      let pedido;
       switch (nuevoEstado.data.estado) {
         case "CANCELADO":
-          const motivo = req.body?.motivo ?? req.query?.motivo ?? null;
           pedido = await this.pedidosService.cancelar(
             resultId.data,
             userId,
@@ -71,9 +72,22 @@ export class PedidosController {
         case "CONFIRMADO":
           pedido = await this.pedidosService.confirmar(resultId.data, userId);
           break;
+        case "EN_PREPARACION":
+          pedido = await this.pedidosService.marcarEnPreparacion(
+            resultId.data,
+            userId
+          );
+          break;
+        case "ENTREGADO":
+          pedido = await this.pedidosService.marcarEntregado(
+            resultId.data,
+            userId
+          );
+          break;
         default:
           throw new ValidationError("Nuevo estado inválido");
       }
+
       res.status(200).json(pedido);
     } catch (error) {
       next(error);
@@ -83,9 +97,26 @@ export class PedidosController {
   async historialDelUsuario(req, res, next) {
     try {
       const userId = historialUsuarioSchema.safeParse(req.query);
-      const pedidosUsuario = await this.pedidosService.historialDelUsuario(
-        userId.data.userId
-      );
+      const tipoVista = req.query.tipoVista; // 'comprador' o 'vendedor'
+      const { page = 1, limit = 10, orden = "reciente" } = req.query;
+
+      let pedidosUsuario;
+      if (tipoVista === "vendedor") {
+        pedidosUsuario = await this.pedidosService.historialComoVendedor(
+          userId.data.userId,
+          page,
+          limit,
+          orden
+        );
+      } else {
+        pedidosUsuario = await this.pedidosService.historialDelUsuario(
+          userId.data.userId,
+          page,
+          limit,
+          orden
+        );
+      }
+
       res.json(pedidosUsuario);
     } catch (error) {
       next(error);

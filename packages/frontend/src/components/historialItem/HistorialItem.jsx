@@ -13,6 +13,14 @@ export const HistorialItem = ({ item }) => {
     if (!item) return;
     setLoading(true);
     try {
+      // Si el producto ya está poblado, usarlo directamente
+      if (typeof item.producto === "object" && item.producto.titulo) {
+        setProducto(item.producto);
+        setLoading(false);
+        return;
+      }
+
+      // Si no, hacer fetch del producto
       const response = await getProductoById(item.producto);
       setProducto(response);
     } catch (err) {
@@ -44,6 +52,14 @@ export const HistorialItem = ({ item }) => {
         return "$";
     }
   })();
+
+  // Función para truncar texto
+  const truncarTexto = (texto, maxCaracteres = 50) => {
+    if (!texto) return "";
+    if (texto.length <= maxCaracteres) return texto;
+    return texto.substring(0, maxCaracteres) + "...";
+  };
+
   return (
     <div className="historial-item-container flex items-center gap-4">
       <div className="rectangle">
@@ -58,8 +74,11 @@ export const HistorialItem = ({ item }) => {
 
       <div className="item-details flex items-center justify-between">
         <div className="item-title-price inline-flex flex-col items-start">
-          <div className="text-wrapper-3 flex items-center justify-center">
-            {producto?.titulo || "Sin título"}
+          <div
+            className="text-wrapper-3"
+            title={producto?.titulo || "Sin título"}
+          >
+            {truncarTexto(producto?.titulo || "Sin título", 45)}
           </div>
 
           <div className="text-wrapper-4 flex items-center justify-center">

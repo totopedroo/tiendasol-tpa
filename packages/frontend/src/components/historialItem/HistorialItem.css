@@ -47,7 +47,11 @@
   margin-top: -1px;
   position: relative;
   white-space: nowrap;
-  width: fit-content;
+  max-width: 400px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  text-align: left;
 }
 
 .item-title-price .text-wrapper-4 {

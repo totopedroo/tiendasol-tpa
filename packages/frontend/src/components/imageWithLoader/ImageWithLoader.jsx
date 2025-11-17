@@ -52,7 +52,7 @@ export const ImageWithLoader = ({
         {...props}
       />
       {hasError && (
-        <div className={`image-error ${placeholderClassName}`}>
+        <div className={`image-error flex flex-col items-center justify-center w-full h-full ${placeholderClassName}`}>
           <span>📷</span>
           <p>Imagen no disponible</p>
         </div>

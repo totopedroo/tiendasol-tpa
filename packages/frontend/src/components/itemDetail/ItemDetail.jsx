@@ -55,7 +55,7 @@ export const ItemDetail = ({ item }) => {
   return (
     <div className="item-detail flex items-start gap-8">
       <div className="image-section flex flex-col gap-4">
-        <div className="img-placeholder">
+        <div className="img-placeholder flex items-center justify-center">
           <ImageWithLoader
             className="img"
             alt={item.titulo}
@@ -123,10 +123,6 @@ export const ItemDetail = ({ item }) => {
           ) : (
             <span className="no-stock-message">No hay stock disponible</span>
           )}
-
-          <Button variant="primary" disabled={!hayStock}>
-            Comprar ahora
-          </Button>
 
           <Button
             variant="secondary"

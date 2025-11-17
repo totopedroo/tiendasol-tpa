@@ -102,15 +102,77 @@ export class PedidosService {
     return pedido;
   }
 
-  async historialDelUsuario(userId) {
-    const pedidosUsuario =
-      await this.pedidosRepository.getHistorialDeUsuario(userId);
+  async historialDelUsuario(userId, page = 1, limit = 10, orden = "reciente") {
+    const numeroPagina = Math.max(Number(page), 1);
+    const elementosPorPagina = Math.min(Math.max(Number(limit), 1), 100);
+
+    // Determinar el ordenamiento
+    const ordenamiento =
+      orden === "antiguo" ? { createdAt: 1 } : { createdAt: -1 };
+
+    const pedidosUsuario = await this.pedidosRepository.getHistorialDeUsuario(
+      userId,
+      numeroPagina,
+      elementosPorPagina,
+      ordenamiento
+    );
+
     if (!pedidosUsuario) {
       throw new NotFoundError(
         "El usuario con ese ID no existe o no tiene pedidos"
       );
     }
-    return pedidosUsuario;
+
+    const total = await this.pedidosRepository.contarPedidosDeUsuario(userId);
+    const totalPaginas = Math.ceil(total / elementosPorPagina);
+
+    return {
+      pagina: numeroPagina,
+      perPage: elementosPorPagina,
+      total,
+      totalPaginas,
+      data: pedidosUsuario,
+    };
+  }
+
+  async historialComoVendedor(
+    userId,
+    page = 1,
+    limit = 10,
+    orden = "reciente"
+  ) {
+    const numeroPagina = Math.max(Number(page), 1);
+    const elementosPorPagina = Math.min(Math.max(Number(limit), 1), 100);
+
+    // Determinar el ordenamiento
+    const ordenamiento =
+      orden === "antiguo" ? { createdAt: 1 } : { createdAt: -1 };
+
+    const pedidosVendedor =
+      await this.pedidosRepository.getHistorialComoVendedor(
+        userId,
+        numeroPagina,
+        elementosPorPagina,
+        ordenamiento
+      );
+
+    if (!pedidosVendedor) {
+      throw new NotFoundError(
+        "El usuario con ese ID no existe o no tiene pedidos como vendedor"
+      );
+    }
+
+    const total =
+      await this.pedidosRepository.contarPedidosComoVendedor(userId);
+    const totalPaginas = Math.ceil(total / elementosPorPagina);
+
+    return {
+      pagina: numeroPagina,
+      perPage: elementosPorPagina,
+      total,
+      totalPaginas,
+      data: pedidosVendedor,
+    };
   }
 
   async findAll(page, limit, filtros) {
@@ -169,6 +231,28 @@ export class PedidosService {
       );
     }
     await this.#publish(pedido, ESTADO_PEDIDO.CONFIRMADO, null);
+    return pedido;
+  }
+
+  async marcarEnPreparacion(id, userId) {
+    const pedido = await this.pedidosRepository.marcarEnPreparacion(id, userId);
+    if (!pedido) {
+      throw new NotFoundError(
+        "No se encontró el pedido con el ID especificado"
+      );
+    }
+    await this.#publish(pedido, ESTADO_PEDIDO.EN_PREPARACION, null);
+    return pedido;
+  }
+
+  async marcarEntregado(id, userId) {
+    const pedido = await this.pedidosRepository.marcarEntregado(id, userId);
+    if (!pedido) {
+      throw new NotFoundError(
+        "No se encontró el pedido con el ID especificado"
+      );
+    }
+    await this.#publish(pedido, ESTADO_PEDIDO.ENTREGADO, null);
     return pedido;
   }
 

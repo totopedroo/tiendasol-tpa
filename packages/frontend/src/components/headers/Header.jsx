@@ -23,8 +23,10 @@ export const Header = () => {
   } = useCarrito();
   const isLoggedIn = false; // Temporal, más adelante vendrá de contexto o backend
   const [mostrarNotificaciones, setMostrarNotificaciones] = useState(false);
+  const [mostrarMenuUsuario, setMostrarMenuUsuario] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const notifPanelRef = useRef(null);
+  const menuUsuarioRef = useRef(null);
 
   const { user, isAuthenticated, logout, openAuthModal } = useAuth();
 
@@ -85,6 +87,10 @@ export const Header = () => {
     setUltimoProductoAgregado(null);
   };
 
+  const toggleMenuUsuario = () => {
+    setMostrarMenuUsuario(!mostrarMenuUsuario);
+  };
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -93,16 +99,23 @@ export const Header = () => {
       ) {
         setMostrarNotificaciones(false);
       }
+
+      if (
+        menuUsuarioRef.current &&
+        !menuUsuarioRef.current.contains(event.target)
+      ) {
+        setMostrarMenuUsuario(false);
+      }
     };
 
-    if (mostrarNotificaciones) {
+    if (mostrarNotificaciones || mostrarMenuUsuario) {
       document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [mostrarNotificaciones]);
+  }, [mostrarNotificaciones, mostrarMenuUsuario]);
 
   return (
     <div className="header">
@@ -158,19 +171,29 @@ export const Header = () => {
           </div>
 
           {isAuthenticated ? (
-            <div className="user-menu-wrapper">
+            <div className="user-menu-wrapper" ref={menuUsuarioRef}>
               <button
                 className="user-menu-button flex items-center gap-2"
                 aria-label="Menú de usuario"
+                onClick={toggleMenuUsuario}
               >
                 <User className="user-icon-header" />
-                <div className="user-info flex flex-col items-start gap-1">
+                <div className="user-info flex flex-col items-start">
                   <span className="user-name">{nombreUsuario}</span>
                   <span className="user-type">{user?.tipo || "Usuario"}</span>
                 </div>
                 <ChevronDown className="chevron-icon" />
               </button>
-              <div className="user-dropdown-menu">
+              <div
+                className={`user-dropdown-menu ${mostrarMenuUsuario ? "show" : ""}`}
+              >
+                <div className="dropdown-user-info">
+                  <div className="dropdown-user-name">{nombreUsuario}</div>
+                  <div className="dropdown-user-type">
+                    {user?.tipo || "Usuario"}
+                  </div>
+                </div>
+                <div className="dropdown-divider"></div>
                 <button className="dropdown-menu-item" onClick={irAMisPedidos}>
                   Mis pedidos
                 </button>

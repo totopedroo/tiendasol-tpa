@@ -5,15 +5,24 @@ import { ArrowLeft } from "../icons/ArrowLeft";
 import { ArrowRight } from "../icons/ArrowRight";
 import "./Paginacion.css";
 
-export const Paginacion = ({ paginaActual = 1, totalPaginas = 1 }) => {
+export const Paginacion = ({
+  paginaActual = 1,
+  totalPaginas = 1,
+  onCambioPagina = null,
+}) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const cambiarPagina = (nuevaPagina) => {
     if (nuevaPagina < 1 || nuevaPagina > totalPaginas) return;
 
-    const params = new URLSearchParams(searchParams);
-    params.set("page", nuevaPagina.toString());
-    setSearchParams(params);
+    // Si se proporciona un callback, usarlo en lugar de searchParams
+    if (onCambioPagina) {
+      onCambioPagina(nuevaPagina);
+    } else {
+      const params = new URLSearchParams(searchParams);
+      params.set("page", nuevaPagina.toString());
+      setSearchParams(params);
+    }
   };
 
   const generarNumerosPagina = () => {

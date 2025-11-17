@@ -34,7 +34,7 @@ export const AuthModal = ({ isOpen, onClose, initialView = "login" }) => {
   };
 
   return (
-    <div className="auth-modal-overlay" onClick={handleBackdropClick}>
+    <div className="auth-modal-overlay flex items-center justify-center" onClick={handleBackdropClick}>
       <div className="auth-modal-content">
         {currentView === "login" && (
           <LoginForm

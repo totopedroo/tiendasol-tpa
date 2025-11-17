@@ -52,7 +52,11 @@
   margin-top: -1px;
   position: relative;
   white-space: nowrap;
-  width: fit-content;
+  max-width: 350px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  text-align: left;
 }
 
 .checkout-item .text-wrapper-2 {
@@ -102,7 +106,6 @@
 .checkout-item .div-4 {
   align-items: flex-end;
   align-self: stretch;
-  display: flex;
   flex: 0 0 auto;
   justify-content: space-between;
   position: relative;

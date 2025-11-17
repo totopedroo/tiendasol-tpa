@@ -42,6 +42,13 @@ export const CheckoutItem = ({ item }) => {
     }
   })();
 
+  // Función para truncar texto
+  const truncarTexto = (texto, maxCaracteres = 50) => {
+    if (!texto) return "";
+    if (texto.length <= maxCaracteres) return texto;
+    return texto.substring(0, maxCaracteres) + "...";
+  };
+
   return (
     <div className="checkout-item flex items-start">
       <ImageWithLoader
@@ -53,8 +60,8 @@ export const CheckoutItem = ({ item }) => {
       <div className="item-content flex flex-col items-start justify-between">
         <div className="item-header flex items-start justify-between">
           <div className="item-title-price inline-flex flex-col items-start">
-            <div className="text-wrapper flex items-center justify-center">
-              {item.titulo}
+            <div className="text-wrapper" title={item.titulo}>
+              {truncarTexto(item.titulo, 45)}
             </div>
             <div className="text-wrapper-2 flex items-center justify-center">
               {moneda}

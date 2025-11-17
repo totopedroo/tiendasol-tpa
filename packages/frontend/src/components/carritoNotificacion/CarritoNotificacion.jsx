@@ -41,7 +41,7 @@ export const CarritoNotificacion = ({ producto, onClose }) => {
   };
 
   return (
-    <div className="carrito-notificacion">
+    <div className="carrito-notificacion flex flex-col">
       <Button
         variant="close"
         onClick={onClose}
@@ -51,10 +51,10 @@ export const CarritoNotificacion = ({ producto, onClose }) => {
         ×
       </Button>
 
-      <div className="notif-check">✓</div>
+      <div className="notif-check flex items-center justify-center">✓</div>
       <h3 className="notif-titulo">Agregado al carrito</h3>
 
-      <div className="notif-producto">
+      <div className="notif-producto flex items-center">
         {producto.imagenes && producto.imagenes[0] && (
           <img
             src={producto.imagenes[0]}
