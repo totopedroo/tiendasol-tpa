@@ -20,38 +20,47 @@ export class NotificacionesPublisher {
    * @param {CambioEstadoPedido} cambio
    */
   async publicar(cambio) {
-    const { pedido, estado, motivo } = cambio;
+    const { pedido, estado, motivo, actorId } = cambio;
 
-    // No mutamos el pedido original: clon + estado actualizado solo para el mensaje
-    const pedidoPlano = toPlain(pedido);
-    const pedidoParaMensaje = { ...pedidoPlano, estado };
+    const actorEsComprador =
+      actorId?.toString() === pedido.comprador?._id?.toString();
 
-    // Array de notificaciones
-    const notificaciones = this.factory.crearSegunPedido(pedidoParaMensaje);
-
-    // Etiqueta según requerimiento + motivo si es cancelado
     const etiquetas = {
-      [ESTADO_PEDIDO.PENDIENTE]: "Nuevo pedido recibido",
-      [ESTADO_PEDIDO.CONFIRMADO]: "Confirmación de pedido",
-      [ESTADO_PEDIDO.ENVIADO]: "Aviso de pedido enviado",
-      [ESTADO_PEDIDO.CANCELADO]: "Cancelación de pedido",
+      PENDIENTE: "Nuevo pedido recibido",
+      CONFIRMADO: "Confirmación de pedido",
+      EN_PREPARACION: "Pedido en preparación",
+      ENVIADO: "Pedido enviado",
+      ENTREGADO: "Pedido entregado",
+      CANCELADO: "Cancelación de pedido",
     };
-    const titulo = etiquetas[estado] ?? `Pedido ${estado}`;
-    const extra =
-      estado === ESTADO_PEDIDO.CANCELADO && motivo ? `\nMotivo: ${motivo}` : "";
-      
-    // Publicar para CADA vendedor
-    for (const noti of notificaciones) {
-      const mensaje = `${titulo}\n${noti.mensaje}${extra}`.trim();
-      const usuarioDestino = getId(noti.usuarioDestino);
 
-      await this.notiService.agregar({
-        usuarioDestino,
-        mensaje,
-        tipo: estado,
-        pedido: pedido?._id,
-      });
+    const titulo = etiquetas[estado] ?? `Pedido ${estado}`;
+    const extra = estado === "CANCELADO" && motivo ? `\nMotivo: ${motivo}` : "";
+
+    // Si el comprador actuó, notificamos a los vendedores
+    if (actorEsComprador) {
+      const notificaciones = this.factory.crearNotiVendedores(pedido);
+
+      for (const noti of notificaciones) {
+        await this.notiService.agregar({
+          usuarioDestino: noti.usuarioDestino,
+          mensaje: `${titulo}\n${noti.mensaje}${extra}`,
+          tipo: estado,
+          pedido: pedido._id,
+        });
+      }
+      return;
     }
+
+    // Si el vendedor actuó, notificamos al comprador
+    const notiComprador = this.factory.crearNotiComprador(pedido);
+
+    await this.notiService.agregar({
+      usuarioDestino: notiComprador.usuarioDestino,
+      mensaje: `${titulo}\n${notiComprador.mensaje}${extra}`,
+      tipo: estado,
+      pedido: pedido._id,
+    });
   }
 }
 
