@@ -105,13 +105,13 @@ export const Filtros = () => {
     cargarVendedores();
   }, []);
 
-  // Aplicar filtros con un pequeño delay para evitar demasiadas llamadas
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      actualizarFiltros();
-    }, 500);
-    return () => clearTimeout(timer);
-  }, [categoria, vendedor, precioMin, precioMax, orden]);
+  // // Aplicar filtros con un pequeño delay para evitar demasiadas llamadas
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     actualizarFiltros();
+  //   }, 500);
+  //   return () => clearTimeout(timer);
+  // }, [categoria, vendedor, precioMin, precioMax, orden]);
 
   const limpiarFiltros = () => {
     setCategoria("");
