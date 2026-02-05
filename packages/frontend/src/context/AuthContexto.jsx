@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = useCallback(async (email, password) => {
     try {
-      console.log("Intentando login con:", email, password);
+      console.log("Intentando login con:", email);
       const token = await apiLogin(email, password);
 
       console.log("Token recibido en AuthContexto:", token);
