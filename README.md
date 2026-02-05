@@ -46,15 +46,13 @@ npm install
 ```
 
 ### 2) Variables de entorno (backend)
-Crear packages/backend/.env usando .env.example como plantilla.
+Crear packages/backend/.env.
 Ejemplo:
 ```env
 ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
 SERVER_PORT=3001
-```
-
-# MongoDB
 MONGODB_URI=mongodb://localhost:27017/tiendasol
+```
 
 ### 3) Ejecutar
 Backend
