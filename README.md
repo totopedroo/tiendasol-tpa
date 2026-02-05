@@ -45,17 +45,26 @@ Desde la raíz del monorepo:
 npm install
 ```
 
-### 2) Variables de entorno (backend)
-Crear packages/backend/.env.
-Ejemplo:
+### 2) Variables de entorno
+
+#### Backend
+Crear `packages/backend/.env` (podés partir de `packages/backend/.env.example`):
 ```env
-ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
-SERVER_PORT=3001
-MONGODB_URI=mongodb://localhost:27017/tiendasol
+SERVER_PORT=8000
+ALLOWED_ORIGINS=http://localhost:3000
+MONGODB_URI=mongodb://localhost:27017
+MONGODB_DB_NAME=tiendasol
+```
+*Si usás Atlas, MONGODB_URI va a ser tu connection string.*
+
+#### Frontend
+Crear `packages/frontend/.env` (podés partir de `packages/frontend/.env.example`):
+```env
+REACT_APP_API_URL=http://localhost:8000
 ```
 
 ### 3) Ejecutar
-Backend
+#### Backend
 ```bash
 npm run start:backend
 ```
@@ -65,12 +74,12 @@ Modo desarrollo (reinicio automático):
 npm run dev:backend
 ```
 
-Frontend
+#### Frontend
 ```bash
 npm run start:frontend
 ```
 
-Ambos (desarrollo)
+#### Ambos (desarrollo)
 ```bash
 npm run start:dev
 ```
