@@ -1,6 +1,6 @@
 # Tienda Sol — Plataforma de Comercio Electrónico (TP DDS UTN FRBA 2C 2025)
 
-**Tienda Sol** es una plataforma web de e-commerce donde **vendedores** pueden publicar productos, gestionar stock y pedidos, y **compradores** pueden explorar el catálogo, buscar/filtrar, agregar al carrito y realizar compras. Incluye un sistema de **notificaciones** para eventos relevantes (pedido creado, enviado, cancelado). :contentReference[oaicite:1]{index=1}
+**Tienda Sol** es una plataforma web de e-commerce donde **vendedores** pueden publicar productos, gestionar stock y pedidos, y **compradores** pueden explorar el catálogo, buscar/filtrar, agregar al carrito y realizar compras. Incluye un sistema de **notificaciones** para eventos relevantes (pedido creado, enviado, cancelado).
 
 Demo (frontend): https://tiendasollis.netlify.app/
 
@@ -17,17 +17,18 @@ Este proyecto es un **monorepo** con **frontend** y **backend** gestionados con 
 ```
 
 ## Funcionalidades
-- **Búsqueda y visualización de productos** con filtros (texto/categoría/descripción), rango de precios, paginación y ordenamiento. :contentReference[oaicite:2]{index=2}
-- **Carrito** del lado del cliente (agregar/quitar, totales). :contentReference[oaicite:3]{index=3}
-- **Gestión de pedidos**: crear pedido validando stock, cancelar antes de envío, historial, marcado como enviado. :contentReference[oaicite:4]{index=4}
-- **Notificaciones**: pedido confirmado, pedido enviado y cancelación; bandeja de leídas/no leídas y marcar como leída. :contentReference[oaicite:5]{index=5}
+- **Búsqueda y visualización de productos** con filtros (texto/categoría/descripción), rango de precios, paginación y ordenamiento.
+- **Carrito** del lado del cliente (agregar/quitar, totales).
+- **Gestión de pedidos**: crear pedido validando stock, cancelar antes de envío, historial, marcado como enviado.
+- **Notificaciones**: pedido confirmado, pedido enviado y cancelación; bandeja de leídas/no leídas y marcar como leída.
 - Roles: **comprador / vendedor / admin** (según implementación del equipo).
 
 ## Tech stack
 - Frontend: React (Create React App)
 - Backend: Node.js + Express
-- Testing: Jest (unit/integration) y E2E (según entrega) :contentReference[oaicite:6]{index=6}
-- Documentación API: Swagger/OpenAPI (recomendado por la cátedra) :contentReference[oaicite:7]{index=7}
+- Base de datis: MongoDB
+- Testing: Jest (unit/integration) y E2E (según entrega)
+- Documentación API: Swagger/OpenAPI (recomendado por la cátedra)
 
 ## Branches
 - `main`: **versión final** del proyecto.
