@@ -7,12 +7,14 @@ Demo (frontend): https://tiendasollis.netlify.app/
 ## Repositorio
 Este proyecto es un **monorepo** con **frontend** y **backend** gestionados con **npm workspaces**.
 
+```text
 .
 ├── packages/
-│ ├── backend/ # API REST (Express)
-│ └── frontend/ # UI web (React)
-├── package.json # Configuración del monorepo
-└── .env.example # Ejemplo de variables de entorno
+│   ├── backend/        # API REST (Express)
+│   └── frontend/       # UI web (React)
+├── package.json        # Configuración del monorepo
+└── README.md
+```
 
 ## Funcionalidades
 - **Búsqueda y visualización de productos** con filtros (texto/categoría/descripción), rango de precios, paginación y ordenamiento. :contentReference[oaicite:2]{index=2}
