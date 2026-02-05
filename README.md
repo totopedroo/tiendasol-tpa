@@ -26,7 +26,7 @@ Este proyecto es un **monorepo** con **frontend** y **backend** gestionados con 
 ## Tech stack
 - Frontend: React (Create React App)
 - Backend: Node.js + Express
-- Base de datis: MongoDB
+- Base de datos: MongoDB
 - Testing: Jest (unit/integration) y E2E (según entrega)
 - Documentación API: Swagger/OpenAPI (recomendado por la cátedra)
 
