@@ -1,120 +1,98 @@
-Este repositorio es la base para el Trabajo Práctico de la materia **Desarrollo de Software (DDS)** de la carrera **Ingeniería en Sistemas de Información** de la **UTN FRBA**. Se trata de un **monorepo** que integra una aplicación frontend con Create React App y un backend con Express, facilitando el desarrollo y la gestión de ambos proyectos en un único entorno.
+# Tienda Sol — Plataforma de Comercio Electrónico (TP DDS UTN FRBA 2C 2025)
 
-## 📦 Estructura del Proyecto
+**Tienda Sol** es una plataforma web de e-commerce donde **vendedores** pueden publicar productos, gestionar stock y pedidos, y **compradores** pueden explorar el catálogo, buscar/filtrar, agregar al carrito y realizar compras. Incluye un sistema de **notificaciones** para eventos relevantes (pedido creado, enviado, cancelado). :contentReference[oaicite:1]{index=1}
 
-El monorepo está organizado de la siguiente manera:
+Demo (frontend): https://tiendasollis.netlify.app/
 
-```
+## Repositorio
+Este proyecto es un **monorepo** con **frontend** y **backend** gestionados con **npm workspaces**.
+
 .
 ├── packages/
-│   ├── backend/        # Servidor Express.js
-│   └── frontend/       # Aplicación React (Create React App)
-├── package.json        # Configuración del monorepo (root)
-├── README.md           # Este archivo
-└── .env.example        # Ejemplo de configuración de variables de entorno
-```
+│ ├── backend/ # API REST (Express)
+│ └── frontend/ # UI web (React)
+├── package.json # Configuración del monorepo
+└── .env.example # Ejemplo de variables de entorno
 
-## ⚙️ Paquetes
+## Funcionalidades
+- **Búsqueda y visualización de productos** con filtros (texto/categoría/descripción), rango de precios, paginación y ordenamiento. :contentReference[oaicite:2]{index=2}
+- **Carrito** del lado del cliente (agregar/quitar, totales). :contentReference[oaicite:3]{index=3}
+- **Gestión de pedidos**: crear pedido validando stock, cancelar antes de envío, historial, marcado como enviado. :contentReference[oaicite:4]{index=4}
+- **Notificaciones**: pedido confirmado, pedido enviado y cancelación; bandeja de leídas/no leídas y marcar como leída. :contentReference[oaicite:5]{index=5}
+- Roles: **comprador / vendedor / admin** (según implementación del equipo).
 
-Este monorepo utiliza **`npm workspaces`** para gestionar los diferentes paquetes.
+## Tech stack
+- Frontend: React (Create React App)
+- Backend: Node.js + Express
+- Testing: Jest (unit/integration) y E2E (según entrega) :contentReference[oaicite:6]{index=6}
+- Documentación API: Swagger/OpenAPI (recomendado por la cátedra) :contentReference[oaicite:7]{index=7}
 
-### Backend (`packages/backend`)
+## Branches
+- `main`: **versión final** del proyecto.
+- Branches `entrega_*` / ramas por feature: checkpoints/hitos durante la cursada.
 
-El backend está construido con Express.js y utiliza las siguientes dependencias:
+## Inicio rápido (local)
 
-- **`express`**: El framework web para Node.js, utilizado para construir la API.
-- **`cors`**: Middleware para Express que habilita Cross-Origin Resource Sharing (CORS), necesario para permitir que el frontend acceda al backend desde un origen diferente.
-- **`dotenv`**: Carga variables de entorno desde un archivo `.env` en `process.env`. Es crucial para configurar el puerto del servidor y los orígenes permitidos.
+### Requisitos
+- Node.js + npm
+- MongoDB en ejecución (local o Atlas)
 
-La idea es dar lo mínimo para levantar el servidor, y que durante el desarrollo del TP se vayan agregando las dependencias necesarias.
-
-### Frontend (`packages/frontend`)
-
-El frontend es una aplicación de React generada con Create React App.
-
-## 🚀 Inicio Rápido
-
-Seguí estos pasos para poner en marcha el proyecto:
-
-### 1\. Instalación de Dependencias
-
-Desde la raíz del monorepo, ejecutá:
-
+### 1) Instalar dependencias
+Desde la raíz del monorepo:
 ```bash
 npm install
 ```
 
-Esto instalará todas las dependencias para la raíz y para los paquetes `frontend` y `backend`.
-
-### 2\. Configuración de Variables de Entorno
-
-Crea un archivo `.env` en el directorio `packages/backend`. Puedes usar el archivo `.env.example` como plantilla.
-
-```
-# packages/backend/.env
+### 2) Variables de entorno (backend)
+Crear packages/backend/.env usando .env.example como plantilla.
+Ejemplo:
+```env
 ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
 SERVER_PORT=3001
 ```
 
-- **`ALLOWED_ORIGINS`**: Define los orígenes permitidos para las solicitudes CORS. Asegurate de incluir la URL donde se ejecuta tu frontend (por defecto, `http://localhost:3000` para Create React App). Cuando se haga el despliegue en nube acá se deberá incluir la URL donde se desplegó el frontend.
-- **`SERVER_PORT`**: El puerto en el que se ejecutará el servidor backend (ej. `8000`).
+# MongoDB
+MONGODB_URI=mongodb://localhost:27017/tiendasol
 
-### 3\. Ejecución de la Aplicación
-
-Podés iniciar el frontend y el backend por separado o ambos a la vez:
-
-#### Ejecutar el Backend
-
+### 3) Ejecutar
+Backend
 ```bash
 npm run start:backend
 ```
 
-Para el desarrollo con reinicio automático:
-
+Modo desarrollo (reinicio automático):
 ```bash
 npm run dev:backend
 ```
 
-#### Ejecutar el Frontend
-
+Frontend
 ```bash
 npm run start:frontend
 ```
 
-#### Ejecutar Ambos (Desarrollo)
-
-Para iniciar el backend en modo `dev` y el frontend simultáneamente, usá:
-
+Ambos (desarrollo)
 ```bash
 npm run start:dev
 ```
 
-### 4. Poblar la Base de Datos (Seeder)
-
-El proyecto incluye un **seeder service** para poblar la base de datos con datos de prueba:
-
+### 4) Poblar la base de datos (Seeder)
+El proyecto incluye un seeder para cargar datos de prueba.
 ```bash
-# Desde packages/backend
 cd packages/backend
 npm run seed
 ```
-
-Esto creará:
-
+Crea (aprox.):
 - 50 usuarios (compradores, vendedores y admins)
 - 18 categorías
 - ~160 productos con stock
 - 200 pedidos con diferentes estados
 
-**Opciones disponibles:**
-
+Opciones:
 ```bash
-# Mantener datos existentes (no limpia la BD)
 npm run seed:keep
-
-# Personalizar cantidades
 node scripts/seed.js --usuarios=100 --productos=200 --pedidos=500
-
-# Ver más opciones
 node scripts/seed.js --help
 ```
+
+## Créditos
+Trabajo Práctico Integrador — Desarrollo de Software (DDS) — Ingeniería en Sistemas — UTN FRBA — 2C 2025.
