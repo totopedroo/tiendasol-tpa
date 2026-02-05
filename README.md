@@ -106,4 +106,4 @@ node scripts/seed.js --help
 ```
 
 ## Créditos
-Trabajo Práctico Integrador — Desarrollo de Software (DDS) — Ingeniería en Sistemas — UTN FRBA — 2C 2025.
+### Trabajo Práctico Integrador — Desarrollo de Software (DDS) — Ingeniería en Sistemas — UTN FRBA — 2C 2025.
