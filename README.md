@@ -55,6 +55,7 @@ SERVER_PORT=8000
 ALLOWED_ORIGINS=http://localhost:3000
 MONGODB_URI=mongodb://localhost:27017
 MONGODB_DB_NAME=tiendasol
+JWT_SECRET=changeme
 ```
 *Si usás Atlas, MONGODB_URI va a ser tu connection string.*
 
