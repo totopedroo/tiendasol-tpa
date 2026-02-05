@@ -1,7 +1,11 @@
 import jwt from "jsonwebtoken";
 import { UsuarioRepository } from "../models/repositories/usuarioRepository.js";
 
-const SECRET_KEY = process.env.JWT_SECRET || "your_secret_key";
+const SECRET_KEY = process.env.JWT_SECRET;
+if (!SECRET_KEY) {
+  throw new Error("JWT_SECRET is required (set it in packages/backend/.env)");
+}
+
 const usuarioRepository = new UsuarioRepository();
 
 export const authenticateUser = async (email, password) => {
