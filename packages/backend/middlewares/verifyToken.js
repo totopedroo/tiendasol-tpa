@@ -1,6 +1,9 @@
 import jwt from "jsonwebtoken";
 
-const SECRET_KEY = process.env.JWT_SECRET || "your_secret_key";
+const SECRET_KEY = process.env.JWT_SECRET;
+if (!SECRET_KEY) {
+  throw new Error("JWT_SECRET is required (set it in packages/backend/.env)");
+}
 
 export function verifyToken(req, res, next) {
   const token = req.headers["authorization"]?.split(" ")[1];
